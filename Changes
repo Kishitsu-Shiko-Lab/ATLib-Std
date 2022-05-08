@@ -2,6 +2,10 @@ Revision history for Perl extension ATLib-Std
 
 {{$NEXT}}
 
+v0.2.1 2022-05-08T14:52:01Z
+
+    - LICENSEファイルの誤りを修正
+
 v0.2.0 2022-05-08T14:05:29Z
 
     - original version
