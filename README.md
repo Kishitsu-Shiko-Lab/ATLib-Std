@@ -4,7 +4,7 @@ ATLib::Std - ATLib 共通型システムの [Mouse](https://metacpan.org/pod/Mou
 
 # バージョン
 
-この文書は ATLib::Std version v0.2.0 について説明しています。
+この文書は ATLib::Std version v0.2.2 について説明しています。
 
 # 概要
 
@@ -52,6 +52,10 @@ Perlの型に合わせて作成しております。
 
 整数型。数値型から派生します。
 
+## [ATLib::Std::Radix](https://metacpan.org/pod/ATLib%3A%3AStd%3A%3ARadix)
+
+基数計算に使用する型。
+
 ## [ATLib::Std::Maybe](https://metacpan.org/pod/ATLib%3A%3AStd%3A%3AMaybe)
 
 値型に関して、未定義を許容するジェネリックな型です。
@@ -64,10 +68,14 @@ Perlの型に合わせて作成しております。
 
 キーを使用して要素にアクセスできるジェネリックなコレクション型です。
 
+## [ATLib::Std::DateTime](https://metacpan.org/pod/ATLib%3A%3AStd%3A%3ADateTime)
+
+日時型。日付、時間の表現、計算を行うための型です。
+
 # インストール方法
 
-$cpanm https://github.com/Kishitsu-Shiko-Lab/ATLib-Utils.git
-$cpanm https://github.com/Kishitsu-Shiko-Lab/ATLib-Std.git
+    $cpanm https://github.com/Kishitsu-Shiko-Lab/ATLib-Utils.git
+    $cpanm https://github.com/Kishitsu-Shiko-Lab/ATLib-Std.git
 
 # AUTHOR
 
@@ -75,7 +83,7 @@ atdev01 &lt;mine\_t7 at hotmail.com>
 
 # COPYRIGHT AND LICENSE
 
-Copyright (C) 2020-2022 atdev01.
+Copyright (C) 2020-2023 atdev01.
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms of the Artistic License 2.0. For details,

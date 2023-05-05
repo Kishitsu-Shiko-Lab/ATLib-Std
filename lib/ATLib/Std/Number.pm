@@ -9,19 +9,21 @@ use ATLib::Std::Exception;
 # Overloads
 use overload(
     q{""}    => \&as_string,
-    q{+}     => \&add,
-    q{-}     => \&subtract,
+    q{0+}    => \&as_number,
+    q{+}     => \&_add,
+    q{-}     => \&_subtract,
     fallback => 1,
 );
 
 # Attributes
 has '+_value' => (isa => 'Num');
 
-# Methods
-sub add
+# Overload Handler
+sub _add
 {
     my $this = shift;
     my $that = shift;
+    my $swap = shift;
 
     my $class = blessed($this);
     my $value = undef;
@@ -53,10 +55,12 @@ sub add
         $class = __PACKAGE__;
     }
 
-    return $class->from($value);
+    return $class->from($value) if ((!defined $swap || !$swap) && blessed($this) && $this->isa(__PACKAGE__));
+    return $class->from($value) if (defined $swap && $swap && blessed($that) && $that->isa(__PACKAGE__));
+    return $value;
 }
 
-sub subtract
+sub _subtract
 {
     my $this = shift;
     my $that = shift;
@@ -97,7 +101,22 @@ sub subtract
         $class = __PACKAGE__;
     }
 
-    return $class->from($value);
+    return $class->from($value) if ((!defined $swap || !$swap) && blessed($this) && $this->isa(__PACKAGE__));
+    return $class->from($value) if (defined $swap && $swap && blessed($that) && $that->isa(__PACKAGE__));
+    return $value;
+}
+
+# Class Methods
+sub value
+{
+    my $class = shift;
+    my $target = shift;
+
+    if (blessed($target) && $target->isa($class))
+    {
+        return $target->_value;
+    }
+    return $target;
 }
 
 # Instance Methods
@@ -105,6 +124,32 @@ sub as_string
 {
     my $self = shift;
     return ATLib::Std::String->from($self->_value);
+}
+
+sub as_number
+{
+    my $self = shift;
+    return $self->_value;
+}
+
+sub _can_equals
+{
+    my $self = shift;
+    my $target = shift;
+
+    if (!defined $target)
+    {
+        return 0;
+    }
+
+    if ($target->isa($self->get_full_name))
+    {
+        if ($target->can(q{_value}))
+        {
+            return 1;
+        }
+    }
+    return 0;
 }
 
 sub compare
@@ -146,7 +191,7 @@ ATLib::Std::Number - ATLib::Stdにおける標準型で数値を表すクラス
 
 =head1 バージョン
 
-この文書は ATLib::Std version v0.2.0 について説明しています。
+この文書は ATLib::Std version v0.2.2 について説明しています。
 
 =head1 概要
 
@@ -161,7 +206,7 @@ ATLib::Std::Number - ATLib::Stdにおける標準型で数値を表すクラス
     my $result = $instance1->compare(123.44); # 1
     my $result = $instance2->compare($instance3); # 0
     my $result = $instance3->compare($instance1); # -1
-    # And you can also use operator of '<', '<=', '>', '>='.
+    # And you can also use operator of '<', '<=', '>', '>=', '<=>'.
 
     my $result = $instance1->equals(123.44); # 1
     my $result = $instance1->equals($instance2); # 0
@@ -188,6 +233,11 @@ $valueを整数値とするインスタンスを生成します。
 
 スカラコンテキストでは、クラスに格納された整数値を文字列型 L<< ATLib::Std::String >> 化して返します。
 このコンテキストは比較時に文字列形式の数値変換など Perlから使用されます。
+
+=head2 数値化 C<< 0+ >>
+
+スカラコンテキストで数値が必要な場合は、インスタンスに格納された整数値を返します。
+これによりPerl標準の数値比較演算子 C<< E<lt>, E<le>, E<gt>, E<ge>, E<lt>=E<gt>, == >>を使用できます。
 
 =head2 演算子 C<< + >>
 
@@ -269,5 +319,17 @@ $instanceと$targetを数値比較します。
 $targetが$instanceと等価であるかを判定します。
 判定には、C<< $instance->compare($target) >> が使用されます。
 必要に応じて、派生クラスでオーバーライドします。
+
+=head1 AUTHOR
+
+atdev01 E<lt>mine_t7 at hotmail.comE<gt>
+
+=head1 COPYRIGHT AND LICENSE
+
+Copyright (C) 2020-2023 atdev01.
+
+This library is free software; you can redistribute it and/or modify
+it under the same terms of the Artistic License 2.0. For details,
+see the full text of the license in the file LICENSE.
 
 =cut

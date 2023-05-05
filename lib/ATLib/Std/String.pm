@@ -5,6 +5,7 @@ extends 'ATLib::Std::Any';
 # Overloads
 use overload(
     q{""}  => \&as_string,
+    q{cmp} => \&_compare,
     q{.}   => \&_concat,
     fallback => 1,
 );
@@ -12,24 +13,33 @@ use overload(
 # Attributes
 has '_value' => (is => 'rw', isa => 'Str', required => 1);
 
-# Class Methods
-sub from
+# Overload Handler
+sub _compare
 {
-    my $class = shift;
-    my $value = shift;
+    my ($this, $that, $swap) = @_;
 
-    return $class->new({type_name => $class, _value => $value});
-}
-
-sub is_undef_or_empty
-{
-    my $class = shift;
-    my $target = shift;
-
-    return 0 if !defined $target;
-    return 1 if blessed($target) && $target->can(q{_value}) && $target eq q{};
-    return 1 if $target eq q{};
-    return 0;
+    if (defined $swap && $swap)
+    {
+        if (blessed($that))
+        {
+            return $that->compare($this);
+        }
+        else
+        {
+            return ATLib::Std::String->from($that)->compare($this);
+        }
+    }
+    else
+    {
+        if (blessed($this))
+        {
+            return $this->compare($that);
+        }
+        else
+        {
+            return ATLib::Std::String->from($this)->compare($that);
+        }
+    }
 }
 
 sub _concat
@@ -76,6 +86,26 @@ sub _concat
     }
 
     return $class->from($value);
+}
+
+# Class Methods
+sub from
+{
+    my $class = shift;
+    my $value = shift;
+
+    return $class->new({type_name => $class, _value => $value});
+}
+
+sub is_undef_or_empty
+{
+    my $class = shift;
+    my $target = shift;
+
+    return 0 if !defined $target;
+    return 1 if blessed($target) && $target->can(q{_value}) && $target eq q{};
+    return 1 if $target eq q{};
+    return 0;
 }
 
 # Instance Methods
@@ -234,7 +264,7 @@ ATLib::Std::String - ATLib::Stdでにおける標準型で文字列を表すク�
 
 =head1 バージョン
 
-この文書は ATLib::Std version v0.2.0 について説明しています。
+この文書は ATLib::Std version v0.2.2 について説明しています。
 
 =head1 概要
 
@@ -247,6 +277,9 @@ ATLib::Std::String - ATLib::Stdでにおける標準型で文字列を表すク�
     my $result = $instance->compare(q{Hello});  # -1
     my $result = $instance->compare($instance); # 0
     my $result = $instance->compare(q{Hello, ATLib::Std::String::Bigger}); # 1
+
+    # You can use operator to compare; lt, le, gt, ge, eq, and cmp.
+    my $result = $instance cmp q{Hello}; # -1
 
     my $result = $instance->equals(q{Hello, ATLib::Std::String}); # 1
 
@@ -287,6 +320,10 @@ $valueを文字列値とするインスタンスを生成します。
 =head2 文字列化 C<< "" >>
 
 スカラコンテキストでは、クラスに格納された文字列を返します。
+
+=head2 文字列比較演算子 C<< lt, le, gt, ge, eq, cmp >>
+
+標準の文字列比較演算子を使用できます。
 
 =head2 演算子 C<< . >>
 
@@ -418,7 +455,7 @@ atdev01 E<lt>mine_t7 at hotmail.comE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2020-2022 atdev01.
+Copyright (C) 2020-2023 atdev01.
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms of the Artistic License 2.0. For details,

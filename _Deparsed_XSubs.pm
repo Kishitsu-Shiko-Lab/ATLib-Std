@@ -90,13 +90,6 @@ sub XSUB;
 sub XSUBANY;
 sub const_sv;
 }
-package B::Debug {
-sub cstring;
-sub main_root;
-sub main_start;
-sub sv_undef;
-sub walkoptree;
-}
 package B::Deparse {
 sub main_cv;
 sub main_root;
@@ -781,6 +774,7 @@ sub convert_blessed;
 sub decode;
 sub decode_json($;$$) ;
 sub decode_prefix;
+sub dupkeys_as_arrayref;
 sub encode;
 sub encode_json($;$) ;
 sub escape_slash;
@@ -799,6 +793,7 @@ sub get_ascii;
 sub get_binary;
 sub get_canonical;
 sub get_convert_blessed;
+sub get_dupkeys_as_arrayref;
 sub get_escape_slash;
 sub get_indent;
 sub get_indent_length;
@@ -898,21 +893,6 @@ sub unshift;
 package Data::Dumper {
 sub Dumpxs($;$$) ;
 sub _vstring($) ;
-}
-package Devel::Cover {
-sub abs_path;
-sub getcwd;
-sub main_cv;
-sub main_root;
-sub main_start;
-sub ppname;
-}
-package Devel::Cover::Inc {
-sub fastcwd;
-sub getcwd;
-}
-package Devel::Cover::Util {
-sub abs_path;
 }
 package Devel::NYTProf::Data {
 sub load_profile_data_from_file;
@@ -1191,9 +1171,6 @@ sub bsd_glob;
 sub bsd_glob_override;
 sub csh_glob;
 }
-package File::Path {
-sub getcwd;
-}
 package File::Spec::Unix {
 sub _fn_canonpath;
 sub _fn_catdir;
@@ -1226,14 +1203,21 @@ sub centfree;
 sub clear_error;
 sub close;
 sub coalesce;
+sub convert;
 sub count;
+sub crash_tolerance_status;
 sub dbname;
+sub dump;
 sub errno;
+sub failure_atomic;
 sub filter_fetch_key;
 sub filter_fetch_value;
 sub filter_store_key;
 sub filter_store_value;
 sub flags;
+sub gdbm_check_syserr;
+sub latest_snapshot;
+sub load;
 sub mmap;
 sub mmapsize;
 sub needs_recovery;
@@ -1767,7 +1751,6 @@ sub hidden_ref_keys;
 sub hv_store(\%$$) ;
 sub legal_ref_keys;
 sub num_buckets(\%) ;
-sub reftype($) ;
 sub used_buckets(\%) ;
 }
 package Hash::Util::FieldHash {
@@ -1779,7 +1762,6 @@ sub _test_uvar_same;
 sub _test_uvar_set;
 sub id($) ;
 sub id_2obj($) ;
-sub reftype($) ;
 sub register($@) ;
 }
 package I18N::Langinfo {
@@ -2326,12 +2308,7 @@ package Internals {
 sub SvREADONLY(\[$%@];$) ;
 sub SvREFCNT(\[$%@];$) ;
 sub V;
-sub getcwd() ;
 sub hv_clear_placeholders(\%) ;
-}
-package JSON::MaybeXS {
-sub decode_json($;$$) ;
-sub encode_json($;$) ;
 }
 package JSON::XS {
 sub CLONE;
@@ -2382,77 +2359,6 @@ sub shrink;
 sub space_after;
 sub space_before;
 sub utf8;
-}
-package List::MoreUtils::XS {
-sub _XScompiled;
-sub _array_iterator(;$) ;
-sub _slideatatime_iterator() ;
-sub after(&@) ;
-sub after_incl(&@) ;
-sub all(&@) ;
-sub all_u(&@) ;
-sub any(&@) ;
-sub any_u(&@) ;
-sub apply(&@) ;
-sub arrayify;
-sub before(&@) ;
-sub before_incl(&@) ;
-sub binsert(&$\@) ;
-sub bremove(&\@) ;
-sub bsearch(&@) ;
-sub bsearchidx(&@) ;
-sub duplicates(@) ;
-sub each_array(\@;\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@) ;
-sub each_arrayref;
-sub equal_range(&@) ;
-sub false(&@) ;
-sub firstidx(&@) ;
-sub firstres(&@) ;
-sub firstval(&@) ;
-sub frequency(@) ;
-sub indexes(&@) ;
-sub insert_after(&$\@) ;
-sub insert_after_string($$\@) ;
-sub lastidx(&@) ;
-sub lastres(&@) ;
-sub lastval(&@) ;
-sub listcmp(\@\@;\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@) ;
-sub lower_bound(&@) ;
-sub mesh(\@\@;\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@) ;
-sub minmax(@) ;
-sub minmaxstr(@) ;
-sub mode(@) ;
-sub natatime($@) ;
-sub none(&@) ;
-sub none_u(&@) ;
-sub notall(&@) ;
-sub notall_u(&@) ;
-sub occurrences(@) ;
-sub one(&@) ;
-sub one_u(&@) ;
-sub onlyidx(&@) ;
-sub onlyres(&@) ;
-sub onlyval(&@) ;
-sub pairwise(&\@\@) ;
-sub part(&@) ;
-sub qsort(&\@) ;
-sub reduce_0(&@) ;
-sub reduce_1(&@) ;
-sub reduce_u(&@) ;
-sub samples($@) ;
-sub singleton(@) ;
-sub slide(&@) ;
-sub slideatatime($@) ;
-sub true(&@) ;
-sub uniq(@) ;
-sub upper_bound(&@) ;
-sub zip6(\@\@;\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@) ;
-}
-package List::MoreUtils::XS_ea {
-sub DESTROY;
-}
-package List::MoreUtils::XS_sa {
-sub DESTROY;
 }
 package List::Util {
 sub all(&@) ;
@@ -2708,6 +2614,14 @@ sub filter_fetch_value;
 sub filter_store_key;
 sub filter_store_value;
 }
+package Net::Libproxy {
+sub proxy_factory_free_proxies;
+sub proxy_factory_get_proxies;
+sub proxy_factory_new;
+}
+package Net::Libproxy::ProxyFactoryPtr {
+sub DESTROY;
+}
 package Net::SSLeay {
 sub AF_802() ;
 sub AF_AAL() ;
@@ -2775,6 +2689,7 @@ sub CTX_get_cert_store($) ;
 sub CTX_get_client_CA_list($) ;
 sub CTX_get_ex_data($$) ;
 sub CTX_get_ex_new_index($;$$$$) ;
+sub CTX_get_keylog_callback($) ;
 sub CTX_get_max_proto_version($) ;
 sub CTX_get_min_proto_version($) ;
 sub CTX_get_mode($) ;
@@ -2824,9 +2739,11 @@ sub CTX_set_default_passwd_cb_userdata($;$) ;
 sub CTX_set_default_verify_paths($) ;
 sub CTX_set_ex_data($$$) ;
 sub CTX_set_info_callback($$;$) ;
+sub CTX_set_keylog_callback($$) ;
 sub CTX_set_max_proto_version($$) ;
 sub CTX_set_min_proto_version($$) ;
 sub CTX_set_mode($$) ;
+sub CTX_set_msg_callback($$;$) ;
 sub CTX_set_next_proto_select_cb($$;$) ;
 sub CTX_set_next_protos_advertised_cb($$;$) ;
 sub CTX_set_num_tickets($$) ;
@@ -2937,6 +2854,20 @@ sub OCSP_response_status_str($) ;
 sub OCSP_response_verify($$;$$) ;
 sub OPENSSL_add_all_algorithms_conf() ;
 sub OPENSSL_add_all_algorithms_noconf() ;
+sub OPENSSL_info($) ;
+sub OPENSSL_version_build_metadata() ;
+sub OPENSSL_version_major() ;
+sub OPENSSL_version_minor() ;
+sub OPENSSL_version_patch() ;
+sub OPENSSL_version_pre_release() ;
+sub OSSL_LIB_CTX_get0_global_default() ;
+sub OSSL_PROVIDER_available($$) ;
+sub OSSL_PROVIDER_do_all($$;$) ;
+sub OSSL_PROVIDER_get0_name($) ;
+sub OSSL_PROVIDER_load($$) ;
+sub OSSL_PROVIDER_self_test($) ;
+sub OSSL_PROVIDER_try_load($$$) ;
+sub OSSL_PROVIDER_unload($) ;
 sub OpenSSL_add_all_algorithms() ;
 sub OpenSSL_add_all_digests() ;
 sub OpenSSL_add_ssl_algorithms() ;
@@ -3407,6 +3338,7 @@ sub set_info_callback($$;$) ;
 sub set_max_proto_version($$) ;
 sub set_min_proto_version($$) ;
 sub set_mode($$) ;
+sub set_msg_callback($$;$) ;
 sub set_num_tickets($$) ;
 sub set_options($$) ;
 sub set_post_handshake_auth($$) ;
@@ -3536,6 +3468,7 @@ sub CHILD_MAX() ;
 sub CLK_TCK() ;
 sub EOTHER() ;
 sub EPROCLIM() ;
+sub FLT_ROUNDS() ;
 sub LC_SYNTAX;
 sub LC_TOD;
 sub LDBL_EPSILON() ;
@@ -3616,7 +3549,7 @@ sub fclose;
 sub fcntl;
 sub fdim;
 sub fdopen;
-sub fegetround;
+sub fegetround() ;
 sub feof;
 sub ferror;
 sub fesetround;
@@ -3884,11 +3817,6 @@ sub _XScompiled;
 package Params::Util::PP {
 sub looks_like_number($) ;
 }
-package Params::Validate::XS {
-sub validate(\@$) ;
-sub validate_pos(\@@) ;
-sub validate_with;
-}
 package PerlIO {
 sub get_layers(*;@) ;
 }
@@ -3962,6 +3890,10 @@ sub IPTOS_MINCOST() ;
 sub IPTOS_RELIABILITY() ;
 sub IPTOS_THROUGHPUT() ;
 sub IPV6_ADDRFROM() ;
+sub LOCAL_CONNWAIT() ;
+sub LOCAL_CREDS() ;
+sub LOCAL_OCREDS() ;
+sub LOCAL_PEEREID() ;
 sub MSG_BCAST() ;
 sub MSG_BTAG() ;
 sub MSG_CTLFLAGS() ;
@@ -4176,26 +4108,9 @@ sub unpack_sockaddr_in6;
 sub unpack_sockaddr_in;
 sub unpack_sockaddr_un;
 }
-package Term::ReadKey {
-sub GetControlChars;
-sub GetSpeed;
-sub GetTermSizeGSIZE;
-sub GetTermSizeGWINSZ;
-sub GetTermSizeVIO;
-sub GetTermSizeWin32;
-sub SetControlChars;
-sub SetReadMode;
-sub SetTerminalSize;
-sub Win32PeekChar;
-sub blockoptions;
-sub pollfile;
-sub selectfile;
-sub setnodelay;
-sub termoptions;
-sub termsizeoptions;
-}
 package Test2::API {
 sub blessed($) ;
+sub time() ;
 sub weaken($) ;
 }
 package Test2::API::Context {
@@ -4394,6 +4309,24 @@ sub _fetch_attrs($) ;
 sub _guess_stash($) ;
 sub _modify_attrs;
 sub reftype($) ;
+}
+package builtin {
+sub blessed($) ;
+sub ceil($) ;
+sub created_as_number($) ;
+sub created_as_string($) ;
+sub false() ;
+sub floor($) ;
+sub import;
+sub indexed;
+sub is_bool($) ;
+sub is_weak($) ;
+sub refaddr($) ;
+sub reftype($) ;
+sub trim;
+sub true() ;
+sub unweaken($) ;
+sub weaken($) ;
 }
 package bytes {
 sub chr(_) ;

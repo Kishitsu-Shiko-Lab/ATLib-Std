@@ -1,6 +1,6 @@
 package ATLib::Std;
 use 5.016_001;
-use version; our $VERSION = version->declare('v0.2.1');
+use version; our $VERSION = version->declare('v0.2.2');
 use strict;
 use warnings;
 
@@ -15,7 +15,7 @@ ATLib::Std - ATLib 共通型システムの L<< Mouse >> による実装
 
 =head1 バージョン
 
-この文書は ATLib::Std version v0.2.0 について説明しています。
+この文書は ATLib::Std version v0.2.2 について説明しています。
 
 =head1 概要
 
@@ -63,6 +63,10 @@ Perlの型に合わせて作成しております。
 
 整数型。数値型から派生します。
 
+=head2 L<< ATLib::Std::Radix >>
+
+基数計算に使用する型。
+
 =head2 L<< ATLib::Std::Maybe >>
 
 値型に関して、未定義を許容するジェネリックな型です。
@@ -75,10 +79,14 @@ Perlの型に合わせて作成しております。
 
 キーを使用して要素にアクセスできるジェネリックなコレクション型です。
 
+=head2 L<< ATLib::Std::DateTime >>
+
+日時型。日付、時間の表現、計算を行うための型です。
+
 =head1 インストール方法
 
-$cpanm https://github.com/Kishitsu-Shiko-Lab/ATLib-Utils.git
-$cpanm https://github.com/Kishitsu-Shiko-Lab/ATLib-Std.git
+    $cpanm https://github.com/Kishitsu-Shiko-Lab/ATLib-Utils.git
+    $cpanm https://github.com/Kishitsu-Shiko-Lab/ATLib-Std.git
 
 =head1 AUTHOR
 
@@ -86,7 +94,7 @@ atdev01 E<lt>mine_t7 at hotmail.comE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2020-2022 atdev01.
+Copyright (C) 2020-2023 atdev01.
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms of the Artistic License 2.0. For details,

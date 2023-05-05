@@ -2,6 +2,14 @@ Revision history for Perl extension ATLib-Std
 
 {{$NEXT}}
 
+v0.2.2 2023-05-05T05:22:21Z
+
+    - ATLib::Std::Any->get_hash_code()が短いスコープで同じ値になるバグを修正
+    - ATLib::Std::Dictionaryのキーにオブジェクトを指定した場合にスカラ値となるバグを修正
+    - ATLib::Std::Stringが標準文字列比較演算子で比較を行えるように修正
+    - ATLib::Std::Numberにおいて、数値化のオーバーロードハンドラを追加
+    - ATLib::Std::DateTimeを追加
+
 v0.2.1 2022-05-08T14:52:01Z
 
     - LICENSEファイルの誤りを修正

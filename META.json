@@ -4,7 +4,7 @@
       "atdev01 <mine_t7 at hotmail.com>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Minilla/v3.1.12, CPAN::Meta::Converter version 2.150010",
+   "generated_by" : "Minilla/v3.1.20, CPAN::Meta::Converter version 2.150010",
    "license" : [
       "artistic_2"
    ],
@@ -45,6 +45,8 @@
             "ATLib::Utils" : "0",
             "Digest::SHA" : "0",
             "Mouse" : "0",
+            "Time::HiRes" : "0",
+            "Time::Local" : "0",
             "perl" : "5.016001"
          }
       },
@@ -62,14 +64,14 @@
       "homepage" : "https://github.com/Kishitsu-Shiko-Lab/ATLib-Std",
       "repository" : {
          "type" : "git",
-         "url" : "git://github.com/Kishitsu-Shiko-Lab/ATLib-Std.git",
+         "url" : "https://github.com/Kishitsu-Shiko-Lab/ATLib-Std.git",
          "web" : "https://github.com/Kishitsu-Shiko-Lab/ATLib-Std"
       }
    },
-   "version" : "v0.2.1",
+   "version" : "v0.2.2",
    "x_contributors" : [
       "atdev01ux2 <mine_t7@hotmail.com>"
    ],
-   "x_serialization_backend" : "JSON::PP version 4.06",
+   "x_serialization_backend" : "JSON::PP version 4.07",
    "x_static_install" : 1
 }

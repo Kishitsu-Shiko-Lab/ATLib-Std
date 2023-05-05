@@ -1,22 +1,41 @@
 package ATLib::Std::Any;
 use Mouse;
 
+use Time::HiRes qw{ gettimeofday };
 use Digest::SHA qw{ sha512_base64 };
 
 # Attributes
-has 'type_name' => (is => q{ro}, isa => q{Str}, required => 1, default => q{Item});
+has 'type_name'  => (is => q{ro}, isa => q{Str}, required => 1, default => q{Item});
+has '_hash_code' => (is => q{rw}, isa => q{Str});
 
 # Instance Methods
 sub get_hash_code
 {
     my $self = shift;
-    return sha512_base64(scalar($self));
+    if (!defined $self->_hash_code)
+    {
+        my $date_time = $self->_now_utc_full();
+        $self->_hash_code(sha512_base64(scalar($self) . $date_time));
+    }
+    return $self->_hash_code;
 }
 
 sub get_full_name
 {
     my $self = shift;
     return blessed($self);
+}
+
+sub _now_utc_full
+{
+    my $self = shift;
+
+    my ($epoch_sec, $micro_sec) = gettimeofday();
+    my ($sec, $min, $hour, $day, $month, $year) = gmtime($epoch_sec);
+    my $date_time =
+        sprintf(q{%4d/%02d/%02d %02d:%02d:%02d.%06d}, $year + 1900, $month + 1, $day, $hour, $min, $sec, $micro_sec);
+
+    return $date_time;
 }
 
 sub _can_equals
@@ -145,7 +164,7 @@ atdev01 E<lt>mine_t7 at hotmail.comE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2020-2022 atdev01.
+Copyright (C) 2020-2023 atdev01.
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms of the Artistic License 2.0. For details,

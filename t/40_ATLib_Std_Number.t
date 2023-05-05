@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-use Test::More tests => 23;
+use Test::More tests => 25;
 use English qw{ -no_match_vars };
 
 use ATLib::Std::Exception::Argument;
@@ -67,23 +67,29 @@ is($number_instance->equals(q{4649}), 0);
 #19
 is($number_instance->_can_equals($value), 0);
 
-#>> 20 -
+#20
+is($number_instance == $number_instance, 1);
+
+#21
+is($number_instance <=> $number_instance, 0);
+
+#>> 22 -
 eval
 {
     $number_instance->compare(q{String value.});
 };
 
-#20
+#22
 ok($EVAL_ERROR);
 
-#21
+#23
 my $class_as_exception = q{ATLib::Std::Exception::Argument};
 isa_ok($EVAL_ERROR, $class_as_exception);
 
-#22
+#24
 is($EVAL_ERROR->message, q{Type mismatch.});
 
-#23
+#25
 is($EVAL_ERROR->param_name, q{$target});
 
 done_testing();

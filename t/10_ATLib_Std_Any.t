@@ -3,15 +3,13 @@ use strict;
 use warnings;
 use Test::More tests => 10;
 
-use Digest::SHA qw{ sha512_base64 };
-
 #1
 use_ok(q{ATLib::Std::Any});
 
 #2
 my $instance = ATLib::Std::Any->new();
-my $hash_code_instance = sha512_base64(scalar($instance));
-is($instance->get_hash_code(), $hash_code_instance);
+my $hash_code = $instance->get_hash_code();
+is($instance->get_hash_code(), $hash_code);
 
 #3
 is($instance->get_full_name(), q{ATLib::Std::Any});

@@ -6,11 +6,18 @@ with qw{ATLib::Std::Role::Generic2 ATLib::Std::Role::Collection};
 use ATLib::Utils qw{as_type_of equals};
 use ATLib::Std::Int;
 use ATLib::Std::Exception::Argument;
+use ATLib::Std::Collections::List;
 
 # Attributes
-has '_items_ref' => (
-    is         => q{rw},
-    isa        => q{HashRef[Maybe[Defined]]},
+has '_items_key_of_ref' => (
+    is  => q{rw},
+    isa => q{HashRef[Maybe[Defined]]},
+    lazy_build => 1,
+);
+
+has '_items_value_of_ref' => (
+    is  => q{rw},
+    isa => q{HashRef[Maybe[Defined]]},
     lazy_build => 1,
 );
 
@@ -30,14 +37,15 @@ sub items
 
     if (defined $value)
     {
-        $self->_items_ref->{$key} = $value;
+        $self->_items_value_of_ref->{$key} = $value;
         return;
     }
-    return $self->_items_ref->{$key};
+    return $self->_items_value_of_ref->{$key};
 }
 
 # Builder
-sub _build__items_ref { return {} };
+sub _build__items_key_of_ref { return {} };
+sub _build__items_value_of_ref { return {} };
 
 # Class Methods
 sub of
@@ -88,8 +96,32 @@ sub count
 {
     my $self = shift;
 
-    my @keys = keys(%{$self->_items_ref});
+    my @keys = keys(%{$self->_items_key_of_ref});
     return ATLib::Std::Int->from(scalar(@keys));
+}
+
+sub get_keys_ref
+{
+    my $self = shift;
+
+    my @keys = ();
+    for my $key (keys %{$self->_items_key_of_ref})
+    {
+        push @keys, $self->_items_key_of_ref->{$key};
+    }
+    return \@keys;
+}
+
+sub get_values_ref
+{
+    my $self = shift;
+
+    my @values = ();
+    for my $key (keys %{$self->_items_key_of_ref})
+    {
+        push @values, $self->_items_value_of_ref->{$key};
+    }
+    return \@values;
 }
 
 sub contains
@@ -110,7 +142,7 @@ sub contains
         return 0;
     }
 
-    if (exists $self->_items_ref->{$key})
+    if (exists $self->_items_key_of_ref->{$key})
     {
         return 1;
     }
@@ -134,7 +166,7 @@ sub contains_value
         return 0;
     }
 
-    my @values = values(%{$self->_items_ref});
+    my @values = @{$self->get_values_ref()};
     if (!defined $value)
     {
         for my $item (@values)
@@ -180,7 +212,8 @@ sub contains_value
 sub clear
 {
     my $self = shift;
-    $self->_items_ref({});
+    $self->_items_key_of_ref({});
+    $self->_items_value_of_ref({});
     return $self;
 }
 
@@ -214,7 +247,8 @@ sub add
         })->throw();
     }
 
-    $self->_items_ref->{$key} = $value;
+    $self->_items_key_of_ref->{$key} = $key;
+    $self->_items_value_of_ref->{$key} = $value;
     return $self;
 }
 
@@ -227,7 +261,8 @@ sub remove
     {
         return 0;
     }
-    delete $self->_items_ref->{$key};
+    delete $self->_items_key_of_ref->{$key};
+    delete $self->_items_value_of_ref->{$key};
     return 1;
 }
 
@@ -244,7 +279,7 @@ ATLib::Std::Collections::Dictionary - キーを使用して要素にアクセス
 
 =head1 バージョン
 
-この文書は ATLib::Std:: version 0.2.0 について説明しています。
+この文書は ATLib::Std:: version 0.2.2 について説明しています。
 
 =head1 概要
 
@@ -261,6 +296,16 @@ ATLib::Std::Collections::Dictionary - キーを使用して要素にアクセス
     $result = $instance->contains_key(q{Hello});  #1
     $result = $instance->contains_value(q{world.});  #1
     $count = $instance->count();  #1
+
+    for my $key (@{$instance->get_keys_ref()})
+    {
+      ...
+    }
+
+    for my $value (@{$instance->get_values_ref()})
+    {
+      ...
+    }
 
     $instance->remove(q{Hello});
     $result = $instance->contains_key(q{Hello});  #0
@@ -346,6 +391,15 @@ $keyが存在しない場合は、例外L<< ATLib::Std::Exception::Argument >>�
 
 =head1 インスタンスメソッド
 
+=head2 C<< $keys_array_ref = $instance->get_keys_ref(); >>
+
+コレクションに格納されているキーを配列の参照で取得します。
+
+=head2 C<< $values_array_ref = $instance->get_values_ref(); >>
+
+コレクションに格納されている値を配列の参照で取得します。
+C<< $instance->get_keys_ref() >>で取得したキーの順序で取得されます。
+
 =head2 C<< $result = $instance->contains_key($key); >>
 
 $keyがコレクションに存在するかどうかを判定して返します。
@@ -378,7 +432,7 @@ atdev01 E<lt>mine_t7 at hotmail.comE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2020-2022 atdev01.
+Copyright (C) 2020-2023 atdev01.
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms of the Artistic License 2.0. For details,

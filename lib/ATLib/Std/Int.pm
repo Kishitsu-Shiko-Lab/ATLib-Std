@@ -18,7 +18,7 @@ ATLib::Std::Int - ATLib::Stdにおける標準型で整数値を表すクラス
 
 =head1 バージョン
 
-この文書は ATLib::Std version v0.2.0 について説明しています。
+この文書は ATLib::Std version v0.2.2 について説明しています。
 
 =head1 概要
 
@@ -141,5 +141,17 @@ $instanceと$targetを数値比較します。
 $targetが$instanceと等価であるかを判定します。
 判定には、C<< $instance->compare($target) >> が使用されます。
 必要に応じて、派生クラスでオーバーライドします。
+
+=head1 AUTHOR
+
+atdev01 E<lt>mine_t7 at hotmail.comE<gt>
+
+=head1 COPYRIGHT AND LICENSE
+
+Copyright (C) 2020-2023 atdev01.
+
+This library is free software; you can redistribute it and/or modify
+it under the same terms of the Artistic License 2.0. For details,
+see the full text of the license in the file LICENSE.
 
 =cut
