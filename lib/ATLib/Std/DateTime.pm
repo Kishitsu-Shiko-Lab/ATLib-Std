@@ -346,13 +346,11 @@ sub _adjust_leap_last_day
     return;
 }
 
-use Test::More;
 sub _sync_unix_time
 {
     my $self = shift;
     my $second = $self->second;
 
-    diag($self->as_string('%c'));
     if ($self->in_leap_second)
     {
         $second = 59;
@@ -795,7 +793,7 @@ ATLib::Std::DateTime - ATLib::Stdにおける標準型で日時を表すクラ�
 
 =head1 バージョン
 
-この文書は ATLib::Std version v0.2.3 について説明しています。
+この文書は ATLib::Std version v0.2.4 について説明しています。
 
 =head1 概要
 

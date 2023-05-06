@@ -2,6 +2,10 @@ Revision history for Perl extension ATLib-Std
 
 {{$NEXT}}
 
+v0.2.4 2023-05-06T02:34:03Z
+
+    - ATLib::Std::DateTimeのデバッグプリントを削除
+
 v0.2.3 2023-05-06T02:30:31Z
 
     - ATLib::Std::DateTimeの日付演算において、UNIX時間が更新されないバグを修正
