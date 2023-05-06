@@ -334,6 +334,57 @@ sub _set_micro_second
     return;
 }
 
+sub _adjust_leap_last_day
+{
+    my $self = shift;
+
+    if ($self->day > $self->_month->last_day)
+    {
+        $self->_day->_set_value(ATLib::Std::Int->value(ATLib::Std::DateTime::Day->to_epoch($self->_month->last_day)));
+        $self->_day->_set_radix(ATLib::Std::Int->value($self->_month->last_day));
+    }
+    return;
+}
+
+use Test::More;
+sub _sync_unix_time
+{
+    my $self = shift;
+    my $second = $self->second;
+
+    diag($self->as_string('%c'));
+    if ($self->in_leap_second)
+    {
+        $second = 59;
+    }
+
+    my $epoc_sec = $self->unix_time;
+    if ($self->is_utc)
+    {
+        $epoc_sec = timegm_posix(
+            ATLib::Std::Int->value($second),
+            $self->minute->_value,
+            $self->hour->_value,
+            $self->day->_value,
+            ATLib::Std::DateTime::Month->to_epoch($self->month)->_value,
+            ATLib::Std::DateTime::Year->to_epoch($self->year)->_value
+        );
+    }
+    else
+    {
+        $epoc_sec = timelocal_posix(
+            ATLib::Std::Int->value($second),
+            $self->minute->_value,
+            $self->hour->_value,
+            $self->day->_value,
+            ATLib::Std::DateTime::Month->to_epoch($self->month)->_value,
+            ATLib::Std::DateTime::Year->to_epoch($self->year)->_value
+        );
+    }
+    $self->_set_unix_time(ATLib::Std::Int->from($epoc_sec));
+    return;
+}
+
 sub copy
 {
     my $self = shift;
@@ -380,6 +431,7 @@ sub _mutable_add_years
     {
         my $leap_seconds = ATLib::Std::DateTime::Utils->get_leap_seconds_utc($self->_second);
         $self->_year->_value(ATLib::Std::Int->value($self->_year + $years));
+        $self->_adjust_leap_last_day();
         if ($years > 0)
         {
             $self->_mutable_add_seconds($leap_seconds);
@@ -392,7 +444,11 @@ sub _mutable_add_years
     else
     {
         $self->_year->_value(ATLib::Std::Int->value($self->_year + $years));
+        $self->_adjust_leap_last_day();
     }
+
+    $self->_sync_unix_time();
+
     return $self;
 }
 
@@ -412,6 +468,7 @@ sub _mutable_add_months
     {
         my $leap_seconds = ATLib::Std::DateTime::Utils->get_leap_seconds_utc($self->_second);
         $self->_month->add($months);
+        $self->_adjust_leap_last_day();
         if ($months > 0)
         {
             $self->_mutable_add_seconds($leap_seconds);
@@ -424,7 +481,11 @@ sub _mutable_add_months
     else
     {
         $self->_month->add($months);
+        $self->_adjust_leap_last_day();
     }
+
+    $self->_sync_unix_time();
+
     return $self;
 }
 
@@ -457,6 +518,7 @@ sub _mutable_add_days
     {
         $self->_day->add($days);
     }
+    $self->_sync_unix_time();
     return $self;
 }
 
@@ -489,6 +551,7 @@ sub _mutable_add_hours
     {
         $self->_hour->add($hours);
     }
+    $self->_sync_unix_time();
     return $self;
 }
 
@@ -521,7 +584,7 @@ sub _mutable_add_minutes
     {
         $self->_minute->add($minutes);
     }
-
+    $self->_sync_unix_time();
     return $self;
 }
 
@@ -544,6 +607,7 @@ sub _mutable_add_seconds
     {
         $self->_second->add($seconds);
     }
+    $self->_sync_unix_time();
     return $self;
 }
 
@@ -731,7 +795,7 @@ ATLib::Std::DateTime - ATLib::Stdにおける標準型で日時を表すクラ�
 
 =head1 バージョン
 
-この文書は ATLib::Std version v0.2.2 について説明しています。
+この文書は ATLib::Std version v0.2.3 について説明しています。
 
 =head1 概要
 
@@ -811,7 +875,7 @@ ATLib::Std::DateTime は、ATLib::Stdで提供される L<< Mouse >> で実装�
 インスタンスがあらわす日時の秒(0〜60)を取得します。
 60は閏秒です。
 
-=head2 C<< $result = $instance->in_leap_second; >> -E<gt> C<< ATLib::Std::Int >>
+=head2 C<< $result = $instance->in_leap_second; >> -E<gt> C<< Int >>
 
 インスタンスが現在閏秒かどうかを取得します。
 

@@ -4,7 +4,7 @@ ATLib::Std - ATLib 共通型システムの [Mouse](https://metacpan.org/pod/Mou
 
 # バージョン
 
-この文書は ATLib::Std version v0.2.2 について説明しています。
+この文書は ATLib::Std version v0.2.3 について説明しています。
 
 # 概要
 
@@ -12,7 +12,7 @@ ATLib::Std - ATLib 共通型システムの [Mouse](https://metacpan.org/pod/Mou
 
 # 説明
 
-ATLib::Std は、オブジェクト指向での開発で必要となる標準的な型を [Mouse](https://metacpan.org/pod/Mouse) による実装で提供します。
+ATLib::Std は、Perlでの開発に.NET Frameworkのような共通型を [Mouse](https://metacpan.org/pod/Mouse) による実装で導入します。
 標準型は.NET Framework (C#) での開発経験からエンタープライズ開発で便利と考えられるものを、
 Perlの型に合わせて作成しております。
 

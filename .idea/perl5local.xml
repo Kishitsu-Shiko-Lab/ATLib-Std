@@ -16,6 +16,8 @@
         <entry key="$USER_HOME$/perl5/lib/perl5/x86_64-linux-thread-multi/auto/Mouse/Mouse.so" value="1654081166000" />
         <entry key="$USER_HOME$/perl5/lib/perl5/x86_64-linux-thread-multi/auto/PadWalker/PadWalker.so" value="1655032689000" />
         <entry key="$USER_HOME$/perl5/lib/perl5/x86_64-linux-thread-multi/auto/Params/Util/Util.so" value="1654081341000" />
+        <entry key="$USER_HOME$/perl5/lib/perl5/x86_64-linux-thread-multi/auto/Params/Validate/XS/XS.so" value="1683264123000" />
+        <entry key="$USER_HOME$/perl5/lib/perl5/x86_64-linux-thread-multi/auto/Term/ReadKey/ReadKey.so" value="1683264128000" />
         <entry key="$USER_HOME$/perl5/lib/perl5/x86_64-linux-thread-multi/auto/Test/LeakTrace/LeakTrace.so" value="1654081160000" />
         <entry key="/usr/lib/perl5/5.36/core_perl/auto/B/B.so" value="1670883579000" />
         <entry key="/usr/lib/perl5/5.36/core_perl/auto/Compress/Raw/Bzip2/Bzip2.so" value="1670883579000" />

@@ -3817,6 +3817,11 @@ sub _XScompiled;
 package Params::Util::PP {
 sub looks_like_number($) ;
 }
+package Params::Validate::XS {
+sub validate(\@$) ;
+sub validate_pos(\@@) ;
+sub validate_with;
+}
 package PerlIO {
 sub get_layers(*;@) ;
 }
@@ -4107,6 +4112,24 @@ sub unpack_ipv6_mreq;
 sub unpack_sockaddr_in6;
 sub unpack_sockaddr_in;
 sub unpack_sockaddr_un;
+}
+package Term::ReadKey {
+sub GetControlChars;
+sub GetSpeed;
+sub GetTermSizeGSIZE;
+sub GetTermSizeGWINSZ;
+sub GetTermSizeVIO;
+sub GetTermSizeWin32;
+sub SetControlChars;
+sub SetReadMode;
+sub SetTerminalSize;
+sub Win32PeekChar;
+sub blockoptions;
+sub pollfile;
+sub selectfile;
+sub setnodelay;
+sub termoptions;
+sub termsizeoptions;
 }
 package Test2::API {
 sub blessed($) ;

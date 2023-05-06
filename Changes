@@ -2,6 +2,11 @@ Revision history for Perl extension ATLib-Std
 
 {{$NEXT}}
 
+v0.2.3 2023-05-06T02:30:31Z
+
+    - ATLib::Std::DateTimeの日付演算において、UNIX時間が更新されないバグを修正
+    - ATLib::Std::DateTimeの日付演算において、月の最終日は不正となるバグを修正
+
 v0.2.2 2023-05-05T05:22:21Z
 
     - ATLib::Std::Any->get_hash_code()が短いスコープで同じ値になるバグを修正
