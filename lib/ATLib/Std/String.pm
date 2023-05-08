@@ -102,7 +102,7 @@ sub is_undef_or_empty
     my $class = shift;
     my $target = shift;
 
-    return 0 if !defined $target;
+    return 1 if !defined $target;
     return 1 if blessed($target) && $target->can(q{_value}) && $target eq q{};
     return 1 if $target eq q{};
     return 0;
@@ -264,7 +264,7 @@ ATLib::Std::String - ATLib::Stdでにおける標準型で文字列を表すク�
 
 =head1 バージョン
 
-この文書は ATLib::Std version v0.2.2 について説明しています。
+この文書は ATLib::Std version v0.2.5 について説明しています。
 
 =head1 概要
 

@@ -20,7 +20,7 @@ is($class->is_undef_or_empty(q{}), 1);
 my $base_instance = ATLib::Std::Any->new();
 my $string_value = q{Hello, ATLib::Std::String.};
 my $instance = undef;
-is($class->is_undef_or_empty($instance), 0);
+is($class->is_undef_or_empty($instance), 1);
 
 #5
 $instance = ATLib::Std::String->from(q{});
