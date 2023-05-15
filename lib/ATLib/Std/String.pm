@@ -251,6 +251,21 @@ sub substring
     return __PACKAGE__->from($part_of_string);
 }
 
+sub split
+{
+    my $self = shift;
+    my $separator = shift;
+
+    my @result = split($separator, $self->as_string());
+    my @strings = ();
+    for my $word (@result)
+    {
+        my $string = ATLib::Std::String->from($word);
+        $strings[scalar(@strings)] = $string;
+    }
+    return @strings;
+}
+
 __PACKAGE__->meta->make_immutable();
 no Mouse;
 1;
@@ -264,7 +279,7 @@ ATLib::Std::String - ATLib::Stdでにおける標準型で文字列を表すク�
 
 =head1 バージョン
 
-この文書は ATLib::Std version v0.2.5 について説明しています。
+この文書は ATLib::Std version v0.2.6 について説明しています。
 
 =head1 概要
 
@@ -298,6 +313,9 @@ ATLib::Std::String - ATLib::Stdでにおける標準型で文字列を表すク�
     my $string = $instance->trim();
 
     my $string = $instance->substring(0, 5); # Hello
+
+    my $string = q{Hello, world.};
+    my @words = $new_instance->split(' ');
 
 =head1 基底クラス
 
@@ -448,6 +466,10 @@ $targetが$instanceと等価であるかを判定します。
 
 文字列の指定した位置 $offset から指定した長さ $length の新しい部分文字列を返します。
 $lengthを省略した場合は、指定した位置 $offset 以降の新しい部分文字列を返します。
+
+=head2 C<< @words = $instance->split($separator); >> -E<gt> ARRAY E<lt> L<< ATLib::Std::String >> E<gt>
+
+文字列を指定した$separatorで分割してリストで返します。
 
 =head1 AUTHOR
 

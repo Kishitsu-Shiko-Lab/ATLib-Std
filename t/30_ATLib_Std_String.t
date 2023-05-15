@@ -2,7 +2,7 @@
 use strict;
 use warnings;
 use utf8;
-use Test::More tests => 68;
+use Test::More tests => 72;
 
 use ATLib::Std::Any;
 
@@ -228,6 +228,19 @@ is($string->substring(2, length(q{String value.})), q{String value.});
 
 #68
 is($string->substring(2), q{String value.  });
+
+#69
+my @words = $string->split(q{ });
+is(scalar(@words), 2);
+
+#70
+isa_ok($words[0], $class);
+
+#71
+is($words[0], q{String});
+
+#72
+is($words[1], q{value.});
 
 done_testing();
 __END__

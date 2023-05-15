@@ -2,6 +2,10 @@ Revision history for Perl extension ATLib-Std
 
 {{$NEXT}}
 
+v0.2.6 2023-05-15T22:10:28Z
+
+    - ATLib::Std::String->split($separator)メソッドを追加
+
 v0.2.5 2023-05-08T22:25:33Z
 
     - ATLib::Std::String->is_undef_or_empty()でundefが渡された際に誤判定されるバグを修正
