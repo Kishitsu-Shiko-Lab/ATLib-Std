@@ -1,6 +1,6 @@
 package ATLib::Std;
 use 5.016_001;
-use version; our $VERSION = version->declare('v0.2.6');
+use version; our $VERSION = version->declare('v0.3.0');
 use strict;
 use warnings;
 
@@ -11,11 +11,11 @@ __END__
 
 =head1 名前
 
-ATLib::Std - ATLib 共通型システムの L<< Mouse >> による実装
+ATLib::Std - ATLib 標準型システムの L<< Mouse >> による実装
 
 =head1 バージョン
 
-この文書は ATLib::Std version v0.2.6 について説明しています。
+この文書は ATLib::Std version v0.3.0 について説明しています。
 
 =head1 概要
 
@@ -24,8 +24,6 @@ ATLib::Std - ATLib 共通型システムの L<< Mouse >> による実装
 =head1 説明
 
 ATLib::Std は、Perlでの開発に.NET Frameworkのような共通型を L<< Mouse >> による実装で導入します。
-標準型は.NET Framework (C#) での開発経験からエンタープライズ開発で便利と考えられるものを、
-Perlの型に合わせて作成しております。
 
 =head1 インターフェース
 
@@ -41,7 +39,7 @@ Perlの型に合わせて作成しております。
 
 =head2 L<< ATLib::Std::Any >>
 
-共通型システムにおけるルートとなる型です。
+ATLib 標準型システムにおけるルートとなる型です。
 
 =head2 L<< ATLib::Std::Exception >>
 

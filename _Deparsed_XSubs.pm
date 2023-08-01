@@ -2869,14 +2869,6 @@ sub filter_fetch_value;
 sub filter_store_key;
 sub filter_store_value;
 }
-package Net::Libproxy {
-sub proxy_factory_free_proxies;
-sub proxy_factory_get_proxies;
-sub proxy_factory_new;
-}
-package Net::Libproxy::ProxyFactoryPtr {
-sub DESTROY;
-}
 package Net::SSLeay {
 sub AF_802() ;
 sub AF_AAL() ;

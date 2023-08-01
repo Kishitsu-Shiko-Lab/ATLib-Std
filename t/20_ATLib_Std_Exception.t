@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-use Test::More tests => 16;
+use Test::More tests => 17;
 use English qw{ -no_match_vars };
 
 use ATLib::Std::String;
@@ -16,38 +16,41 @@ my $exception_with_message = $class->new({message => $message});
 isa_ok($exception_with_message, $class);
 
 #3
+is($exception_with_message->type_name, $class);
+
+#4
 my $class_as_string = q{ATLib::Std::String};
 my $hash_code = $exception_with_message->get_hash_code();
 isa_ok($hash_code, $class_as_string);
 
-#4
+#5
 my $full_name = $exception_with_message->get_full_name();
 isa_ok($full_name, $class_as_string);
 
-#5
+#6
 is($full_name, $class);
 
-#6
+#7
 isa_ok($exception_with_message->message, $class_as_string);
 
-#7
+#8
 is($exception_with_message->message, $message);
 
-#8
+#9
 my $exception_without_message = $class->new();
 isa_ok($exception_without_message, $class);
 
-#9
+#10
 my $hash_code_without_message = $exception_without_message->get_hash_code();
 isa_ok($hash_code_without_message, $class_as_string);
 
-#10
+#11
 is($exception_with_message->equals($exception_with_message), 1);
 
-#11
+#12
 is($exception_with_message->equals($exception_without_message), 0);
 
-#>> 12 - 14
+#>> 13 - 15
 sub raise_exception
 {
     my $exception = shift;
@@ -61,10 +64,10 @@ eval
     $pass_point_1 = 1;
 };
 
-#12
+#13
 is($pass_point_1, 0);
 
-#13
+#14
 isa_ok($EVAL_ERROR, $class);
 
 my $pass_point_2 = 0;
@@ -73,12 +76,12 @@ if ($class->caught($EVAL_ERROR))
     $pass_point_2 = 1;
 }
 
-#14
+#15
 is($pass_point_2, 1);
 
 #<<
 
-#>> 15 - 16
+#>> 16 - 17
 $pass_point_1 = 0;
 $pass_point_2 = 0;
 sub raise_runtime_error
@@ -91,7 +94,7 @@ eval
     raise_runtime_error();
 };
 
-#15
+#16
 ok($EVAL_ERROR);
 
 if ($class->caught($EVAL_ERROR))
@@ -99,7 +102,7 @@ if ($class->caught($EVAL_ERROR))
     $pass_point_1 = 1;
 }
 
-#16
+#17
 is($pass_point_1, 0);
 
 #<<

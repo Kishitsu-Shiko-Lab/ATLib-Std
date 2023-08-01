@@ -98,7 +98,7 @@ use ATLib::Utils qw{as_type_of};
 for my $i (0 .. $number_of_list - 1)
 {
     is($instance->items($i), $test_int[$i]);
-    is(as_type_of($instance->type_name, $instance->items($i)), 1);
+    is(as_type_of($instance->T, $instance->items($i)), 1);
 }
 
 # Basic type of Mouse
@@ -109,7 +109,7 @@ $instance = $class->from($T, @test_int);
 for my $i (0 .. $number_of_list - 1)
 {
     is($instance->items($i), $test_int[$i]);
-    is(as_type_of($instance->type_name, $instance->items($i)), 1);
+    is(as_type_of($instance->T, $instance->items($i)), 1);
 }
 
 done_testing();

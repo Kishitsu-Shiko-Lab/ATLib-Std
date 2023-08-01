@@ -34,12 +34,12 @@ ATLib::Std::Exception::Argument - ATLib::Stdにおける標準型で引数に関
 
 =head1 バージョン
 
-この文書は ATLib::Utils version v0.2.0 について説明しています。
+この文書は ATLib::Std version v0.2.0 について説明しています。
 
 =head1 概要
 
     use ATLib::Std::String;
-    use ATLib::Std::String::Argument;
+    use ATLib::Std::Exception::Argument;
     use English qw{ -no_match_vars }; # $EVAL_ERROR
 
     sub something_throw
@@ -57,7 +57,7 @@ ATLib::Std::Exception::Argument - ATLib::Stdにおける標準型で引数に関
 
 =head1 基底クラス
 
-L<< ATLib::Std::Any >>
+L<< ATLib::Std::Any >> E<gt>- L<< ATLib::Std::Exception >>
 
 =head1 説明
 

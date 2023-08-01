@@ -17,11 +17,10 @@ isa_ok($instance, $class);
 is($instance->T1, $TKey);
 
 #4
-is($instance->T2, $TValue);
+is($instance->T2, qq{Maybe[$TValue]});
 
 #5
-my $type_name = q{Maybe[} . $instance->T2 . q{]};
-is($instance->type_name, $type_name);
+is($instance->type_name, $class);
 
 #6
 is($instance->count()->equals(0), 1);
@@ -78,7 +77,7 @@ for my $key (@{$instance->get_keys_ref()})
     }
     else
     {
-        is(as_type_of($type_name, $instance->items($key)), 1);
+        is(as_type_of($instance->T2, $instance->items($key)), 1);
     }
 }
 

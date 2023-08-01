@@ -2,6 +2,8 @@ package ATLib::Std::String;
 use Mouse;
 extends 'ATLib::Std::Any';
 
+use ATLib::Utils qw{ as_type_of };
+
 # Overloads
 use overload(
     q{""}  => \&as_string,
@@ -94,7 +96,11 @@ sub from
     my $class = shift;
     my $value = shift;
 
-    return $class->new({type_name => $class, _value => $value});
+    if (as_type_of('ATLib::Std::String', $value))
+    {
+        $value = $value->_value;
+    }
+    return $class->new({_value => $value});
 }
 
 sub is_undef_or_empty
@@ -279,13 +285,15 @@ ATLib::Std::String - ATLib::Stdでにおける標準型で文字列を表すク�
 
 =head1 バージョン
 
-この文書は ATLib::Std version v0.2.6 について説明しています。
+この文書は ATLib::Std version v0.2.7 について説明しています。
 
 =head1 概要
 
     use ATLib::Std::String;
 
     my $instance = ATLib::Std::String->from(q{Hello, ATLib::Std::String});
+    my $instance2 = ATLib::Std::String->from($instance);
+
     my $result = ATLib::Std::String->is_undef_or_empty(undef);
     my $result = ATLib::Std::String->is_undef_or_empty(q{});
 
@@ -332,6 +340,7 @@ ATLib::Std::String は、ATLib::Stdで提供される L<< Mouse >> で実装さ�
 =head2 C<< $instance = ATLib::Std::String->from($value);  >>
 
 $valueを文字列値とするインスタンスを生成します。
+$valueがATLib::Std::Stringのインスタンスの場合は、その値で新しいインスタンスを生成します。
 
 =head1 オーバーロード
 
@@ -346,45 +355,6 @@ $valueを文字列値とするインスタンスを生成します。
 =head2 演算子 C<< . >>
 
 指定された文字列を結合した新たな文字列クラスを返します。
-
-=head1 プロパティ
-
-=head2 C<< $type_name = $instance->type_name;  >>
-
-インスタンスの L<< Mouse >> における型名 C<< ATLib::Std::String >> を取得します。
-派生クラスでは L<< Mouse >> が対応する以下に示す型名を返却するように実装します。
-
-=over 4
-
-=item *
-
-Item
-
-=item *
-
-Bool
-
-=item *
-
-Int
-
-=item *
-
-Num
-
-=item *
-
-E<lt> Class Name E<gt>
-
-=item *
-
-Ref
-
-=item *
-
-Maybe[ E<lt>type_name E<gt> ]
-
-=back
 
 =head1 クラスメソッド
 

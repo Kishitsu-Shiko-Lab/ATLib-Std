@@ -4,7 +4,8 @@ use warnings;
 use Test::More tests => 10;
 
 #1
-use_ok(q{ATLib::Std::Any});
+my $class = q{ATLib::Std::Any};
+use_ok($class);
 
 #2
 my $instance = ATLib::Std::Any->new();
@@ -12,10 +13,10 @@ my $hash_code = $instance->get_hash_code();
 is($instance->get_hash_code(), $hash_code);
 
 #3
-is($instance->get_full_name(), q{ATLib::Std::Any});
+is($instance->get_full_name(), $class);
 
 #4
-is($instance->type_name, q{Item});
+is($instance->type_name, $class);
 
 #5
 is($instance->_can_equals($instance), 1);

@@ -8,6 +8,14 @@ use Digest::SHA qw{ sha512_base64 };
 has 'type_name'  => (is => q{ro}, isa => q{Str}, required => 1, default => q{Item});
 has '_hash_code' => (is => q{rw}, isa => q{Str});
 
+# Initialize
+sub BUILDARGS
+{
+    my ($class, $args_ref) = @_;
+    $args_ref->{type_name} = $class;
+    return $args_ref;
+}
+
 # Instance Methods
 sub get_hash_code
 {
@@ -84,7 +92,7 @@ ATLib::Std::Any - ATLib::Stdで提供される標準型のルートクラス
 
 =head1 バージョン
 
-この文書は ATLib::Std version v0.2.0 について説明しています。
+この文書は ATLib::Std version v0.3.0 について説明しています。
 
 =head1 概要
 
@@ -104,10 +112,6 @@ ATLib::Std::Any は、ATLib::Stdで提供される L<< Mouse >> で実装され�
 派生クラスでは L<< Mouse >> が対応する以下に示す型名を返却するように実装します。
 
 =over 4
-
-=item *
-
-Item
 
 =item *
 

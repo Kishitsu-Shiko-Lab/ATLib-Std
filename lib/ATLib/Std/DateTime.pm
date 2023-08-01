@@ -161,6 +161,8 @@ sub BUILDARGS
 {
     my ($class, $args_ref) = @_;
 
+    $class->SUPER::BUILDARGS($args_ref);
+
     if (!exists $args_ref->{is_utc}) { $args_ref->{is_utc} = ATLib::Std::Int->from(0); }
     if (!exists $args_ref->{unix_time}) { $args_ref->{unix_time} = ATLib::Std::Int->from(0); }
     if (!exists $args_ref->{_year})

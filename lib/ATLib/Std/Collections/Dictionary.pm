@@ -54,7 +54,7 @@ sub of
     my $TKey = shift;
     my $TValue = shift;
 
-    return $class->new({type_name => qq{Maybe[$TValue]}, T1 => $TKey, T2 => $TValue})
+    return $class->new({T1 => $TKey, T2 => qq{Maybe[$TValue]}})
 }
 
 sub from
@@ -179,9 +179,9 @@ sub contains_value
         return 0;
     }
 
-    if (!as_type_of($self->type_name, $value))
+    if (!as_type_of($self->T2, $value))
     {
-        my $type_name = $self->type_name;
+        my $type_name = $self->T2;
         ATLib::Std::Exception::Argument->new({
             message    => ATLib::Std::String->from(qq{Type mismatch. The \$value must be $type_name.}),
             param_name => ATLib::Std::String->from(q{$value}),
@@ -231,7 +231,7 @@ sub add
         })->throw();
     }
 
-    if (!as_type_of($self->type_name, $value))
+    if (!as_type_of($self->T2, $value))
     {
         ATLib::Std::Exception::Argument->new({
             message    => ATLib::Std::String->from(q{Type mismatch.}),
@@ -279,7 +279,7 @@ ATLib::Std::Collections::Dictionary - キーを使用して要素にアクセス
 
 =head1 バージョン
 
-この文書は ATLib::Std:: version 0.2.2 について説明しています。
+この文書は ATLib::Std:: version 0.3.0 について説明しています。
 
 =head1 概要
 
@@ -340,45 +340,6 @@ ATLib::Std::Collections::Dictionary は、ATLib::Stdで提供される L<< Mouse
 指定されたPerlのハッシュから、キーの型を$TKey、値の型を$TValueとするハッシュのインスタンスを生成します。
 
 =head1 プロパティ
-
-=head2 C<< $type_name = $instance->type_name;  >>
-
-インスタンスの L<< Mouse >> における型名 Maybe[$instance->T2] を取得します。
-ここで$T2はL<< Mouse >> が対応する以下に示す型名となります。
-
-派生クラスでは L<< Mouse >> が対応する以下に示す型名を返却するように実装します。
-
-=over 4
-
-=item *
-
-Item
-
-=item *
-
-Bool
-
-=item *
-
-Int
-
-=item *
-
-Num
-
-=item *
-
-E<lt> Class Name E<gt>
-
-=item *
-
-Ref
-
-=item *
-
-Maybe[ E<lt>type_name E<gt> ]
-
-=back
 
 =head2 C<< $element = $instance->items($key, $value); -E<gt> T2 >>
 

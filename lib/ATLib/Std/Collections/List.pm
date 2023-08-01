@@ -55,8 +55,7 @@ sub of
 {
     my $class = shift;
     my $T = shift;
-
-    return $class->new({type_name => qq{Maybe[$T]}, T => $T});
+    return $class->new({T => qq{Maybe[$T]}});
 }
 
 sub from
@@ -117,9 +116,9 @@ sub contains
         return 0;
     }
 
-    if (!as_type_of($self->type_name, $element))
+    if (!as_type_of($self->T, $element))
     {
-        my $type_name = $self->type_name;
+        my $type_name = $self->T;
         ATLib::Std::Exception::Argument->new({
             message    => ATLib::Std::String->from(qq{Type mismatch. The \$element must be $type_name.}),
             param_name => ATLib::Std::String->from(q{$element}),
@@ -160,7 +159,7 @@ sub add
     my $self = shift;
     my $element = shift;
 
-    if (!as_type_of($self->type_name, $element))
+    if (!as_type_of($self->T, $element))
     {
         ATLib::Std::Exception::Argument->new({
             message    => ATLib::Std::String->from(q{Type mismatch.}),
@@ -199,7 +198,7 @@ sub remove
         return 0;
     }
 
-    if (!as_type_of($self->type_name, $element))
+    if (!as_type_of($self->T, $element))
     {
         ATLib::Std::Exception::Argument->new({
             message    => ATLib::Std::String->from(q{Type mismatch.}),
@@ -222,7 +221,7 @@ sub remove
 
     for my $i (0 .. $self->count() - 1)
     {
-        if (equals($self->type_name, $self->_items_ref->[$i], $element))
+        if (equals($self->T, $self->_items_ref->[$i], $element))
         {
             $self->remove_at($i);
             return 1;
@@ -244,7 +243,7 @@ ATLib::Std::Collections::List - 索引を使用して要素にアクセスでき
 
 =head1 バージョン
 
-この文書は ATLib::Std version v0.2.0 について説明しています。
+この文書は ATLib::Std version v0.3.0 について説明しています。
 
 =head1 概要
 
@@ -299,45 +298,6 @@ $T型の要素を格納するリストのインスタンスを生成します。
 指定されたPerlの配列から$T型の要素を格納するリストのインスタンスを生成します。
 
 =head1 プロパティ
-
-=head2 C<< $type_name = $instance->type_name;  >>
-
-インスタンスの L<< Mouse >> における型名 Maybe[$instance->T] を取得します。
-ここで$TはL<< Mouse >> が対応する以下に示す型名となります。
-
-派生クラスでは L<< Mouse >> が対応する以下に示す型名を返却するように実装します。
-
-=over 4
-
-=item *
-
-Item
-
-=item *
-
-Bool
-
-=item *
-
-Int
-
-=item *
-
-Num
-
-=item *
-
-E<lt> Class Name E<gt>
-
-=item *
-
-Ref
-
-=item *
-
-Maybe[ E<lt>type_name E<gt> ]
-
-=back
 
 =head2 C<< $element = $instance->items($index, $element); -E<gt> T >>
 

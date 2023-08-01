@@ -19,7 +19,7 @@ isa_ok($instance, $class);
 is($instance->has_value, 0);
 
 #4
-is($instance->type_name, qq{Maybe[$T]});
+is($instance->type_name, $class);
 
 #5
 is($instance->get_full_name(), $class);

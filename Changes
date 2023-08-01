@@ -2,6 +2,16 @@ Revision history for Perl extension ATLib-Std
 
 {{$NEXT}}
 
+v0.3.0 2023-08-01T13:14:17Z
+
+    - ATLib::Std::Any->type_nameはパッケージ名(インボカント)が自動的に割り当てられるように変更
+    - 上記に伴う修正 ATLib::Std::Maybe->type_name
+    - 上記に伴う修正 ATLib::Std::Collections::List->type_name
+    - 上記に伴う修正 ATLib::Std::Collections::Dictionary->type_name
+    - 上記に伴う修正 ATLib::Std::Maybe->TはMaybe[<型>]となるように変更
+    - 上記に伴う修正 ATLib::Std::Collections::List->TはMaybe[<型>]となるように変更
+    - 上記に伴う修正 ATLib::Std::Collections::Dictionary->T2はMaybe[<値の型>]となるように変更
+
 v0.2.6 2023-05-15T22:10:28Z
 
     - ATLib::Std::String->split($separator)メソッドを追加

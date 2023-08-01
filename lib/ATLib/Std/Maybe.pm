@@ -55,7 +55,7 @@ sub of
         })->throw();
     }
 
-    return $class->new({type_name => qq{Maybe[$T]}, T => $T, _value => $value});
+    return $class->new({T => qq{Maybe[$T]}, _value => $value});
 }
 
 # Instance Methods
@@ -132,7 +132,7 @@ ATLib::Std::Maybe - 未定義値を値として持つこと許容可能にする
 
 =head1 バージョン
 
-この文書は ATLib::Std version v0.2.0 について説明しています。
+この文書は ATLib::Std version v0.3.0 について説明しています。
 
 =head1 概要
 
@@ -171,45 +171,6 @@ $valueは省略可能で、初期値を設定します。
 $Tが値型ではない場合は、例外L<< ATLib::Std::Exception::Argument >>が発生します。
 
 =head1 プロパティ
-
-=head2 C<< $type_name = $instance->type_name;  >>
-
-インスタンスの L<< Mouse >> における型名 Maybe[$T] を取得します。
-ここで$TはL<< Mouse >> が対応する以下に示す型名となります。
-
-派生クラスでは L<< Mouse >> が対応する以下に示す型名を返却するように実装します。
-
-=over 4
-
-=item *
-
-Item
-
-=item *
-
-Bool
-
-=item *
-
-Int
-
-=item *
-
-Num
-
-=item *
-
-E<lt> Class Name E<gt>
-
-=item *
-
-Ref
-
-=item *
-
-Maybe[ E<lt>type_name E<gt> ]
-
-=back
 
 =head2 C<< $value = $instance->value($value); -E<gt> Maybe[$T]  >>
 
