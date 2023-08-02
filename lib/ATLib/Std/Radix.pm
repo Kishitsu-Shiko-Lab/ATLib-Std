@@ -46,7 +46,7 @@ sub from
         })->throw();
     }
 
-    return $class->new({type_name => $class, radix => $radix, value => $value});
+    return $class->new({radix => $radix, value => $value});
 }
 
 # Instance Methods
@@ -218,7 +218,7 @@ ATLib::Std::Radix - ATLib::Stdにおける基数クラス
 
 =head1 バージョン
 
-この文書は ATLib::Std version v0.2.2 について説明しています。
+この文書は ATLib::Std version v0.3.1 について説明しています。
 
 =head1 概要
 

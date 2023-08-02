@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-use Test::More tests => 49;
+use Test::More tests => 50;
 
 use ATLib::Std::DateTime::Year;
 use ATLib::Std::DateTime::Month;
@@ -44,53 +44,56 @@ my $instance = $class->from($second_ref, $micro_second);
 isa_ok($instance, $class);
 
 #3
-is($instance->year, $year);
+is($instance->type_name, $class);
 
 #4
-is($instance->month, $month);
+is($instance->year, $year);
 
 #5
-is($instance->day, $day);
+is($instance->month, $month);
 
 #6
-is($instance->hour, $hour);
+is($instance->day, $day);
 
 #7
-is($instance->minute, $minute);
+is($instance->hour, $hour);
 
 #8
-is($instance->second, $second);
+is($instance->minute, $minute);
 
 #9
-is($instance->micro_second, $micro_second);
+is($instance->second, $second);
 
 #10
+is($instance->micro_second, $micro_second);
+
+#11
 $micro_second += 1; #999,991 (2023/12/31 23:59:59.999991)
 my $carry = $instance->inc();
 is($carry, 0);
 
-#11
+#12
 is($instance->year, $year);
 
-#12
+#13
 is($instance->month, $month);
 
-#13
+#14
 is($instance->day, $day);
 
-#14
+#15
 is($instance->hour, $hour);
 
-#15
+#16
 is($instance->minute, $minute);
 
-#16
+#17
 is($instance->second, $second);
 
-#17
+#18
 is($instance->micro_second, $micro_second);
 
-#18
+#19
 $micro_second += 9; #1,000,000 -> 0 (2024/01/01 00:00:00.000000)
 $micro_second %= 1_000_000;
 $second += 1;       #60 -> 0
@@ -107,28 +110,28 @@ $year += 1;         #2024
 $carry = $instance->add(9);
 is($carry, 1);
 
-#19
+#20
 is($instance->year, $year);
 
-#20
+#21
 is($instance->month, $month);
 
-#21
+#22
 is($instance->day, $day);
 
-#22
+#23
 is($instance->hour, $hour);
 
-#23
+#24
 is($instance->minute, $minute);
 
-#24
+#25
 is($instance->second, $second);
 
-#25
+#26
 is($instance->micro_second, $micro_second);
 
-#26 (2024/01/01 00:00:00.000000)
+#27 (2024/01/01 00:00:00.000000)
 $micro_second -= 1; #-1 -> 999,999 (2023/12/31 23:59:59.999999)
 $micro_second += 1_000_000;
 $second -= 1;       #-1 -> 59
@@ -145,56 +148,56 @@ $year -= 1;         #2023
 $carry = $instance->dec();
 is($carry, -1);
 
-#27
+#28
 is($instance->year, $year);
 
-#28
+#29
 is($instance->month, $month);
 
-#29
+#30
 is($instance->day, $day);
 
-#30
+#31
 is($instance->hour, $hour);
 
-#31
+#32
 is($instance->minute, $minute);
 
-#32
+#33
 is($instance->second, $second);
 
-#33
+#34
 is($instance->micro_second, $micro_second);
 
-#34 (2023/12/31 23:59:59.999999)
+#35 (2023/12/31 23:59:59.999999)
 $micro_second -= 1_000_000; #-1 -> 999,999 (2023/12/31 23:59:58.999999)
 $micro_second += 1_000_000;
 $second -= 1;       #58
 $carry = $instance->subtract(1_000_000);
 is($carry, -1);
 
-#35
+#36
 is($instance->year, $year);
 
-#36
+#37
 is($instance->month, $month);
 
-#37
+#38
 is($instance->day, $day);
 
-#38
+#39
 is($instance->hour, $hour);
 
-#39
+#40
 is($instance->minute, $minute);
 
-#40
+#41
 is($instance->second, $second);
 
-#41
+#42
 is($instance->micro_second, $micro_second);
 
-#42 (2023/12/31 23:59:58.999999)
+#43 (2023/12/31 23:59:58.999999)
 $micro_second += 2_000_000; #2999999 -> 999,999 (2024/01/01 00:00:00.999999)
 $micro_second %= 1_000_000;
 $second += 2;       #60->0
@@ -211,25 +214,25 @@ $year += 1;         #2024
 $carry = $instance->add(2_000_000);
 is($carry, 2);
 
-#43
+#44
 is($instance->year, $year);
 
-#44
+#45
 is($instance->month, $month);
 
-#45
+#46
 is($instance->day, $day);
 
-#46
+#47
 is($instance->hour, $hour);
 
-#47
+#48
 is($instance->minute, $minute);
 
-#48
+#49
 is($instance->second, $second);
 
-#49
+#50
 is($instance->micro_second, $micro_second);
 
 done_testing();

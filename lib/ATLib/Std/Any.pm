@@ -92,7 +92,7 @@ ATLib::Std::Any - ATLib::Stdで提供される標準型のルートクラス
 
 =head1 バージョン
 
-この文書は ATLib::Std version v0.3.0 について説明しています。
+この文書は ATLib::Std version v0.3.1 について説明しています。
 
 =head1 概要
 

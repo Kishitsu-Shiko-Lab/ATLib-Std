@@ -61,7 +61,6 @@ sub from
     }
 
     return $class->new({
-        type_name => $class,
         _year_ref => $year_ref,
         radix     => 12,
         value     => $epoch_month,
@@ -147,7 +146,7 @@ ATLib::Std::DateTime::Month - ATLib::Std::DateTimeにおける月部分を管理
 
 =head1 バージョン
 
-この文書は ATLib::Std version v0.2.2 について説明しています。
+この文書は ATLib::Std version v0.3.1 について説明しています。
 
 =head1 概要
 

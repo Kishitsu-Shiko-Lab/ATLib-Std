@@ -795,7 +795,7 @@ ATLib::Std::DateTime - ATLib::Stdにおける標準型で日時を表すクラ�
 
 =head1 バージョン
 
-この文書は ATLib::Std version v0.2.4 について説明しています。
+この文書は ATLib::Std version v0.3.1 について説明しています。
 
 =head1 概要
 

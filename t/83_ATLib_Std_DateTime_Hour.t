@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-use Test::More tests => 41;
+use Test::More tests => 42;
 
 use ATLib::Std::DateTime::Year;
 use ATLib::Std::DateTime::Month;
@@ -29,109 +29,112 @@ my $instance = $class->from($day_ref, $hour);
 isa_ok($instance, $class);
 
 #3
-is($instance->year, $year);
+is($instance->type_name, $class);
 
 #4
-is($instance->month, $month);
+is($instance->year, $year);
 
 #5
-is($instance->day, $day);
+is($instance->month, $month);
 
 #6
-is($instance->hour, $hour);
+is($instance->day, $day);
 
 #7
+is($instance->hour, $hour);
+
+#8
 $hour += 1; #8 (2023/01/04)
 my $carry = $instance->inc();
 is($carry, 0);
 
-#8
+#9
 is($instance->year, $year);
 
-#9
+#10
 is($instance->month, $month);
 
-#10
+#11
 is($instance->day, $day);
 
-#11
+#12
 is($instance->hour, $hour);
 
-#12
+#13
 $hour -= 1; #7 (2023/01/04)
 $carry = $instance->dec();
 is($carry, 0);
 
-#13
+#14
 is($instance->year, $year);
 
-#14
+#15
 is($instance->month, $month);
 
-#15
+#16
 is($instance->day, $day);
 
-#16
+#17
 is($instance->hour, $hour);
 
-#17
+#18
 $hour += 17; #24 -> 0 (2023/01/05)
 $hour %= 24;
 $day += 1;
 $carry = $instance->add(17);
 is($carry, 1);
 
-#18
+#19
 is($instance->year, $year);
 
-#19
+#20
 is($instance->month, $month);
 
-#20
+#21
 is($instance->day, $day);
 
-#21
+#22
 is($instance->hour, $hour);
 
-#22
+#23
 $hour -= 1; #-1 -> 23 (2023/01/04)
 $hour += 24;
 $day -= 1;
 $carry = $instance->dec();
 is($carry, -1);
 
-#23
+#24
 is($instance->year, $year);
 
-#24
+#25
 is($instance->month, $month);
 
-#25
+#26
 is($instance->day, $day);
 
-#26
+#27
 is($instance->hour, $hour);
 
-#27
+#28
 $hour += 1; #24 -> 0 (2023/01/05)
 $hour %= 24;
 $day += 1;
 $carry = $instance->inc();
 is($carry, 1);
 
-#28
+#29
 is($instance->year, $year);
 
-#29
+#30
 is($instance->month, $month);
 
-#30
+#31
 is($instance->day, $day);
 
-#31
+#32
 is($instance->hour, $hour);
 
-#32
+#33
 $hour -= 24 * 5; #-120 -> 0 (2022/12/31)
 $hour %= 24;
 $day -= 5;
@@ -142,19 +145,19 @@ $year -= 1;
 $carry = $instance->subtract(24 * 5);
 is($carry, -5);
 
-#33
+#34
 is($instance->year, $year);
 
-#34
+#35
 is($instance->month, $month);
 
-#35
+#36
 is($instance->day, $day);
 
-#36
+#37
 is($instance->hour, $hour);
 
-#37
+#38
 $hour += 24 * 6; #144 -> 0 (2023/01/06)
 $hour %= 24;
 $day += 6;
@@ -165,16 +168,16 @@ $year += 1;
 $carry = $instance->add(24 * 6);
 is($carry, 6);
 
-#38
+#39
 is($instance->year, $year);
 
-#39
+#40
 is($instance->month, $month);
 
-#40
+#41
 is($instance->day, $day);
 
-#41
+#42
 is($instance->hour, $hour);
 
 done_testing();

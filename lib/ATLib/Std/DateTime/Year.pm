@@ -29,10 +29,7 @@ sub from
     my $class = shift;
     my $epoch_year = shift;
 
-    return $class->new({
-        type_name => $class,
-        _value => ATLib::Std::Int->value($epoch_year)
-    });
+    return $class->new({_value => ATLib::Std::Int->value($epoch_year)});
 }
 
 sub to_epoch
@@ -68,7 +65,7 @@ ATLib::Std::DateTime::Year - ATLib::Std::DateTimeにおける年部分を管理�
 
 =head1 バージョン
 
-この文書は ATLib::Std version v0.2.2 について説明しています。
+この文書は ATLib::Std version v0.3.1 について説明しています。
 
 =head1 概要
 

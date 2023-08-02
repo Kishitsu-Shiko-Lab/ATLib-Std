@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-use Test::More tests => 4;
+use Test::More tests => 5;
 
 use ATLib::Std::String;
 
@@ -16,9 +16,12 @@ my $instance = ATLib::Std::Exception::Argument->new({message => $message, param_
 isa_ok($instance, $class);
 
 #3
-is($instance->message, $message);
+is($instance->type_name, $class);
 
 #4
+is($instance->message, $message);
+
+#5
 is($instance->param_name, $param_name);
 
 done_testing();

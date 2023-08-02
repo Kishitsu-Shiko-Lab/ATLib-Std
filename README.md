@@ -4,7 +4,7 @@ ATLib::Std - ATLib 標準型システムの [Mouse](https://metacpan.org/pod/Mou
 
 # バージョン
 
-この文書は ATLib::Std version v0.3.0 について説明しています。
+この文書は ATLib::Std version v0.3.1 について説明しています。
 
 # 概要
 

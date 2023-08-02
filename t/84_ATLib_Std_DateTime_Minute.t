@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-use Test::More tests => 37;
+use Test::More tests => 38;
 
 use ATLib::Std::DateTime::Year;
 use ATLib::Std::DateTime::Month;
@@ -34,105 +34,108 @@ my $instance = $class->from($hour_ref, $minute);
 isa_ok($instance, $class);
 
 #3
-is($instance->year, $year);
+is($instance->type_name, $class);
 
 #4
-is($instance->month, $month);
+is($instance->year, $year);
 
 #5
-is($instance->day, $day);
+is($instance->month, $month);
 
 #6
-is($instance->hour, $hour);
+is($instance->day, $day);
 
 #7
-is($instance->minute, $minute);
+is($instance->hour, $hour);
 
 #8
+is($instance->minute, $minute);
+
+#9
 $minute += 1; #12 (2023/01/23 10:12)
 my $carry = $instance->inc();
 is($carry, 0);
 
-#9
+#10
 is($instance->year, $year);
 
-#10
+#11
 is($instance->month, $month);
 
-#11
+#12
 is($instance->day, $day);
 
-#12
+#13
 is($instance->hour, $hour);
 
-#13
+#14
 is($instance->minute, $minute);
 
-#14
+#15
 $minute -= 1; #12 (2023/01/23 10:11)
 $carry = $instance->dec();
 is($carry, 0);
 
-#15
+#16
 is($instance->year, $year);
 
-#16
+#17
 is($instance->month, $month);
 
-#17
+#18
 is($instance->day, $day);
 
-#18
+#19
 is($instance->hour, $hour);
 
-#19
+#20
 is($instance->minute, $minute);
 
-#20
+#21
 $minute += 50; #61 -> 1 (2023/01/23 11:01)
 $minute %= 60;
 $hour += 1;
 $carry = $instance->add(50);
 is($carry, 1);
 
-#21
+#22
 is($instance->year, $year);
 
-#22
+#23
 is($instance->month, $month);
 
-#23
+#24
 is($instance->day, $day);
 
-#24
+#25
 is($instance->hour, $hour);
 
-#25
+#26
 is($instance->minute, $minute);
 
-#26
+#27
 $minute -= 120; #-59 -> 1 (2023/01/23 09:01)
 $minute += 60 * 2;
 $hour -= 2;
 $carry = $instance->subtract(120);
 is($carry, -2);
 
-#27
+#28
 is($instance->year, $year);
 
-#28
+#29
 is($instance->month, $month);
 
-#29
+#30
 is($instance->day, $day);
 
-#30
+#31
 is($instance->hour, $hour);
 
-#31
+#32
 is($instance->minute, $minute);
 
-#32
+#33
 $minute -= 1; #0 (2023/01/23 09:00)
 $day -= 23;
 $day += 31;
@@ -142,19 +145,19 @@ $year -= 1; # (2022/12/31 09:00)
 $carry = $instance->subtract(1 + (60 * 24 * 23));
 is($carry, -(24 * 23));
 
-#33
+#34
 is($instance->year, $year);
 
-#34
+#35
 is($instance->month, $month);
 
-#35
+#36
 is($instance->day, $day);
 
-#36
+#37
 is($instance->hour, $hour);
 
-#37
+#38
 is($instance->minute, $minute);
 
 done_testing();

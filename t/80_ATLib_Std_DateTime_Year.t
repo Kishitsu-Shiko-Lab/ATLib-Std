@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-use Test::More tests => 11;
+use Test::More tests => 12;
 
 #1
 my $class = q{ATLib::Std::DateTime::Year};
@@ -16,30 +16,33 @@ my $instance = $class->from($class->to_epoch($year));
 isa_ok($instance, $class);
 
 #4
-is($instance->year, $year);
+is($instance->type_name, $class);
 
 #5
-is($class->is_leap_year($year), 0);
+is($instance->year, $year);
 
 #6
-is($instance->number_of_days, 365);
+is($class->is_leap_year($year), 0);
 
 #7
+is($instance->number_of_days, 365);
+
+#8
 $year += 2;
 $instance = $instance + 2;
 is($instance->year, $year);
 
-#8
+#9
 is($class->is_leap_year($year), 1);
 
-#9
+#10
 is($instance->number_of_days, 366);
 
-#10
+#11
 $year = 400;
 is($class->is_leap_year($year), 1);
 
-#11
+#12
 $year = 2200;
 is($class->is_leap_year($year), 0);
 

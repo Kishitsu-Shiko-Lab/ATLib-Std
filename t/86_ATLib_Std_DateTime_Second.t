@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-use Test::More tests => 95;
+use Test::More tests => 96;
 
 use ATLib::Std::DateTime::Year;
 use ATLib::Std::DateTime::Month;
@@ -39,135 +39,138 @@ my $instance = $class->from($minute_ref, $second);
 isa_ok($instance, $class);
 
 #3
-is($instance->year, $year);
+is($instance->type_name, $class);
 
 #4
-is($instance->month, $month);
+is($instance->year, $year);
 
 #5
-is($instance->day, $day);
+is($instance->month, $month);
 
 #6
-is($instance->hour, $hour);
+is($instance->day, $day);
 
 #7
-is($instance->minute, $minute);
+is($instance->hour, $hour);
 
 #8
-is($instance->second, $second);
+is($instance->minute, $minute);
 
 #9
-is($instance->max_second, 59);
+is($instance->second, $second);
 
 #10
+is($instance->max_second, 59);
+
+#11
 $second += 1; #59 (2023/03/01 07:28:59)
 my $carry = $instance->inc();
 is($carry, 0);
 
-#11
+#12
 is($instance->max_second, 59);
 
-#12
+#13
 is($instance->year, $year);
 
-#13
+#14
 is($instance->month, $month);
 
-#14
+#15
 is($instance->day, $day);
 
-#15
+#16
 is($instance->hour, $hour);
 
-#16
+#17
 is($instance->minute, $minute);
 
-#17
+#18
 is($instance->second, $second);
 
-#18
+#19
 $second -= 1; #58 (2023/03/01 07:28:58)
 $carry = $instance->dec();
 is($carry, 0);
 
-#19
+#20
 is($instance->max_second, 59);
 
-#20
+#21
 is($instance->year, $year);
 
-#21
+#22
 is($instance->month, $month);
 
-#22
+#23
 is($instance->day, $day);
 
-#23
+#24
 is($instance->hour, $hour);
 
-#24
+#25
 is($instance->minute, $minute);
 
-#25
+#26
 is($instance->second, $second);
 
-#26
+#27
 $second += 3; #61 -> 1 (2023/03/01 07:29:01)
 $second %= 60;
 $minute += 1;
 $carry = $instance->add(3);
 is($carry, 1);
 
-#27
+#28
 is($instance->max_second, 59);
 
-#28
+#29
 is($instance->year, $year);
 
-#29
+#30
 is($instance->month, $month);
 
-#30
+#31
 is($instance->day, $day);
 
-#31
+#32
 is($instance->hour, $hour);
 
-#32
+#33
 is($instance->minute, $minute);
 
-#33
+#34
 is($instance->second, $second);
 
-#34
+#35
 $second -= 120; #-119 -> 1 (2023/03/01 07:27:01)
 $second += 60 * 2;
 $minute -= 2;
 $carry = $instance->subtract(120);
 is($carry, -2);
 
-#35
+#36
 is($instance->max_second, 59);
 
-#36
+#37
 is($instance->year, $year);
 
-#37
+#38
 is($instance->month, $month);
 
-#38
+#39
 is($instance->day, $day);
 
-#39
+#40
 is($instance->hour, $hour);
 
-#40
+#41
 is($instance->minute, $minute);
 
-#41
+#42
 is($instance->second, $second);
 
-#42
+#43
 # Init (2023/01/02 03:04:05)
 $year = 2023;
 $year_ref = $class_year->from($class_year->to_epoch($year));
@@ -183,25 +186,25 @@ $second = 5;
 $instance = $class->from($minute_ref, $second);
 is($instance->max_second, 59);
 
-#43
+#44
 is($instance->year, $year);
 
-#44
+#45
 is($instance->month, $month);
 
-#45
+#46
 is($instance->day, $day);
 
-#46
+#47
 is($instance->hour, $hour);
 
-#47
+#48
 is($instance->minute, $minute);
 
-#48
+#49
 is($instance->second, $second);
 
-#49
+#50
 # Init (2023/01/02 03:04:05)
 $second -= 5; # 0 (2023/01/02 03:04:00) (Carry: 0)
 $second -= 60 * 4; # -240 (2023/01/02 03:00:00) (Carry: -4)
@@ -220,25 +223,25 @@ $year -= 1;
 $carry = $instance->subtract(5 + (60 * 4) + (60 * 60 * 3) + (60 * 60 * 24 * 2));
 is($carry, -(4 + 60 * 3 + 60 * 24 * 2));
 
-#50
+#51
 is($instance->max_second, 59);
 
-#51
+#52
 is($instance->year, $year);
 
-#52
+#53
 is($instance->month, $month);
 
-#53
+#54
 is($instance->day, $day);
 
-#54
+#55
 is($instance->hour, $hour);
 
-#55
+#56
 is($instance->minute, $minute);
 
-#56
+#57
 is($instance->second, $second);
 
 # Test for leap seconds
@@ -255,54 +258,54 @@ $minute = 59;
 $minute_ref = $class_minute->from($hour_ref, $minute);
 $second = 0;
 $instance = $class->from_utc($minute_ref, $second);
-#57
+#58
 is($instance->year, $year);
 
-#58
+#59
 is($instance->month, $month);
 
-#59
+#60
 is($instance->day, $day);
 
-#60
+#61
 is($instance->hour, $hour);
 
-#61
+#62
 is($instance->minute, $minute);
 
-#62
+#63
 is($instance->second, $second);
 
-#63
+#64
 is($instance->max_second, 60);
 
 # 2015/06/30 23:59:00 (UTC) - 1sec  => 2015/06/30 23:58:59 (UTC)
 $second -= 1;
 $second += 60; #59 (Radix: 61 -> 60)
 $minute -= 1;  #58
-#64
+#65
 $carry = $instance->dec_utc();
 is($carry, -1);
 
-#65
+#66
 is($instance->year, $year);
 
-#66
+#67
 is($instance->month, $month);
 
-#67
+#68
 is($instance->day, $day);
 
-#68
+#69
 is($instance->hour, $hour);
 
-#69
+#70
 is($instance->minute, $minute);
 
-#70
+#71
 is($instance->second, $second);
 
-#71
+#72
 is($instance->max_second, 59);
 
 # 2015/06/30 23:58:59 (UTC) + 61sec => 2015/06/30 23:59:60 (UTC)
@@ -311,28 +314,28 @@ $second %= 60;
 $second += 60; #120 -> 60 (Radix: 60 -> 61)
 $minute += 1;  #59
 $carry = $instance->add_utc(61);
-#72
+#73
 is($carry, 1);
 
-#73
+#74
 is($instance->year, $year);
 
-#74
+#75
 is($instance->month, $month);
 
-#75
+#76
 is($instance->day, $day);
 
-#76
+#77
 is($instance->hour, $hour);
 
-#77
+#78
 is($instance->minute, $minute);
 
-#78
+#79
 is($instance->second, $second);
 
-#79
+#80
 is($instance->max_second, 60);
 
 # 2015/06/30 23:59:60 (UTC) + 1sec => 2015/07/01 00:00:00 (UTC)
@@ -346,28 +349,28 @@ $day += 1;
 $day %= 30;    #31 -> 1
 $month += 1;   #7
 $carry = $instance->inc_utc();
-#80
+#81
 is($carry, 1);
 
-#81
+#82
 is($instance->year, $year);
 
-#82
+#83
 is($instance->month, $month);
 
-#83
+#84
 is($instance->day, $day);
 
-#84
+#85
 is($instance->hour, $hour);
 
-#85
+#86
 is($instance->minute, $minute);
 
-#86
+#87
 is($instance->second, $second);
 
-#87
+#88
 is($instance->max_second, 59);
 
 # 2015/07/01 00:00:00 (UTC) - 60sec => 2015/06/30 23:59:01 (UTC)
@@ -381,28 +384,28 @@ $day -= 1;
 $day += 30;    #30
 $month -= 1;
 $carry = $instance->subtract_utc(60);
-#88
+#89
 is($carry, -1);
 
-#89
+#90
 is($instance->year, $year);
 
-#90
+#91
 is($instance->month, $month);
 
-#91
+#92
 is($instance->day, $day);
 
-#92
+#93
 is($instance->hour, $hour);
 
-#93
+#94
 is($instance->minute, $minute);
 
-#94
+#95
 is($instance->second, $second);
 
-#95
+#96
 is($instance->max_second, 60);
 
 done_testing();

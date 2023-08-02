@@ -50,7 +50,6 @@ sub from
     }
 
     return $class->new({
-        type_name  => $class,
         _month_ref => $month_ref,
         radix      => $month_ref->last_day->_value,
         value      => $epoch_day,
@@ -180,7 +179,7 @@ ATLib::Std::DateTime::Day - ATLib::Std::DateTimeにおける日部分を管理�
 
 =head1 バージョン
 
-この文書は ATLib::Std version v0.2.2 について説明しています。
+この文書は ATLib::Std version v0.3.1 について説明しています。
 
 =head1 概要
 

@@ -94,7 +94,6 @@ sub from
     }
 
     return $class->new({
-        type_name   => $class,
         _second_ref => $second_ref,
         radix       => 1_000_000,
         value       => $micro_second,
@@ -204,7 +203,7 @@ ATLib::Std::DateTime::Second - ATLib::Std::DateTimeにおけるマイクロ秒�
 
 =head1 バージョン
 
-この文書は ATLib::Std version v0.2.2 について説明しています。
+この文書は ATLib::Std version v0.3.1 について説明しています。
 
 =head1 概要
 

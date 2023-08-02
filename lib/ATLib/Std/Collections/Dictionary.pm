@@ -279,7 +279,7 @@ ATLib::Std::Collections::Dictionary - キーを使用して要素にアクセス
 
 =head1 バージョン
 
-この文書は ATLib::Std:: version 0.3.0 について説明しています。
+この文書は ATLib::Std:: version 0.3.1 について説明しています。
 
 =head1 概要
 

@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-use Test::More tests => 224;
+use Test::More tests => 225;
 
 #1
 my $class = q{ATLib::Std::DateTime};
@@ -15,12 +15,15 @@ my ($sec, $min, $hour, $day, $month, $year, $days_of_week, $days_of_year) = loca
 isa_ok($instance, $class);
 
 #3
-is($instance->is_utc, 0);
+is($instance->type_name, $class);
 
 #4
-is($instance->unix_time, $epoch_sec);
+is($instance->is_utc, 0);
 
 #5
+is($instance->unix_time, $epoch_sec);
+
+#6
 {
     my $i = 0;
     while ($instance->micro_second != $micro_sec)
@@ -34,46 +37,46 @@ is($instance->unix_time, $epoch_sec);
 }
 is($instance->micro_second, $micro_sec);
 
-#6
+#7
 is($instance->year, $year + 1900);
 
-#7
+#8
 is($instance->month, $month + 1);
 
-#8
+#9
 is($instance->day, $day);
 
-#9
+#10
 is($instance->hour, $hour);
 
-#10
+#11
 is($instance->minute, $min);
 
-#11
+#12
 is($instance->second, $sec);
 
-#12
+#13
 is($instance->milli_second, int($micro_sec / 1000));
 
-#13
+#14
 is($instance->day_of_week, $days_of_week);
 
-#14
+#15
 is($instance->days_of_year, $days_of_year + 1);
 
-#15
+#16
 ($epoch_sec, $micro_sec) = gettimeofday();
 $instance = $class->now_utc();
 ($sec, $min, $hour, $day, $month, $year, $days_of_week, $days_of_year) = gmtime($epoch_sec);
 isa_ok($instance, $class);
 
-#16
+#17
 is($instance->is_utc, 1);
 
-#17
+#18
 is($instance->unix_time, $epoch_sec);
 
-#18
+#19
 {
     my $i = 0;
     while ($instance->micro_second != $micro_sec)
@@ -87,712 +90,712 @@ is($instance->unix_time, $epoch_sec);
 }
 is($instance->micro_second, $micro_sec);
 
-#19
+#20
 is($instance->year, $year + 1900);
 
-#20
+#21
 is($instance->month, $month + 1);
 
-#21
+#22
 is($instance->day, $day);
 
-#22
+#23
 is($instance->hour, $hour);
 
-#23
+#24
 is($instance->minute, $min);
 
-#24
+#25
 is($instance->second, $sec);
 
-#25
+#26
 is($instance->milli_second, int($micro_sec / 1000));
 
-#26
+#27
 is($instance->day_of_week, $days_of_week);
 
-#27
+#28
 is($instance->days_of_year, $days_of_year + 1);
 
 # Test for leap year
 # Can divide 4 then leap year.
-#28
+#29
 my $leap_year = 2004;
 is($class->is_leap_year($leap_year), 1);
 
-#29
+#30
 #2004/02/28 23:59:59
 $instance = $class->from($leap_year, 2, 28, 23, 59, 59);
 isa_ok($instance, $class);
 
-#30
+#31
 is($instance->is_utc, 0);
 
-#31
+#32
 is($instance->year, $leap_year);
 
-#32
+#33
 is($instance->month, 2);
 
-#33
+#34
 is($instance->day, 28);
 
-#34
+#35
 is($instance->hour, 23);
 
-#35
+#36
 is($instance->minute, 59);
 
-#36
+#37
 is($instance->second, 59);
 
-#37
+#38
 is($instance->milli_second, 0);
 
-#38
+#39
 is($instance->micro_second, 0);
 
-#39
+#40
 #2004/02/29 23:59:59 <- 2004/02/28 23:59:59
 $epoch_sec = $instance->unix_time;
 my $instance_new = $instance->add_days(1);
 $epoch_sec += 60 * 60 * 24;
 isa_ok($instance_new, $class);
 
-#40
+#41
 is($instance_new->unix_time, $epoch_sec);
 
-#41
+#42
 is($instance_new->year, $leap_year);
 
-#42
+#43
 is($instance_new->month, 2);
 
-#43
+#44
 is($instance_new->day, 29);
 
-#44
+#45
 is($instance_new->hour, 23);
 
-#45
+#46
 is($instance_new->minute, 59);
 
-#46
+#47
 is($instance_new->second, 59);
 
-#47
+#48
 is($instance_new->milli_second, 0);
 
-#48
+#49
 is($instance_new->micro_second, 0);
 
-#49
+#50
 #2004/02/29 00:59:59 <- 2004/02/28 23:59:59
 $epoch_sec = $instance->unix_time;
 $instance_new = $instance->add_hours(1);
 $epoch_sec += 60 * 60;
 isa_ok($instance_new, $class);
 
-#50
+#51
 is($instance_new->unix_time, $epoch_sec);
 
-#51
+#52
 is($instance_new->year, $leap_year);
 
-#52
+#53
 is($instance_new->month, 2);
 
-#53
+#54
 is($instance_new->day, 29);
 
-#54
+#55
 is($instance_new->hour, 0);
 
-#55
+#56
 is($instance_new->minute, 59);
 
-#56
+#57
 is($instance_new->second, 59);
 
-#57
+#58
 is($instance_new->milli_second, 0);
 
-#58
+#59
 is($instance_new->micro_second, 0);
 
-#59
+#60
 $epoch_sec = $instance->unix_time;
 $instance_new = $instance->add_minutes(1);
 $epoch_sec += 60;
 isa_ok($instance_new, $class);
 
-#60
+#61
 is($instance_new->unix_time, $epoch_sec);
 
-#61
+#62
 is($instance_new->year, $leap_year);
 
-#62
+#63
 is($instance_new->month, 2);
 
-#63
+#64
 is($instance_new->day, 29);
 
-#64
+#65
 is($instance_new->hour, 0);
 
-#65
+#66
 is($instance_new->minute, 0);
 
-#66
+#67
 is($instance_new->second, 59);
 
-#67
+#68
 is($instance_new->milli_second, 0);
 
-#68
+#69
 is($instance_new->micro_second, 0);
 
-#69
+#70
 #2004/02/29 00:00:00 <- 2004/02/28 23:59:59
 $epoch_sec = $instance->unix_time;
 $instance_new = $instance->add_seconds(1);
 $epoch_sec += 1;
 isa_ok($instance_new, $class);
 
-#70
+#71
 is($instance_new->unix_time, $epoch_sec);
 
-#71
+#72
 is($instance_new->year, $leap_year);
 
-#72
+#73
 is($instance_new->month, 2);
 
-#73
+#74
 is($instance_new->day, 29);
 
-#74
+#75
 is($instance_new->hour, 0);
 
-#75
+#76
 is($instance_new->minute, 0);
 
-#76
+#77
 is($instance_new->second, 0);
 
-#77
+#78
 is($instance_new->milli_second, 0);
 
-#78
+#79
 is($instance_new->micro_second, 0);
 
-#79
+#80
 $epoch_sec = $instance->unix_time;
 $instance_new = $instance->add_milli_seconds(1000);
 isa_ok($instance_new, $class);
 
-#80
+#81
 is($instance_new->unix_time, $epoch_sec);
 
-#81
+#82
 is($instance_new->year, $leap_year);
 
-#82
+#83
 is($instance_new->month, 2);
 
-#83
+#84
 is($instance_new->day, 29);
 
-#84
+#85
 is($instance_new->hour, 0);
 
-#85
+#86
 is($instance_new->minute, 0);
 
-#86
+#87
 is($instance_new->second, 0);
 
-#87
+#88
 is($instance_new->milli_second, 0);
 
-#88
+#89
 is($instance_new->micro_second, 0);
 
-#89
+#90
 $epoch_sec = $instance->unix_time;
 $instance_new = $instance->add_micro_seconds(1000000);
 isa_ok($instance_new, $class);
 
-#90
+#91
 is($instance_new->unix_time, $epoch_sec);
 
-#91
+#92
 is($instance_new->year, $leap_year);
 
-#92
+#93
 is($instance_new->month, 2);
 
-#93
+#94
 is($instance_new->day, 29);
 
-#94
+#95
 is($instance_new->hour, 0);
 
-#95
+#96
 is($instance_new->minute, 0);
 
-#96
+#97
 is($instance_new->second, 0);
 
-#97
+#98
 is($instance_new->milli_second, 0);
 
-#98
+#99
 is($instance_new->micro_second, 0);
 
-#99
+#100
 $instance = $instance_new->copy()->add_days(1);
 is($instance->year, $leap_year);
 
-#100
+#101
 is($instance->month, 3);
 
-#101
+#102
 is($instance->day, 1);
 
-#102
+#103
 is($instance->hour, 0);
 
-#103
+#104
 is($instance->minute, 0);
 
-#104
+#105
 is($instance->second, 0);
 
-#105
+#106
 is($instance->milli_second, 0);
 
-#106
+#107
 is($instance->micro_second, 0);
 
-#107
+#108
 $epoch_sec = $instance->unix_time;
 $instance_new = $instance->add_days(-1);
 $epoch_sec -= 60 * 60 * 24;
 isa_ok($instance_new, $class);
 
-#108
+#109
 is($instance_new->unix_time, $epoch_sec);
 
-#109
+#110
 is($instance_new->year, $leap_year);
 
-#110
+#111
 is($instance_new->month, 2);
 
-#111
+#112
 is($instance_new->day, 29);
 
-#112
+#113
 is($instance_new->hour, 0);
 
-#113
+#114
 is($instance_new->minute, 0);
 
-#114
+#115
 is($instance_new->second, 0);
 
-#115
+#116
 is($instance_new->milli_second, 0);
 
-#116
+#117
 is($instance_new->micro_second, 0);
 
-#117
+#118
 $epoch_sec = $instance->unix_time;
 $instance_new = $instance->add_hours(-1);
 $epoch_sec -= 60 * 60;
 isa_ok($instance_new, $class);
 
-#118
+#119
 is($instance_new->unix_time, $epoch_sec);
 
-#119
+#120
 is($instance_new->year, $leap_year);
 
-#120
+#121
 is($instance_new->month, 2);
 
-#121
+#122
 is($instance_new->day, 29);
 
-#122
+#123
 is($instance_new->hour, 23);
 
-#123
+#124
 is($instance_new->minute, 0);
 
-#124
+#125
 is($instance_new->second, 0);
 
-#125
+#126
 is($instance_new->milli_second, 0);
 
-#126
+#127
 is($instance_new->micro_second, 0);
 
-#127
+#128
 $epoch_sec = $instance->unix_time;
 $instance_new = $instance->add_minutes(-1);
 $epoch_sec -= 60;
 isa_ok($instance_new, $class);
 
-#128
+#129
 is($instance_new->unix_time, $epoch_sec);
 
-#129
+#130
 is($instance_new->year, $leap_year);
 
-#130
+#131
 is($instance_new->month, 2);
 
-#131
+#132
 is($instance_new->day, 29);
 
-#132
+#133
 is($instance_new->hour, 23);
 
-#133
+#134
 is($instance_new->minute, 59);
 
-#134
+#135
 is($instance_new->second, 0);
 
-#135
+#136
 is($instance_new->milli_second, 0);
 
-#136
+#137
 is($instance_new->micro_second, 0);
 
-#137
+#138
 $epoch_sec = $instance->unix_time;
 $instance_new = $instance->add_seconds(-1);
 $epoch_sec -= 1;
 isa_ok($instance_new, $class);
 
-#138
+#139
 is($instance_new->unix_time, $epoch_sec);
 
-#139
+#140
 is($instance_new->year, $leap_year);
 
-#140
+#141
 is($instance_new->month, 2);
 
-#141
+#142
 is($instance_new->day, 29);
 
-#142
+#143
 is($instance_new->hour, 23);
 
-#143
+#144
 is($instance_new->minute, 59);
 
-#144
+#145
 is($instance_new->second, 59);
 
-#145
+#146
 is($instance_new->milli_second, 0);
 
-#146
+#147
 is($instance_new->micro_second, 0);
 
-#147
+#148
 $epoch_sec = $instance->unix_time;
 $instance_new = $instance->add_milli_seconds(-1);
 isa_ok($instance_new, $class);
 
-#148
+#149
 is($instance_new->unix_time, $epoch_sec);
 
-#149
+#150
 is($instance_new->year, $leap_year);
 
-#150
+#151
 is($instance_new->month, 2);
 
-#151
+#152
 is($instance_new->day, 29);
 
-#152
+#153
 is($instance_new->hour, 23);
 
-#153
+#154
 is($instance_new->minute, 59);
 
-#154
+#155
 is($instance_new->second, 59);
 
-#155
+#156
 is($instance_new->milli_second, 999);
 
-#156
+#157
 is($instance_new->micro_second, 999000);
 
-#157
+#158
 $epoch_sec = $instance->unix_time;
 $instance_new = $instance->add_micro_seconds(-999999);
 isa_ok($instance_new, $class);
 
-#158
+#159
 is($instance_new->unix_time, $epoch_sec);
 
-#159
+#160
 is($instance_new->year, $leap_year);
 
-#160
+#161
 is($instance_new->month, 2);
 
-#161
+#162
 is($instance_new->day, 29);
 
-#162
+#163
 is($instance_new->hour, 23);
 
-#163
+#164
 is($instance_new->minute, 59);
 
-#164
+#165
 is($instance_new->second, 59);
 
-#165
+#166
 is($instance_new->milli_second, 0);
 
-#166
+#167
 is($instance_new->micro_second, 1);
 
 # Can divide 4 then leap year, but can divide 100 then no leap year.
-#167
+#168
 $leap_year = 2100;
 is($class->is_leap_year($leap_year), 0);
 
 # But can divide 400 then leap year.
-#168
+#169
 $leap_year = 2000;
 is($class->is_leap_year($leap_year), 1);
 
 # The others then not leap year.
-#169
+#170
 $leap_year = 2022;
 is($class->is_leap_year($leap_year), 0);
 
 # Test for leap seconds
-# 170
+# 171
 $instance = $class->from_utc(1972, 6, 30, 23, 58, 0);
 $instance = $instance->add_minutes(1);
 is($instance->as_string('%c'), '1972/06/30 23:59:00');
 
-# 171
+# 172
 is($instance->in_leap_second, 0);
 
-# 172
+# 173
 $epoch_sec = $instance->unix_time;
 $instance = $instance->add_seconds(60);
 $epoch_sec += 59;
 is($instance->second, 60);
 
-# 173
+# 174
 is($instance->unix_time, $epoch_sec);
 
-# 174
+# 175
 is($instance->in_leap_second, 1);
 
-# 175
+# 176
 is($instance->as_string('%c'), '1972/06/30 23:59:60');
 
-# 176
+# 177
 $epoch_sec = $instance->unix_time;
 $instance = $instance->add_seconds(-1);
 is($instance->as_string('%c'), '1972/06/30 23:59:59');
 
-# 177
+# 178
 is($instance->unix_time, $epoch_sec);
 
-# 178
+# 179
 $instance = $instance->add_seconds(2);
 is($instance->as_string('%c'), '1972/07/01 00:00:00');
 
-# 179
+# 180
 $instance = $instance->add_seconds(-1);
 is($instance->as_string('%c'), '1972/06/30 23:59:60');
 
-# 180
+# 181
 $instance = $class->from_utc(1973, 1, 1, 0, 0, 0);
 $instance = $instance->add_seconds(-1);
 is($instance->as_string('%c'), '1972/12/31 23:59:60');
 
-# 181
+# 182
 is($instance->in_leap_second, 1);
 
-# 182
+# 183
 $instance = $instance->add_seconds(-1);
 is($instance->as_string('%c'), '1972/12/31 23:59:59');
 
-# 183
+# 184
 is($instance->in_leap_second, 0);
 
-# 184
+# 185
 $instance = $instance->add_seconds(2);
 is($instance->as_string('%c'), '1973/01/01 00:00:00');
 
-# 185
+# 186
 $instance = $class->from_utc(1973, 12, 31, 23, 58, 0);
 $instance = $instance->add_seconds(120);
 is($instance->as_string('%c'), '1973/12/31 23:59:60');
 
-# 186
+# 187
 is($instance->in_leap_second, 1);
 
-# 187
+# 188
 $instance = $instance->add_minutes(-1);
 is($instance->as_string('%c'), '1973/12/31 23:58:59');
 
-# 188
+# 189
 is($instance->in_leap_second, 0);
 
-# 189
+# 190
 $instance = $instance->add_minutes(1)->add_seconds(1);
 is($instance->as_string('%c'), '1973/12/31 23:59:60');
 
-# 190
+# 191
 is($instance->in_leap_second, 1);
 
-# 191
+# 192
 $instance = $instance->add_minutes(1);
 is($instance->as_string('%c'), '1974/01/01 00:01:00');
 
-# 192
+# 193
 is($instance->in_leap_second, 0);
 
-# 193
+# 194
 $instance = $class->from_utc(1974, 12, 31, 23, 59, 59);
 $instance = $instance->add_seconds(1);
 is($instance->as_string('%c'), '1974/12/31 23:59:60');
 
-# 194
+# 195
 is($instance->in_leap_second, 1);
 
-# 195
+# 196
 $instance = $instance->add_hours(-1);
 is($instance->as_string('%c'), '1974/12/31 22:59:59');
 
-# 196
+# 197
 is($instance->in_leap_second, 0);
 
-# 197
+# 198
 $instance = $class->from_utc(1974, 12, 31, 23, 59, 59);
 $instance = $instance->add_seconds(1);
 is($instance->as_string('%c'), '1974/12/31 23:59:60');
 
-# 198
+# 199
 is($instance->in_leap_second, 1);
 
-# 199
+# 200
 $instance = $instance->add_hours(1);
 is($instance->as_string('%c'), '1975/01/01 01:00:00');
 
-# 200
+# 201
 is($instance->in_leap_second, 0);
 
-# 201
+# 202
 $instance = $class->from_utc(1975, 12, 31, 23, 59, 59);
 $instance = $instance->add_seconds(1);
 is($instance->as_string('%c'), '1975/12/31 23:59:60');
 
-# 202
+# 203
 is($instance->in_leap_second, 1);
 
-# 203
+# 204
 $instance = $instance->add_days(-1);
 is($instance->as_string('%c'), '1975/12/30 23:59:59');
 
-# 204
+# 205
 is($instance->in_leap_second, 0);
 
-# 205
+# 206
 $instance = $class->from_utc(1975, 12, 31, 23, 59, 59);
 $instance = $instance->add_seconds(1);
 is($instance->as_string('%c'), '1975/12/31 23:59:60');
 
-# 206
+# 207
 is($instance->in_leap_second, 1);
 
-# 207
+# 208
 $instance = $instance->add_hours(1);
 is($instance->as_string('%c'), '1976/01/01 01:00:00');
 
-# 208
+# 209
 is($instance->in_leap_second, 0);
 
-# 209
+# 210
 $instance = $class->from_utc(1976, 12, 31, 23, 59, 59);
 $instance = $instance->add_seconds(1);
 is($instance->as_string('%c'), '1976/12/31 23:59:60');
 
-# 210
+# 211
 is($instance->in_leap_second, 1);
 
-# 211
+# 212
 $instance = $instance->add_months(-1);
 is($instance->as_string('%c'), '1976/11/30 23:59:59');
 
-# 212
+# 213
 is($instance->in_leap_second, 0);
 
-# 213
+# 214
 $instance = $class->from_utc(1976, 12, 31, 23, 59, 59);
 $instance = $instance->add_seconds(1);
 is($instance->as_string('%c'), '1976/12/31 23:59:60');
 
-# 214
+# 215
 is($instance->in_leap_second, 1);
 
-# 215
+# 216
 $instance = $instance->add_months(1);
 is($instance->as_string('%c'), '1977/02/01 00:00:00');
 
-# 216
+# 217
 is($instance->in_leap_second, 0);
 
-# 217
+# 218
 $instance = $class->from_utc(1977, 12, 31, 23, 59, 59);
 $instance = $instance->add_seconds(1);
 is($instance->as_string('%c'), '1977/12/31 23:59:60');
 
-# 218
+# 219
 is($instance->in_leap_second, 1);
 
-# 219
+# 220
 $instance = $instance->add_years(-1);
 is($instance->as_string('%c'), '1976/12/31 23:59:59');
 
-# 220
+# 221
 is($instance->in_leap_second, 0);
 
-# 221
+# 222
 $instance = $class->from_utc(1977, 12, 31, 23, 59, 59);
 $instance = $instance->add_seconds(1);
 is($instance->as_string('%c'), '1977/12/31 23:59:60');
 
-# 222
+# 223
 is($instance->in_leap_second, 1);
 
-# 223
+# 224
 $instance = $instance->add_years(1);
 is($instance->as_string('%c'), '1979/01/01 00:00:00');
 
-# 224
+# 225
 is($instance->in_leap_second, 0);
 
 done_testing();

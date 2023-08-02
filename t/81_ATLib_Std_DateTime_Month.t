@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-use Test::More tests => 42;
+use Test::More tests => 43;
 
 use ATLib::Std::DateTime::Year;
 
@@ -22,168 +22,171 @@ my $instance = $class->from($year_ref, $class->to_epoch($month));
 isa_ok($instance, $class);
 
 #4
-is($instance->year, $year);
+is($instance->type_name, $class);
 
 #5
-is($instance->month, $month);
+is($instance->year, $year);
 
 #6
-is($instance->last_day, 30);
+is($instance->month, $month);
 
 #7
+is($instance->last_day, 30);
+
+#8
 $month = 4;
 $instance = $class->from($year_ref, $class->to_epoch($month));
 is($instance->last_day, 30);
 
-#8
+#9
 $month = 6;
 $instance = $class->from($year_ref, $class->to_epoch($month));
 is($instance->last_day, 30);
 
-#9
+#10
 $month = 9;
 $instance = $class->from($year_ref, $class->to_epoch($month));
 is($instance->last_day, 30);
 
-#10
+#11
 $month = 1;
 $instance = $class->from($year_ref, $class->to_epoch($month));
 is($instance->last_day, 31);
 
-#11
+#12
 $month = 3;
 $instance = $class->from($year_ref, $class->to_epoch($month));
 is($instance->last_day, 31);
 
-#12
+#13
 $month = 5;
 $instance = $class->from($year_ref, $class->to_epoch($month));
 is($instance->last_day, 31);
 
-#13
+#14
 $month = 7;
 $instance = $class->from($year_ref, $class->to_epoch($month));
 is($instance->last_day, 31);
 
-#14
+#15
 $month = 8;
 $instance = $class->from($year_ref, $class->to_epoch($month));
 is($instance->last_day, 31);
 
-#15
+#16
 $month = 10;
 $instance = $class->from($year_ref, $class->to_epoch($month));
 is($instance->last_day, 31);
 
-#16
+#17
 $month = 12;
 $instance = $class->from($year_ref, $class->to_epoch($month));
 is($instance->last_day, 31);
 
-#17
+#18
 $month = 2;
 $instance = $class->from($year_ref, $class->to_epoch($month));
 is($class_year->is_leap_year($year), 0);
 
-#18
+#19
 is($instance->last_day, 28);
 
-#19
+#20
 $year = 2020;
 $month = 2;
 $year_ref = $class_year->from($class_year->to_epoch($year));
 $instance = $class->from($year_ref, $class->to_epoch($month));
 is($class_year->is_leap_year($year), 1);
 
-#20
+#21
 is($instance->last_day, 29);
 
-#21
+#22
 $month += 1; #3
 my $carry = $instance->add(1);
 is($carry, 0);
 
-#22
+#23
 is($instance->month, $month);
 
-#23
+#24
 $month += 10; #3 + 10 = 13
 $month %= 12; #1
 $carry = $instance->add(10);
 is($carry, 1);
 
-#24
+#25
 is($instance->month, $month);
 
-#25
+#26
 $year += $carry; #2021
 is($instance->year, $year);
 
-#26
+#27
 $month = 3; #(12 +) 1 - 10 = 3
 $carry = $instance->add(-10);
 is($carry, -1);
 
-#27
+#28
 is($instance->month, $month);
 
-#28
+#29
 $year += $carry; #2020 + (-1)
 is($instance->year, $year);
 
-#29
+#30
 $month += 1; #4
 $carry = $instance->add(1);
 is($carry, 0);
 
-#30
+#31
 is($instance->month, $month);
 
-#31
+#32
 $month -= 2; #2
 $carry = $instance->subtract(2);
 is($carry, 0);
 
-#32
+#33
 is($instance->month, $month);
 
-#33
+#34
 $month += 1; #3
 $carry = $instance->inc();
 is($carry, 0);
 
-#34
+#35
 is($instance->month, $month);
 
-#35
+#36
 $month -= 1; #2
 $carry = $instance->dec();
 is($carry, 0);
 
-#36
+#37
 is($instance->month, $month);
 
-#37
+#38
 $month = 12; #(12 +) 2 - 2 = 12
 $carry = $instance->subtract(2);
 is($carry, -1);
 
-#38
+#39
 is($instance->month, $month);
 
-#39
+#40
 $year += $carry;
 is($instance->year, $year);
 
-#40
+#41
 $month = 2; #12 + 2 (- 12) = 2
 $carry = $instance->add(2);
 is($carry, 1);
 
-#41
+#42
 is($instance->month, $month);
 
-#42
+#43
 $year += $carry;
 is($instance->year, $year);
 

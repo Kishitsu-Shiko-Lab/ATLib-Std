@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-use Test::More tests => 33;
+use Test::More tests => 34;
 
 use ATLib::Std::DateTime::Year;
 use ATLib::Std::DateTime::Month;
@@ -27,88 +27,91 @@ my $instance = $class->from($month_ref, $class->to_epoch($day));
 isa_ok($instance, $class);
 
 #4
-is($instance->year, $year);
+is($instance->type_name, $class);
 
 #5
-is($instance->month, $month);
+is($instance->year, $year);
 
 #6
-is($instance->day, $day);
+is($instance->month, $month);
 
 #7
-is($instance->last_day, 31);
+is($instance->day, $day);
 
 #8
+is($instance->last_day, 31);
+
+#9
 $day += 10; #17 (2022/12/17)
 my $carry = $instance->add(10);
 is($carry, 0);
 
-#9
+#10
 is($instance->day, $day);
 
-#10
+#11
 $day += 15; #32
 $day %= 31; #1
 $carry = $instance->add(15);
 is($carry, 1);
 
-#11
+#12
 $month += 1;  #13
 $month %= 12; #1
 is($instance->month, $month);
 
-#12
+#13
 $year += 1; #2023
 is($instance->year, $year);
 
-#13
+#14
 is($instance->day, $day);
 
-#14
+#15
 $day += 1; #2 (2023/01/02)
 $carry = $instance->inc();
 is($carry, 0);
 
-#15
+#16
 is($instance->year, $year);
 
-#16
+#17
 is($instance->month, $month);
 
-#17
+#18
 is($instance->day, $day);
 
-#18
+#19
 $day -= 1; #1 (2023/01/01)
 $carry = $instance->subtract(1);
 is($carry, 0);
 
-#19
+#20
 is($instance->year, $year);
 
-#20
+#21
 is($instance->month, $month);
 
-#21
+#22
 is($instance->day, $day);
 
-#22
+#23
 $day = 31; #31 (2022/12/31)
 $month = 12;
 $year -= 1; #2022
 $carry = $instance->dec();
 is($carry, -1);
 
-#23
+#24
 is($instance->year, $year);
 
-#24
+#25
 is($instance->month, $month);
 
-#25
+#26
 is($instance->day, $day);
 
-#26
+#27
 $day -= -5; #31 - (-5) = 36
 $day %= 31; #5 (2023/01/05)
 $month += 1; #13
@@ -117,16 +120,16 @@ $year += 1; #2023
 $carry = $instance->subtract(-5);
 is($carry, 1);
 
-#27
+#28
 is($instance->year, $year);
 
-#28
+#29
 is($instance->month, $month);
 
-#29
+#30
 is($instance->day, $day);
 
-#30
+#31
 $day += -6; #1 + (-6) = -5
 $day += 31; #26 (2022/12/26)
 $month -= 1; #0
@@ -135,13 +138,13 @@ $year -= 1; #2022
 $carry = $instance->add(-6);
 is($carry, -1);
 
-#31
+#32
 is($instance->year, $year);
 
-#32
+#33
 is($instance->month, $month);
 
-#33
+#34
 is($instance->day, $day);
 
 done_testing();

@@ -285,7 +285,7 @@ ATLib::Std::String - ATLib::Stdでにおける標準型で文字列を表すク�
 
 =head1 バージョン
 
-この文書は ATLib::Std version v0.2.7 について説明しています。
+この文書は ATLib::Std version v0.3.1 について説明しています。
 
 =head1 概要
 
