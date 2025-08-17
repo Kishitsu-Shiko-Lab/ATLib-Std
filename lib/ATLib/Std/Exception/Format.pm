@@ -1,48 +1,8 @@
-package ATLib::Std::Exception::Argument;
+package ATLib::Std::Exception::Format;
 use Mouse;
 extends 'ATLib::Std::Exception';
 
-use ATLib::Utils qw(as_type_of);
-
-# Overloads
-use overload(
-    q{""}    => \&as_string,
-    fallback => 1,
-);
-
-# Attributes
-has 'param_name' => (is => 'rw', isa => 'ATLib::Std::String', required => 1);
-
-# Builder
-sub BUILDARGS
-{
-    my ($class, $args_ref) = @_;
-
-    $class->SUPER::BUILDARGS($args_ref);
-
-    if (exists $args_ref->{param_name})
-    {
-        if (!as_type_of('ATLib::Std::String', $args_ref->{param_name}))
-        {
-            $args_ref->{param_name} = ATLib::Std::String->from($args_ref->{param_name});
-        }
-    }
-
-    return $args_ref;
-}
-
-# Instance Methods
-sub as_string
-{
-    my $self = shift;
-    return
-        $self->get_full_name() . q{: } . $self->message . qq{\n}
-            . q{Parameter name: } . $self->param_name . qq{\n\n}
-            . $self->stack_trace;
-}
-
 __PACKAGE__->meta->make_immutable();
-no Mouse;
 1;
 __END__
 
@@ -50,7 +10,7 @@ __END__
 
 =head1 名前
 
-ATLib::Std::Exception::Argument - 引数に関する構造化例外を表す標準型
+ATLib::Std::Exception::Format - 引数の書式の形式が無効であることを表す構造化例外
 
 =head1 バージョン
 
@@ -58,22 +18,19 @@ ATLib::Std::Exception::Argument - 引数に関する構造化例外を表す標�
 
 =head1 概要
 
-    use ATLib::Std::String;
-    use ATLib::Std::Exception::Argument;
-    use English qw{ -no_match_vars }; # $EVAL_ERROR
+  use ATLib::Std;
 
-    sub something_throw
-    {
-      my $arg = shift;
+  sub something_throw
+  {
+    my $arg = shift;
 
-      # 何か処理を行う
-      ATLib::Std::Exception::Argument->new({
-        message    => ATLib::Std::String->from({q{Type mismatch.}),
-        param_name => ATLib::Std::String->from(q{$arg}),
-      })->throw();
-    }
+    # 何か処理を行う
+    ATLib::Std::Exception::Format->new({
+      message => 'This format is invalid!!',
+    })->throw();
+  }
 
-    # 例外捕捉の仕方は ATLib::Std::Exception を参照
+  # 例外の捕捉の仕方は ATLib::Std::Exception を参照
 
 =head1 基底クラス
 
@@ -81,17 +38,11 @@ L<< ATLib::Std::Any >> E<lt>- L<< ATLib::Std::Exception >>
 
 =head1 説明
 
-ATLib::Std::Exception::Argument は、ATLib::Stdで提供される L<< Mouse >> で実装された引数に関する構造化例外表す型です。
+ATLib::Exception::Format は、ATLib::Stdで提供される L<< Mouse >> で実装された無効な書式指定を表す構造化例外型です。
 
 =head1 コンストラクタ
 
-=head2 C<< $instance = ATLib::Std::Exception::Argument->new({ message => $message, param_name => $param_name }); >>
-
-C<< $message -E<gt> >> L<< ATLib::Std::String >>
-C<< $param_name -E<gt> >> L<< ATLib::Std::String >>
-
-$messageを例外メッセージとするインスタンスを生成します。
-$messageは省略可能です。
+=head2 C<< $instance = ATLib::Std::Exception::Format->new({ message => $message }); >>
 
 =head1 オーバーロード
 
@@ -106,10 +57,6 @@ $messageは省略可能です。
 =head2 C<< $message = $instance->message($message); -E<gt> >> L<< ATLib::Std::String >>
 
 例外メッセージを取得、または設定します。
-
-=head2 C<< $param_name = $instance($param_name); -E<gt> >> L<< ATLib::Std::String >>
-
-引数の名前を取得、または設定します。
 
 =head2 C<< $long_stack_trace = $instance->source; -E<gt> >> L<< ATLib::Std::String >>
 

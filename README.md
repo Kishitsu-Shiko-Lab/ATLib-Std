@@ -4,7 +4,7 @@ ATLib::Std - ATLib 標準型システムの [Mouse](https://metacpan.org/pod/Mou
 
 # バージョン
 
-この文書は ATLib::Std version v0.3.1 について説明しています。
+この文書は ATLib::Std version v0.4.0 について説明しています。
 
 # 概要
 
@@ -28,27 +28,43 @@ ATLib::Std は、Perlでの開発に.NET Frameworkのような共通型を [Mous
 
 ## [ATLib::Std::Any](https://metacpan.org/pod/ATLib%3A%3AStd%3A%3AAny)
 
-ATLib 標準型システムにおけるルートとなる型です。
+ATLib におけるすべての型の基底クラスです。
+
+## [ATLib::Std::Bool](https://metacpan.org/pod/ATLib%3A%3AStd%3A%3ABool)
+
+真偽値を表す標準型です。
 
 ## [ATLib::Std::Exception](https://metacpan.org/pod/ATLib%3A%3AStd%3A%3AException)
 
-構造化例外を表す型です。
+構造化例外を表す標準型です。
 
 ## [ATLib::Std::Exception::Argument](https://metacpan.org/pod/ATLib%3A%3AStd%3A%3AException%3A%3AArgument)
 
-引数に関する構造化例外を表す型です。
+引数に関する構造化例外を表す標準型です。
+
+## [ATLib::Std::Exception::InvalidOperation](https://metacpan.org/pod/ATLib%3A%3AStd%3A%3AException%3A%3AInvalidOperation)
+
+無効なメソッド呼び出しを表す構造化例外です。
+
+## [ATLib::Std::Exception::InvalidCast](https://metacpan.org/pod/ATLib%3A%3AStd%3A%3AException%3A%3AInvalidCast)
+
+無効なキャストを表す構造化例外です。
+
+## [ATLib::Std::Exception::Format](https://metacpan.org/pod/ATLib%3A%3AStd%3A%3AException%3A%3AFormat)
+
+無効な引数での書式指定を表す構造化例外です。
 
 ## [ATLib::Std::String](https://metacpan.org/pod/ATLib%3A%3AStd%3A%3AString)
 
-文字列型。Perlの特性に従い、他の値型のルートとなります。
+文字列を表す標準型。Perlの特性に従い、他の値型のルートとなります。
 
 ## [ATLib::Std::Number](https://metacpan.org/pod/ATLib%3A%3AStd%3A%3ANumber)
 
-数値型。Perlの特性に従い、文字列型から派生します。
+数値を表す標準型。Perlの特性に従い、文字列型から派生します。
 
 ## [ATLib::Std::Int](https://metacpan.org/pod/ATLib%3A%3AStd%3A%3AInt)
 
-整数型。数値型から派生します。
+整数値を表す整数型。数値型から派生します。
 
 ## [ATLib::Std::Radix](https://metacpan.org/pod/ATLib%3A%3AStd%3A%3ARadix)
 
@@ -56,7 +72,7 @@ ATLib 標準型システムにおけるルートとなる型です。
 
 ## [ATLib::Std::Maybe](https://metacpan.org/pod/ATLib%3A%3AStd%3A%3AMaybe)
 
-値型に関して、未定義を許容するジェネリックな型です。
+値型に関して、未定義を許容するジェネリックな標準型です。
 
 ## [ATLib::Std::Collections::List](https://metacpan.org/pod/ATLib%3A%3AStd%3A%3ACollections%3A%3AList)
 
@@ -68,12 +84,16 @@ ATLib 標準型システムにおけるルートとなる型です。
 
 ## [ATLib::Std::DateTime](https://metacpan.org/pod/ATLib%3A%3AStd%3A%3ADateTime)
 
-日時型。日付、時間の表現、計算を行うための型です。
+日付、時間の表現、計算を行うための標準型です。
 
 # インストール方法
 
     $cpanm https://github.com/Kishitsu-Shiko-Lab/ATLib-Utils.git
     $cpanm https://github.com/Kishitsu-Shiko-Lab/ATLib-Std.git
+
+    Or
+
+    $cpm install https://github.com/Kishitsu-Shiko-Lab/ATLib-Std.git
 
 # AUTHOR
 
@@ -81,7 +101,7 @@ atdev01 &lt;mine\_t7 at hotmail.com>
 
 # COPYRIGHT AND LICENSE
 
-Copyright (C) 2020-2023 atdev01.
+Copyright (C) 2020-2025 atdev01.
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms of the Artistic License 2.0. For details,

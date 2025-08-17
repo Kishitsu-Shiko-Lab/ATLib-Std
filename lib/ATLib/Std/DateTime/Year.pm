@@ -2,6 +2,7 @@ package ATLib::Std::DateTime::Year;
 use Mouse;
 extends 'ATLib::Std::Int';
 
+use ATLib::Std::Bool;
 use ATLib::Std::Int;
 
 # Overloads
@@ -44,13 +45,13 @@ sub is_leap_year
     shift;
     my $year = shift;
 
-    if ($year % 400 == 0) { return 1; }
+    if ($year % 400 == 0) { return ATLib::Std::Bool->true; }
     if ($year % 4 == 0)
     {
-        if ($year % 100 == 0) { return 0; }
-        return 1;
+        if ($year % 100 == 0) { return ATLib::Std::Bool->false; }
+        return ATLib::Std::Bool->true;
     }
-    return 0;
+    return ATLib::Std::Bool->false;
 }
 
 __PACKAGE__->meta->make_immutable();
@@ -65,7 +66,7 @@ ATLib::Std::DateTime::Year - ATLib::Std::DateTimeにおける年部分を管理�
 
 =head1 バージョン
 
-この文書は ATLib::Std version v0.3.1 について説明しています。
+この文書は ATLib::Std version v0.4.0 について説明しています。
 
 =head1 概要
 
@@ -117,7 +118,7 @@ $is_utcは協定世界時(UTC)かどうかを指定します。
 
 $yearをエポック年に変換します。
 
-=head2 C<< $result = $class->is_leap_year($year); -E<gt> Int >>
+=head2 C<< $result = $class->is_leap_year($year); -E<gt> ATLib::Std::Bool >>
 
 $yearが閏年かどうかを判定します。
 
@@ -127,7 +128,7 @@ atdev01 E<lt>mine_t7 at hotmail.comE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2020-2023 atdev01.
+Copyright (C) 2020-2025 atdev01.
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms of the Artistic License 2.0. For details,

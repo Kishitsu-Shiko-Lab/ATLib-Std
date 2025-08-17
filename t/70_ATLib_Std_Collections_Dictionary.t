@@ -23,10 +23,10 @@ is($instance->T2, qq{Maybe[$TValue]});
 is($instance->type_name, $class);
 
 #6
-is($instance->count()->equals(0), 1);
+ok($instance->count()->equals(0));
 
 #7
-is($instance->contains_key(''), 0);
+ok(!$instance->contains_key(''));
 
 #8
 use ATLib::Std::Any;
@@ -45,14 +45,14 @@ is($instance->count(), $number_of_entry);
 #9 - 58
 for my $key (keys(%test_hash))
 {
-    is($instance->contains_key($key), 1);
+    ok($instance->contains_key($key));
 }
 
 #59 - 108
 for my $key (keys(%test_hash))
 {
-    my $value = $instance->items($key);
-    is($instance->contains_value($value), 1);
+    my $value = $instance->item($key);
+    ok($instance->contains_value($value));
 }
 
 #109
@@ -63,26 +63,26 @@ $test_hash{$key_undef} = undef;
 is($instance->count(), $number_of_entry);
 
 #110
-is($instance->contains_value(undef), 1);
+ok($instance->contains_value(undef));
 
 #111 - 161, 162 - 212, 213 - 263
 use ATLib::Utils qw{as_type_of};
 for my $key (@{$instance->get_keys_ref()})
 {
     is(as_type_of($TKey, $key), 1);
-    is($instance->items($key), $test_hash{$key});
-    if (defined $instance->items($key))
+    is($instance->item($key), $test_hash{$key});
+    if (defined $instance->item($key))
     {
-        isa_ok($instance->items($key), $TValue);
+        isa_ok($instance->item($key), $TValue);
     }
     else
     {
-        is(as_type_of($instance->T2, $instance->items($key)), 1);
+        is(as_type_of($instance->T2, $instance->item($key)), 1);
     }
 }
 
 #264
-is($instance->remove($key_undef), 1);
+ok($instance->remove($key_undef));
 delete $test_hash{$key_undef};
 --$number_of_entry;
 
@@ -90,12 +90,12 @@ delete $test_hash{$key_undef};
 is($instance->count(), $number_of_entry);
 
 #266
-is($instance->contains_key($key_undef), 0);
+ok(!$instance->contains_key($key_undef));
 
 #267
 $instance->clear();
 $number_of_entry = 0;
-is($instance->count()->equals($number_of_entry), 1);
+ok($instance->count()->equals($number_of_entry));
 
 #268
 %test_hash = ();
@@ -109,7 +109,7 @@ for my $i (0 .. $number_of_entry - 1)
     $test_hash{$key} = $value;
 }
 $instance = $class->from($TKey, $TValue, %test_hash);
-is($instance->count()->equals($number_of_entry), 1);
+ok($instance->count()->equals($number_of_entry));
 
 #269 - 288, 289 - 308, 309 - 328
 my @values = @{$instance->get_values_ref()};
@@ -117,8 +117,8 @@ my $i = 0;
 for my $key (@{$instance->get_keys_ref()})
 {
     is(as_type_of($TKey, $key), 1);
-    is($instance->items($key)->equals($test_hash{$key}), 1);
-    is($instance->items($key)->equals($values[$i]), 1);
+    ok($instance->item($key)->equals($test_hash{$key}));
+    ok($instance->item($key)->equals($values[$i]));
     ++$i;
 }
 

@@ -5,6 +5,8 @@ extends 'ATLib::Std::Any';
 use Time::Local qw { timelocal_posix timegm_posix };
 use Time::HiRes qw { gettimeofday };
 
+use ATLib::Utils qw { is_int };
+use ATLib::Std::String;
 use ATLib::Std::Int;
 use ATLib::Std::Radix;
 use ATLib::Std::Collections::Dictionary;
@@ -16,6 +18,8 @@ use ATLib::Std::DateTime::Minute;
 use ATLib::Std::DateTime::Second;
 use ATLib::Std::DateTime::MicroSecond;
 use ATLib::Std::DateTime::Utils;
+use ATLib::Std::Exception::Argument;
+use ATLib::Std::Exception::Format;
 
 # Overloads
 use overload(
@@ -78,7 +82,7 @@ my $week_names_of = ATLib::Std::Collections::Dictionary->of(q{Int}, q{Str});
 }
 
 # Attributes
-has 'is_utc'        => (is => 'ro', isa => 'ATLib::Std::Int', required => 1, writer => '_set_is_utc');
+has 'is_utc'        => (is => 'ro', isa => 'ATLib::Std::Bool', required => 1, writer => '_set_is_utc');
 has 'unix_time'     => (is => 'ro', isa => 'ATLib::Std::Int', required => 1, writer => '_set_unix_time');
 has '_year'         => (is => 'ro', isa => 'ATLib::Std::DateTime::Year' => required => 1, writer => '_set__year');
 has '_month'        => (is => 'ro', isa => 'ATLib::Std::DateTime::Month' => required => 1, writer => '_set__month');
@@ -129,7 +133,7 @@ sub second
 sub in_leap_second
 {
     my $self = shift;
-    return ATLib::Std::Int->from($self->second >= 60 ? 1 : 0);
+    return $self->second >= 60 ? ATLib::Std::Bool->true : ATLib::Std::Bool->false;
 }
 
 sub milli_second
@@ -163,7 +167,7 @@ sub BUILDARGS
 
     $class->SUPER::BUILDARGS($args_ref);
 
-    if (!exists $args_ref->{is_utc}) { $args_ref->{is_utc} = ATLib::Std::Int->from(0); }
+    if (!exists $args_ref->{is_utc}) { $args_ref->{is_utc} = ATLib::Std::Bool->false; }
     if (!exists $args_ref->{unix_time}) { $args_ref->{unix_time} = ATLib::Std::Int->from(0); }
     if (!exists $args_ref->{_year})
     {
@@ -208,7 +212,7 @@ sub _from_unix_time
     my $is_utc = shift;
     my $epoc_sec = shift;
     my $instance = undef;
-    if ($is_utc == 0)
+    if (ATLib::Std::Bool->false->equals($is_utc))
     {
         my ($second, $minute, $hour, $day, $epoch_month, $epoch_year, $day_of_week, $days_of_year) = localtime($epoc_sec);
         my $year_ref = ATLib::Std::DateTime::Year->from($epoch_year);
@@ -219,7 +223,7 @@ sub _from_unix_time
         my $second_ref = ATLib::Std::DateTime::Second->from_utc($minute_ref, $second);
         my $micro_second_ref = ATLib::Std::DateTime::MicroSecond->from($second_ref, 0);
         $instance = $class->new({
-            is_utc        => ATLib::Std::Int->from(0),
+            is_utc        => ATLib::Std::Bool->false,
             unix_time     => ATLib::Std::Int->from($epoc_sec),
             _year         => $year_ref,
             _month        => $month_ref,
@@ -229,7 +233,7 @@ sub _from_unix_time
             _second       => $second_ref,
             _micro_second => $micro_second_ref,
             _day_of_week  => ATLib::Std::Radix->from(7, $day_of_week),
-            _days_of_year => ATLib::Std::Radix->from(365 + $year_ref->is_leap_year($year_ref->year), $days_of_year),
+            _days_of_year => ATLib::Std::Radix->from($year_ref->is_leap_year($year_ref->year) ? 366 : 365, $days_of_year),
         });
     }
     else
@@ -243,7 +247,7 @@ sub _from_unix_time
         my $second_ref = ATLib::Std::DateTime::Second->from($minute_ref, $second);
         my $micro_second_ref = ATLib::Std::DateTime::MicroSecond->from($second_ref, 0);
         $instance = $class->new({
-            is_utc        => ATLib::Std::Int->from(1),
+            is_utc        => ATLib::Std::Bool->true,
             unix_time     => ATLib::Std::Int->from($epoc_sec),
             _year         => $year_ref,
             _month        => $month_ref,
@@ -253,7 +257,7 @@ sub _from_unix_time
             _second       => $second_ref,
             _micro_second => $micro_second_ref,
             _day_of_week  => ATLib::Std::Radix->from(7, $day_of_week),
-            _days_of_year => ATLib::Std::Radix->from(365 + $year_ref->is_leap_year($year_ref->year), $days_of_year),
+            _days_of_year => ATLib::Std::Radix->from($year_ref->is_leap_year($year_ref->year) ? 366 : 365, $days_of_year),
         });
     }
     return $instance;
@@ -276,7 +280,7 @@ sub from
         ATLib::Std::DateTime::Month->to_epoch($month),
         ATLib::Std::DateTime::Year->to_epoch($year)
     );
-    return $class->_from_unix_time(0, $epoc_sec);
+    return $class->_from_unix_time(ATLib::Std::Bool->false, $epoc_sec);
 }
 
 sub from_utc
@@ -296,7 +300,7 @@ sub from_utc
         ATLib::Std::DateTime::Month->to_epoch($month),
         ATLib::Std::DateTime::Year->to_epoch($year)
     );
-    return $class->_from_unix_time(1, $epoc_sec);
+    return $class->_from_unix_time(ATLib::Std::Bool->true, $epoc_sec);
 }
 
 sub now
@@ -304,7 +308,7 @@ sub now
     my $class = shift;
 
     my ($epoch_sec, $micro_sec) = gettimeofday();
-    my $instance = $class->_from_unix_time(0, $epoch_sec);
+    my $instance = $class->_from_unix_time(ATLib::Std::Bool->false, $epoch_sec);
     $instance->_set_micro_second($micro_sec);
     return $instance;
 }
@@ -314,9 +318,343 @@ sub now_utc
     my $class = shift;
 
     my ($epoch_sec, $micro_sec) = gettimeofday();
-    my $instance = $class->_from_unix_time(1, $epoch_sec);
+    my $instance = $class->_from_unix_time(ATLib::Std::Bool->true, $epoch_sec);
     $instance->_set_micro_second($micro_sec);
     return $instance;
+}
+
+sub parse_exact
+{
+    my $class = shift;
+    my $target = shift;
+    my $format = shift;
+
+    if (!defined $target)
+    {
+        ATLib::Std::Exception::Argument->new({
+            message    => q{Argument is not specified.},
+            param_name => q{$target},
+        })->throw();
+    }
+
+    if (!defined $format)
+    {
+        ATLib::Std::Exception::Argument->new({
+            message    => q{Argument is not specified.},
+            param_name => q{$format},
+        })->throw();
+    }
+
+    $target = ATLib::Std::String->from($target);
+    $format = ATLib::Std::String->from($format);
+
+    if ($target->get_length() != $format->get_length())
+    {
+        ATLib::Std::Exception::Format->new({
+            message => q{Specified $format is invalid length.},
+        })->throw();
+    }
+
+    my $year = undef;
+    my $month = undef;
+    my $day = undef;
+    my $hour = undef;
+    my $minute = undef;
+    my $second = undef;
+    my $milli_second = undef;
+    my $micro_second = undef;
+
+    my $current_pos = 0;
+    pos $format = 0;
+    while (pos $format < $format->get_length())
+    {
+        my $token = undef;
+        if ($format =~ m{ \G (yyyy)}gcxms)
+        {
+            if (defined $year)
+            {
+                ATLib::Std::Exception::Format->new({
+                    message => q{Specified $format `yyyy` is duplicated.},
+                })->throw();
+            }
+
+            $token = $target->substring($current_pos, 4);
+            if (!is_int($token))
+            {
+                ATLib::Std::Exception::Format->new({
+                    message => q{The $target is not include year(yyyy) string.},
+                })->throw();
+            }
+            $year = ATLib::Std::String->from('0000' . $token)->substring(-4);
+            $current_pos += 4;
+        }
+        elsif ($format =~ m{ \G (MM)}gcxms)
+        {
+            if (defined $month)
+            {
+                ATLib::Std::Exception::Format->new({
+                    message => q{Specified $format `MM` is duplicated.},
+                })->throw();
+            }
+
+            $token = $target->substring($current_pos, 2);
+            if (!is_int($token)
+                || !($token->_value >= 1 && $token->_value <= 12))
+            {
+                ATLib::Std::Exception::Format->new({
+                    message => q{The $target is not include month(MM) string.},
+                })->throw();
+            }
+            $month = ATLib::Std::String->from('00' . $token)->substring(-2);
+            $current_pos += 2;
+        }
+        elsif ($format =~ m{ \G (dd)}gcxms)
+        {
+            if (defined $day)
+            {
+                ATLib::Std::Exception::Format->new({
+                    message => q{Specified $format `dd` is duplicated.},
+                })->throw();
+            }
+
+            $token = $target->substring($current_pos, 2);
+            if (!is_int($token)
+                || !($token->_value >= 1 && $token->_value <= 31))
+            {
+                ATLib::Std::Exception::Format->new({
+                    message => q{The $target is not include day(dd) string.},
+                })->throw();
+            }
+            $day = ATLib::Std::String->from('00' . $token)->substring(-2);
+            $current_pos += 2;
+        }
+        elsif ($format =~ m{ \G (HH)}gcxms)
+        {
+            if (defined $hour)
+            {
+                ATLib::Std::Exception::Format->new({
+                    message => q{Specified $format `HH` is duplicated.},
+                })->throw();
+            }
+
+            $token = $target->substring($current_pos, 2);
+            if (!is_int($token)
+                || !($token->_value >= 0 && $token->_value <= 59))
+            {
+                ATLib::Std::Exception::Format->new({
+                    message => q{The $target is not include hour(HH) string.},
+                })->throw();
+            }
+            $hour = ATLib::Std::String->from('00' . $token)->substring(-2);
+            $current_pos += 2;
+        }
+        elsif ($format =~ m{ \G (mm)}gcxms)
+        {
+            if (defined $minute)
+            {
+                ATLib::Std::Exception::Format->new({
+                    message => q{Specified $format `mm` is duplicated.},
+                })->throw();
+            }
+
+            $token = $target->substring($current_pos, 2);
+            if (!is_int($token)
+                || !($token->_value >= 0 && $token->_value <= 59))
+            {
+                ATLib::Std::Exception::Format->new({
+                    message => q{The $target is not include minute(mm) string.},
+                })->throw();
+            }
+            $minute = ATLib::Std::String->from('00' . $token)->substring(-2);
+            $current_pos += 2;
+        }
+        elsif ($format =~ m{ \G (ss)}gcxms)
+        {
+            if (defined $second)
+            {
+                ATLib::Std::Exception::Format->new({
+                    message => q{Specified $format `ss` is duplicated.},
+                })->throw();
+            }
+
+            $token = $target->substring($current_pos, 2);
+            if (!is_int($token)
+                || !($token->_value >= 0 && $token->_value <= 60))
+            {
+                ATLib::Std::Exception::Format->new({
+                    message => q{The $target is not include second(ss) string.},
+                })->throw();
+            }
+            $second = ATLib::Std::String->from('00' . $token)->substring(-2);
+            $current_pos += 2;
+        }
+        elsif ($format =~ m{ \G (ffffff|FFFFFF)}gcxms)
+        {
+            if (defined $milli_second)
+            {
+                ATLib::Std::Exception::Format->new({
+                    message => q{The $format `fff|FFF` is already specified.},
+                })->throw();
+            }
+            if (defined $micro_second)
+            {
+                ATLib::Std::Exception::Format->new({
+                    message => q{Specified $format `ffffff|FFFFFF` is duplicated.},
+                })->throw();
+            }
+
+            $token = $target->substring($current_pos, 6);
+            if (!is_int($token)
+                || !($token->_value >= 0 && $token->_value <= 999_999))
+            {
+                ATLib::Std::Exception::Format->new({
+                    message => q{The $target is not include micro second(ffffff|FFFFFF) string.},
+                })->throw();
+            }
+            $micro_second = ATLib::Std::String->from('000000' . $token)->substring(-6);
+            $current_pos += 6;
+        }
+        elsif ($format =~ m{ \G (fff|FFF)}gcxms)
+        {
+            if (defined $micro_second)
+            {
+                ATLib::Std::Exception::Format->new({
+                    message => q{The $format `ffffff|FFFFFF` is already specified.},
+                })->throw();
+            }
+            if (defined $milli_second)
+            {
+                ATLib::Std::Exception::Format->new({
+                    message => q{Specified $format `fff|FFF` is duplicated.},
+                })->throw();
+            }
+
+            $token = $target->substring($current_pos, 3);
+            if (!is_int($token)
+                || !($token->_value >= 0 && $token->_value <= 999))
+            {
+                ATLib::Std::Exception::Format->new({
+                    message => q{The $target is not include milli second(fff|FFF) string.},
+                })->throw();
+            }
+            $milli_second = ATLib::Std::String->from('000' . $token)->substring(-3);
+            $current_pos += 3;
+        }
+        elsif ($format =~ m{ \G (/|-)}gcxms)
+        {
+            # Separator of date
+            if (defined $year && defined $month && defined $day)
+            {
+                ATLib::Std::Exception::Format->new({
+                    message => q{Specified date separator, but it's already completed.},
+                })->throw();
+            }
+            $current_pos += 1;
+        }
+        elsif ($format =~ m{ \G (:)}gcxms)
+        {
+            # Separator of time
+            if (defined $hour && defined $minute && defined $second)
+            {
+                ATLib::Std::Exception::Format->new({
+                    message => q{Specified time separator, but it's already completed.},
+                })->throw();
+            }
+            $current_pos += 1;
+        }
+        elsif ($format =~ m{ \G (\.)}gcxms)
+        {
+            # Separator of millisecond or microsecond
+            if (defined $milli_second || defined $micro_second)
+            {
+                ATLib::Std::Exception::Format->new({
+                    message => q{Specified millisecond or microsecond separator, but it's already completed.},
+                })->throw();
+            }
+            $current_pos += 1;
+        }
+        elsif ($format =~ m{ \G (.)}gcxms)
+        {
+            $token = $target->substring($current_pos, 1);
+            if ($token ne ' ')
+            {
+                ATLib::Std::Exception::Format->new({
+                    message => qq{Invalid format keyword `$token` was specified.}
+                })->throw();
+            }
+            $current_pos += 1;
+        }
+        else
+        {
+            # Unreachable
+            $token = $target->substring($current_pos);
+            ATLib::Std::Exception::Format->new({
+                message => qq{Invalid format keyword `$token` was specified.}
+            })->throw();
+            $current_pos += $token->get_length();
+        }
+    }
+
+    my $dtm = undef;
+    if (defined $year && defined $month && defined $day
+        && defined $hour && defined $minute && defined $second)
+    {
+        $dtm = $class->from($year, $month, $day, $hour, $minute, $second);
+        if (defined $milli_second)
+        {
+            $dtm->_set__micro_second(ATLib::Std::DateTime::MicroSecond->from(
+                $dtm->_second,
+                $milli_second->_value * 1_000,
+            ));
+        }
+        if (defined $micro_second)
+        {
+            $dtm->_set__micro_second(ATLib::Std::DateTime::MicroSecond->from(
+                $dtm->_second,
+                $micro_second->_value,
+            ));
+        }
+    }
+    elsif (defined $year && defined $month && defined $day
+        && !defined $hour && !defined $minute && !defined $second)
+    {
+        $dtm = $class->from($year, $month, $day, 0, 0, 0);
+    }
+    elsif (!defined $year && !defined $month && !defined $day
+        && defined $hour && defined $minute && defined $second)
+    {
+        $dtm = $class->from(1970, 1, 1, $hour, $minute, $second);
+        if (defined $milli_second)
+        {
+            $dtm->_set__micro_second(ATLib::Std::DateTime::MicroSecond->from(
+                $dtm->_second,
+                $milli_second->_value * 1_000,
+            ));
+        }
+        if (defined $micro_second)
+        {
+            $dtm->_set__micro_second(ATLib::Std::DateTime::MicroSecond->from(
+                $dtm->_second,
+                $micro_second->_value,
+            ));
+        }
+    }
+    else
+    {
+        ATLib::Std::Exception::Format->new({
+            message => q{Cannot generate type of datetime from specified $target and $format.},
+        })->throw();
+    }
+
+    return $dtm;
+}
+
+sub parse
+{
+    my $class = shift;
+    my $target = shift;
+
+    return $class->parse_exact($target, ATLib::Std::String->from("yyyy/MM/dd HH:mm:ss"));
 }
 
 sub is_leap_year
@@ -392,7 +730,7 @@ sub copy
 
     if ($self->is_utc)
     {
-        $copy->_set_is_utc(ATLib::Std::Int->from(ATLib::Std::Int->value($self->is_utc)));
+        $copy->_set_is_utc(ATLib::Std::Bool->true);
         $copy->_set_unix_time(ATLib::Std::Int->from(ATLib::Std::Int->value($self->unix_time)));
         $copy->_set__year(ATLib::Std::DateTime::Year->from(ATLib::Std::DateTime::Year->to_epoch($self->year)));
         $copy->_set__month(ATLib::Std::DateTime::Month->from($copy->_year, ATLib::Std::DateTime::Month->to_epoch($self->month)));
@@ -406,7 +744,7 @@ sub copy
     }
     else
     {
-        $copy->_set_is_utc(ATLib::Std::Int->from(ATLib::Std::Int->value($self->is_utc)));
+        $copy->_set_is_utc(ATLib::Std::Bool->false);
         $copy->_set_unix_time(ATLib::Std::Int->from(ATLib::Std::Int->value($self->unix_time)));
         $copy->_set__year(ATLib::Std::DateTime::Year->from(ATLib::Std::DateTime::Year->to_epoch($self->year)));
         $copy->_set__month(ATLib::Std::DateTime::Month->from($copy->_year, ATLib::Std::DateTime::Month->to_epoch($self->month)));
@@ -648,6 +986,38 @@ sub add_micro_seconds
     return $self->copy()->_mutable_add_micro_seconds($micro_seconds);
 }
 
+sub _can_equals
+{
+    my $self = shift;
+    my $target = shift;
+
+    return 1 if (!defined $target);
+    return 1 if (blessed($target) && $target->isa($self->get_full_name()));
+    return 0;
+}
+
+sub compare
+{
+    my $self = shift;
+    my $target = shift;
+
+    if ($self->_can_equals($target))
+    {
+        my $this = $self->as_string('%Y%m%d%H%M%S') . sprintf(q{%06d}, $self->micro_second->_value);
+        my $that = $target->as_string('%Y%m%d%H%M%S') . sprintf(q{%06d}, $target->micro_second->_value);
+        return $this cmp $that;
+    }
+
+    return 1;
+}
+
+sub equals
+{
+    my $self = shift;
+    my $target = shift;
+    return $self->compare($target) == 0 ? ATLib::Std::Bool->true : ATLib::Std::Bool->false;
+}
+
 sub as_string
 {
     my $self = shift;
@@ -660,8 +1030,8 @@ sub as_string
     }
     else
     {
-        my $now_utc = $self->now_utc();
-        my $now = $self->now();
+        my $now_utc = ATLib::Std::DateTime->now_utc();
+        my $now = ATLib::Std::DateTime->now();
         if ($now->day > $now_utc->day)
         {
             $offset_string = sprintf(q{+%02d%02d}, 24 + $now->hour - $now_utc->hour, $now->minute - $now_utc->minute);
@@ -702,17 +1072,17 @@ sub as_string
         $format =~ s{%y}{$replacement}xms;
         $replacement = sprintf(q{%02d}, $self->month);
         $format =~ s{%m}{$replacement}xms;
-        $replacement = $month_short_names_of->items($self->month);
+        $replacement = $month_short_names_of->item($self->month);
         $format =~ s{(?:%b|%h)+}{$replacement}xms;
-        $replacement = $month_names_of->items($self->month);
+        $replacement = $month_names_of->item($self->month);
         $format =~ s{%B}{$replacement}xms;
         $replacement = sprintf(q{%02d}, $self->day);
         $format =~ s{%d}{$replacement}xms;
         $replacement = sprintf(q{%2d}, $self->day);
         $format =~ s{%e}{$replacement}xms;
-        $replacement = $week_short_names_of->items($self->day_of_week);
+        $replacement = $week_short_names_of->item($self->day_of_week);
         $format =~ s{%a}{$replacement}xms;
-        $replacement = $week_names_of->items($self->day_of_week);
+        $replacement = $week_names_of->item($self->day_of_week);
         $format =~ s{%A}{$replacement}xms;
         $replacement = sprintf(q{%d}, $self->day_of_week + 1);
         $format =~ s{%u}{$replacement}xms;
@@ -791,14 +1161,20 @@ no Mouse;
 
 =head1 名前
 
-ATLib::Std::DateTime - ATLib::Stdにおける標準型で日時を表すクラス
+ATLib::Std::DateTime - 日付、時間の表現、計算を行うための標準型
 
 =head1 バージョン
 
-この文書は ATLib::Std version v0.3.1 について説明しています。
+この文書は ATLib::Std version v0.4.0 について説明しています。
 
 =head1 概要
 
+    use ATLib::Std;
+
+    my $now = ATLib::Std::DateTime->now();
+    my $passed_years = $now->add_years(1);
+    my $passed_hours = $now->add_hours(1);
+    ...
 
 =head1 基底クラス
 
@@ -842,56 +1218,109 @@ ATLib::Std::DateTime は、ATLib::Stdで提供される L<< Mouse >> で実装�
 
 =head1 プロパティ
 
-=head2 C<< $result = $instance->is_utc; >> -E<gt> C<< ATLib::Std::Int >>
+=head2 C<< $result = $instance->is_utc; >> -E<gt> L<< ATLib::Std::Bool >>
 
 インスタンスがあらわす日時が協定世界時(UTC)かどうかを取得します。
 
-=head2 C<< $epoch_second = $instance->unix_time; >> -E<gt> C<< ATLib::Std::Int >>
+=head2 C<< $epoch_second = $instance->unix_time; >> -E<gt> L<< ATLib::Std::Int >>
 
 インスタンスがあらわす日時のエポック秒(UNIX時間)(1970/01/01 00:00:00 UTCからの秒数)を取得します。
 
-=head2 C<< $year = $instance->year; >> -E<gt> C<< ATLib::Std::Int >>
+=head2 C<< $year = $instance->year; >> -E<gt> L<< ATLib::Std::Int >>
 
 インスタンスがあらわす日時の西暦年を取得します。
 
-=head2 C<< $month = $instance->month; >> -E<gt> C<< ATLib::Std::Int >>
+=head2 C<< $month = $instance->month; >> -E<gt> L<< ATLib::Std::Int >>
 
 インスタンスがあらわす日時の月(1〜12)を取得します。
 
-=head2 C<< $day = $instance->day; >> -E<gt> C<< ATLib::Std::Int >>
+=head2 C<< $day = $instance->day; >> -E<gt> L<< ATLib::Std::Int >>
 
 インスタンスがあらわす日時の日(1〜31)を取得します。
 
-=head2 C<< $hour = $instance->hour; >> -E<gt> C<< ATLib::Std::Int >>
+=head2 C<< $hour = $instance->hour; >> -E<gt> L<< ATLib::Std::Int >>
 
 インスタンスがあらわす日時の時(0〜23)を取得します。
 
-=head2 C<< $minute = $instance->minute; >> -E<gt> C<< ATLib::Std::Int >>
+=head2 C<< $minute = $instance->minute; >> -E<gt> L<< ATLib::Std::Int >>
 
 インスタンスがあらわす日時の分(0〜59)を取得します。
 
-=head2 C<< $second = $instance->second; >> -E<gt> C<< ATLib::Std::Int >>
+=head2 C<< $second = $instance->second; >> -E<gt> L<< ATLib::Std::Int >>
 
 インスタンスがあらわす日時の秒(0〜60)を取得します。
 60は閏秒です。
 
-=head2 C<< $result = $instance->in_leap_second; >> -E<gt> C<< Int >>
+=head2 C<< $result = $instance->in_leap_second; >> -E<gt> L<< ATLib::Std::Bool >>
 
 インスタンスが現在閏秒かどうかを取得します。
 
-=head2 C<< $milli_second = $instance->milli_second; >> -E<gt> C<< ATLib::Std::Int >>
+=head2 C<< $milli_second = $instance->milli_second; >> -E<gt> L<< ATLib::Std::Int >>
 
 インスタンスがあらわす日時のミリ秒(0〜999)を取得します。
 
-=head2 C<< $micro_second = $instance->micro_second; >> -E<gt> C<< ATLib::Std::Int >>
+=head2 C<< $micro_second = $instance->micro_second; >> -E<gt> L<< ATLib::Std::Int >>
 
 インスタンスがあらわす日時のマイクロ秒(0〜999999)を取得します。
 
 =head1 クラスメソッド
 
-=head2 C<< $result = $class->is_leap_year($year); >> -E<gt> C<< ATLib::Std::Int >>
+=head2 C<< $result = $class->is_leap_year($year); >> -E<gt> L<< ATLib::Std::Bool >>
 
 パラメータで指定した西暦$yearが閏年かどうかを判定します。
+
+=head2 C<< $instance = $class->parse_exact($target, $format); >> -E<gt> L<< ATLib::Std::DateTime >>
+
+パラメータ $target で指定した日付／日時文字列を指定の書式 $format に従って解析して日付型を生成します。
+以下に書式 $format として指定できる文字列を示します。
+
+=over 4
+
+=item *
+
+yyyy 西暦 4桁
+
+=item *
+
+MM 月の前ゼロ詰め 2桁 (01〜12)
+
+=item *
+
+dd 日の前ゼロ詰め 2桁 (01〜31)
+
+=item *
+
+hh 時(24時間表記)の前ゼロ詰め 2桁 (00〜23)
+
+=item *
+
+mm 分の前ゼロ詰め 2桁 (00〜59)
+
+=item *
+
+ss 秒の前ゼロ詰め 2桁 (00〜60)
+
+=item *
+
+fff または FFF ミリ秒の前ゼロ詰め 3桁 (000〜999)
+
+=item *
+
+ffffff または FFFFFF マイクロ秒の前ゼロ詰め 6桁 (000〜999999)
+
+=item *
+
+/ または - 日付区切り文字
+
+=item *
+
+: 時分秒区切り文字
+
+=item *
+
+. 秒未満区切り文字
+
+=back
 
 =head1 インスタンスメソッド
 
@@ -938,6 +1367,17 @@ $milli_secondsに負の数を指定した場合は、ミリ秒が減算されま
 
 インスタンスのマイクロ秒(1/1,000,000秒)をパラメータで指定した$micro_secondsマイクロ秒だけ加算したインスタンスを生成、返却します。
 $micro_secondsに負の数を指定した場合は、マイクロ秒が減算されます。
+
+=head2 C<< $result = $instance->compare($target);  >>
+
+$instanceと$targetを文字列比較します。
+等しい場合は 0、$instanceが大きい場合は 1、小さい場合は -1を返します。
+
+=head2 C<< $result = $instance->equals($target); >> -E<gt> L<< ATLib::Std::Bool >>
+
+$targetが$instanceと等価であるかを判定します。
+判定には、C<< $instance->compare($target) >> が使用されます。
+必要に応じて、派生クラスでオーバーライドします。
 
 =head2 C<< $date_time_string = $instance->as_string($format); -E<gt> L<< ATLib::Std::String  >> >>
 
@@ -1091,7 +1531,7 @@ atdev01 E<lt>mine_t7 at hotmail.comE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2020-2023 atdev01.
+Copyright (C) 2020-2025 atdev01.
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms of the Artistic License 2.0. For details,

@@ -144,7 +144,7 @@ sub _can_equals
 
     if ($target->isa($self->get_full_name))
     {
-        if ($target->can(q{_value}))
+        if (blessed($target) && $target->can(q{_value}))
         {
             return 1;
         }
@@ -187,15 +187,15 @@ __END__
 
 =head1 名前
 
-ATLib::Std::Number - ATLib::Stdにおける標準型で数値を表すクラス
+ATLib::Std::Number - 数値を表す標準型
 
 =head1 バージョン
 
-この文書は ATLib::Std version v0.3.1 について説明しています。
+この文書は ATLib::Std version v0.4.0 について説明しています。
 
 =head1 概要
 
-    use ATLib::Std::Number;
+    use ATLib::Std;
 
     my $instance1 = ATLib::Std::Number->from(123.45);
 
@@ -208,8 +208,8 @@ ATLib::Std::Number - ATLib::Stdにおける標準型で数値を表すクラス
     my $result = $instance3->compare($instance1); # -1
     # And you can also use operator of '<', '<=', '>', '>=', '<=>'.
 
-    my $result = $instance1->equals(123.44); # 1
-    my $result = $instance1->equals($instance2); # 0
+    my $result = $instance1->equals(123.44);
+    my $result = $instance1->equals($instance2);
     # And you can also use operator of '==', '!='.
 
 =head1 基底クラス
@@ -326,7 +326,7 @@ atdev01 E<lt>mine_t7 at hotmail.comE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2020-2023 atdev01.
+Copyright (C) 2020-2025 atdev01.
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms of the Artistic License 2.0. For details,

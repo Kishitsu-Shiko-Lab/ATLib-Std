@@ -16,7 +16,7 @@ my $instance = $class->of($T);
 isa_ok($instance, $class);
 
 #3
-is($instance->has_value, 0);
+ok(!$instance->has_value);
 
 #4
 is($instance->type_name, $class);
@@ -29,51 +29,51 @@ $instance = $class->of($T, undef);
 isa_ok($instance, $class);
 
 #7
-is($instance->has_value, 0);
+ok(!$instance->has_value);
 
 #8
 is($instance->value, undef);
 
 #9
-is($instance->equals($instance), 1);
+ok($instance->equals($instance));
 
 #10
-is($instance->equals(undef), 1);
+ok($instance->equals(undef));
 
 #11
 my $value = $T->from(q{Hello, world.});
-is($instance->equals($value), 0);
+ok(!$instance->equals($value));
 
 #12
-is($value->equals($instance->value), 0);
+ok(!$value->equals($instance->value));
 
 #13
 is($instance->compare(""), -1);
 
 #14
 $instance->value($value);
-is($instance->has_value, 1);
+ok($instance->has_value);
 
 #15
 is($instance->value, $value);
 
 #16
-is($instance->compare(""), 1);
+ok($instance->compare(""));
 
 #17
-is($instance->equals($value), 1);
+ok($instance->equals($value));
 
 #18
-is($value->equals($instance->value), 1);
+ok($value->equals($instance->value));
 
 #19
-is($value->equals($instance->as_string()), 1);
+ok($value->equals($instance->as_string()));
 
 #20
-is($value->equals($instance->value), 1);
+ok($value->equals($instance->value));
 
 #21
-is($instance->equals(""), 0);
+ok(!$instance->equals(""));
 
 #22
 my $pass_point_1 = 0;
@@ -110,25 +110,25 @@ my $instance_int = $class->of($T2);
 isa_ok($instance_int, $class);
 
 #27
-is($instance_int->equals(undef), 1);
+ok($instance_int->equals(undef));
 
 #28
 my $value_of_int = $T2->from(1503);
 $instance_int->value($value_of_int);
-is($instance_int->equals(1503), 1);
+ok($instance_int->equals(1503));
 
 #29
-is($instance_int->equals($instance_int), 1);
+ok($instance_int->equals($instance_int));
 
 #30
-is($instance_int->equals($value_of_int), 1);
+ok($instance_int->equals($value_of_int));
 
 #31
-is($value_of_int->equals($instance_int->value), 1);
+ok($value_of_int->equals($instance_int->value));
 
 #32
 $instance->value($instance_int->as_string());
-is($instance_int->equals($instance), 1);
+ok($instance_int->equals($instance));
 
 done_testing();
 __END__

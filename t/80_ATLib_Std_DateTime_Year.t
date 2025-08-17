@@ -22,7 +22,7 @@ is($instance->type_name, $class);
 is($instance->year, $year);
 
 #6
-is($class->is_leap_year($year), 0);
+ok(!$class->is_leap_year($year));
 
 #7
 is($instance->number_of_days, 365);
@@ -33,18 +33,18 @@ $instance = $instance + 2;
 is($instance->year, $year);
 
 #9
-is($class->is_leap_year($year), 1);
+ok($class->is_leap_year($year));
 
 #10
 is($instance->number_of_days, 366);
 
 #11
 $year = 400;
-is($class->is_leap_year($year), 1);
+ok($class->is_leap_year($year));
 
 #12
 $year = 2200;
-is($class->is_leap_year($year), 0);
+ok(!$class->is_leap_year($year));
 
 done_testing();
 

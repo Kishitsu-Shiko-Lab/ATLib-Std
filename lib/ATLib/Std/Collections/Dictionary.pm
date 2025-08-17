@@ -4,6 +4,7 @@ extends 'ATLib::Std::Any';
 with qw{ATLib::Std::Role::Generic2 ATLib::Std::Role::Collection};
 
 use ATLib::Utils qw{as_type_of equals};
+use ATLib::Std::Bool;
 use ATLib::Std::Int;
 use ATLib::Std::Exception::Argument;
 use ATLib::Std::Collections::List;
@@ -21,7 +22,7 @@ has '_items_value_of_ref' => (
     lazy_build => 1,
 );
 
-sub items
+sub item
 {
     my $self = shift;
     my $key = shift;
@@ -139,14 +140,14 @@ sub contains
 
     if ($self->count() == 0)
     {
-        return 0;
+        return ATLib::Std::Bool->false;
     }
 
     if (exists $self->_items_key_of_ref->{$key})
     {
-        return 1;
+        return ATLib::Std::Bool->true;
     }
-    return 0;
+    return ATLib::Std::Bool->false;
 }
 
 sub contains_key
@@ -163,7 +164,7 @@ sub contains_value
 
     if ($self->count() == 0)
     {
-        return 0;
+        return ATLib::Std::Bool->false;
     }
 
     my @values = @{$self->get_values_ref()};
@@ -173,10 +174,10 @@ sub contains_value
         {
             if (!defined $item)
             {
-                return 1;
+                return ATLib::Std::Bool->true;
             }
         }
-        return 0;
+        return ATLib::Std::Bool->false;
     }
 
     if (!as_type_of($self->T2, $value))
@@ -194,7 +195,7 @@ sub contains_value
         {
             if ($value->equals($item))
             {
-                return 1;
+                return ATLib::Std::Bool->true;
             }
         }
     }
@@ -203,10 +204,10 @@ sub contains_value
     {
         if (equals($self->T2, $item, $value))
         {
-            return 1;
+            return ATLib::Std::Bool->true;
         }
     }
-    return 0;
+    return ATLib::Std::Bool->false;
 }
 
 sub clear
@@ -259,11 +260,11 @@ sub remove
 
     if (!$self->contains_key($key))
     {
-        return 0;
+        return ATLib::Std::Bool->false;
     }
     delete $self->_items_key_of_ref->{$key};
     delete $self->_items_value_of_ref->{$key};
-    return 1;
+    return ATLib::Std::Bool->true;
 }
 
 __PACKAGE__->meta->make_immutable();
@@ -279,7 +280,7 @@ ATLib::Std::Collections::Dictionary - キーを使用して要素にアクセス
 
 =head1 バージョン
 
-この文書は ATLib::Std:: version 0.3.1 について説明しています。
+この文書は ATLib::Std:: version 0.4.0 について説明しています。
 
 =head1 概要
 
@@ -293,8 +294,8 @@ ATLib::Std::Collections::Dictionary - キーを使用して要素にアクセス
     my $count = $instance->count();  #0
 
     $instance->add(q{Hello}, $TValue->from(q{world.}));
-    $result = $instance->contains_key(q{Hello});  #1
-    $result = $instance->contains_value(q{world.});  #1
+    $result = $instance->contains_key(q{Hello});  # ATLib::Std::Bool->true
+    $result = $instance->contains_value(q{world.});  # ATLib::Std::Bool->true
     $count = $instance->count();  #1
 
     for my $key (@{$instance->get_keys_ref()})
@@ -308,8 +309,8 @@ ATLib::Std::Collections::Dictionary - キーを使用して要素にアクセス
     }
 
     $instance->remove(q{Hello});
-    $result = $instance->contains_key(q{Hello});  #0
-    $result = $instance->contains_value(q{world.});  #0
+    $result = $instance->contains_key(q{Hello});  # ATLib::Std::Bool->false
+    $result = $instance->contains_value(q{world.});  # ATLib::Std::Bool->false
     $count = $instance->count();  #0
 
     $instance->clear();
@@ -341,7 +342,7 @@ ATLib::Std::Collections::Dictionary は、ATLib::Stdで提供される L<< Mouse
 
 =head1 プロパティ
 
-=head2 C<< $element = $instance->items($key, $value); -E<gt> T2 >>
+=head2 C<< $element = $instance->item($key, $value); -E<gt> T2 >>
 
 $keyに対応する値を取得します。または、$keyに対応する値 $valueを設定します。
 $keyが存在しない場合は、例外L<< ATLib::Std::Exception::Argument >>が発生します。
@@ -361,11 +362,11 @@ $keyが存在しない場合は、例外L<< ATLib::Std::Exception::Argument >>�
 コレクションに格納されている値を配列の参照で取得します。
 C<< $instance->get_keys_ref() >>で取得したキーの順序で取得されます。
 
-=head2 C<< $result = $instance->contains_key($key); >>
+=head2 C<< $result = $instance->contains_key($key); >> -E<gt> L<< ATLib::Std::Bool >>
 
 $keyがコレクションに存在するかどうかを判定して返します。
 
-=head2 C<< $result = $instance->contains_value($value); >>
+=head2 C<< $result = $instance->contains_value($value); >> -E<gt> L<< ATLib::Std::Bool >>
 
 $valueがコレクションに存在するかどうかを判定して返します。
 
@@ -382,7 +383,7 @@ $keyの型がundefか$instance->T1型ではない場合は、例外L<< ATLib::St
 $valueの型がundefか$instance->T2型ではない場合は、例外L<< ATLib::Std::Exception::Argument >>が発生します。
 $keyが既にコレクションに存在する場合は、例外L<< ATLib::Std::Exception::Argument >>が発生します。
 
-=head2 C<< $result = $instance->remove($key); >>
+=head2 C<< $result = $instance->remove($key); >> -E<gt> L<< ATLib::Std::Bool >>
 
 $keyに対応するエントリーをインスタンスから削除します。
 エントリーが削除できたかどうかを示す値を返します。
@@ -393,7 +394,7 @@ atdev01 E<lt>mine_t7 at hotmail.comE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2020-2023 atdev01.
+Copyright (C) 2020-2025 atdev01.
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms of the Artistic License 2.0. For details,

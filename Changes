@@ -2,6 +2,37 @@ Revision history for Perl extension ATLib-Std
 
 {{$NEXT}}
 
+v0.4.0 2025-08-17T22:43:30Z
+
+    - ATLib::Std::Boolを追加 (破壊的な変更)
+    - ATLib::Std::String->equals()はATLib::Std::Boolを返却するように変更
+    - ATLib::Std::String->is_undef_or_empty()はATLib::Std::Boolを返却するように変更
+    - ATLib::Std::String->starts_with()はATLib::Std::Boolを返却するように変更
+    - ATLib::Std::String->ends_with()はATLib::Std::Boolを返却するように変更
+    - ATLib::Std::String->replace()メソッドを追加
+    - ATLib::Std::Radix->equals()はATLib::Std::Boolを返却するように変更
+    - ATLib::Std::DateTime->compare()メソッドを追加
+    - ATLib::Std::DateTime->equals()メソッドを追加
+    - ATLib::Std::DateTime->is_utcはATLib::Std::Boolを返却するように変更
+    - ATLib::Std::DateTime->in_leap_secondはATLib::Std::Boolを返却するように変更
+    - ATLib::Std::DateTime->is_leap_yearはATLib::Std::Boolを返却するように変更
+    - ATLib::Std::DateTime->parse_exact()メソッドを追加
+    - ATLib::Std::Maybe->has_valueはATLib::Std::Boolを返却するように変更
+    - ATLib::Std::Maybe->equals()はATLib::Std::Boolを返却するように変更
+    - ATLib::Std::Collections::List->contains()はATLib::Std::Boolを返却するように変更
+    - ATLib::Std::Collections::Dictionary->contains()はATLib::Std::Boolを返却するように変更
+    - ATLib::Std::Collections::Dictionary->contains_key()はATLib::Std::Boolを返却するように変更
+    - ATLib::Std::Collections::Dictionary->contains_value()はATLib::Std::Boolを返却するように変更
+    - ATLib::Std::Collections::Dictionary->remove()はATLib::Std::Boolを返却するように変更
+    - ATLib::Std::Collections::List->remove()はATLib::Std::Boolを返却するように変更
+    - ATLib::Std::Exception::InvalidOperationを追加
+    - ATLib::Std::Exception->new({message => $message})は$messageをATLib::Std::Stringに変換するように変更
+    - ATLib::Std::Exception::InvalidCastを追加
+    - ATLib::Std::Exception::Formatを追加
+    - ATLib::Std::Role::Collection は item プロパティを要求するように変更 (破壊的な変更)
+    - ATLib::Std::Collections::List->items プロパティは item に変更 (破壊的な変更)
+    - ATLib::Std::Collections::Dictionary->items プロパティは item に変更 (破壊的な変更)
+
 v0.3.1 2023-08-02T22:25:29Z
 
     - ATLib::Std::Any->type_nameの修正に関するテストを追加

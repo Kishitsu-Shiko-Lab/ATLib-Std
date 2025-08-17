@@ -62,7 +62,7 @@ is($number_instance->compare(q{4649}), 1);
 is($number_instance->compare($number_instance), 0);
 
 #18
-is($number_instance->equals(q{4649}), 0);
+ok(!$number_instance->equals(q{4649}));
 
 #19
 is($number_instance->_can_equals($value), 0);

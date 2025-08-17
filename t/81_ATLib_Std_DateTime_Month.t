@@ -86,7 +86,7 @@ is($instance->last_day, 31);
 #18
 $month = 2;
 $instance = $class->from($year_ref, $class->to_epoch($month));
-is($class_year->is_leap_year($year), 0);
+ok(!$class_year->is_leap_year($year));
 
 #19
 is($instance->last_day, 28);
@@ -96,7 +96,7 @@ $year = 2020;
 $month = 2;
 $year_ref = $class_year->from($class_year->to_epoch($year));
 $instance = $class->from($year_ref, $class->to_epoch($month));
-is($class_year->is_leap_year($year), 1);
+ok($class_year->is_leap_year($year));
 
 #21
 is($instance->last_day, 29);

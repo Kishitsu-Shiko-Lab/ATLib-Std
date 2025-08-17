@@ -4,6 +4,7 @@ extends 'ATLib::Std::Any';
 with 'ATLib::Std::Role::Generic';
 
 use ATLib::Utils qw{as_type_of is_number};
+use ATLib::Std::Bool;
 use ATLib::Std::String;
 use ATLib::Std::Exception::Argument;
 
@@ -62,8 +63,8 @@ sub of
 sub has_value
 {
     my $self = shift;
-    return 1 if defined $self->value;
-    return 0;
+    return ATLib::Std::Bool->true if defined $self->value;
+    return ATLib::Std::Bool->false;
 }
 
 sub as_string
@@ -117,7 +118,7 @@ sub equals
     my $self = shift;
     my $target = shift;
 
-    return $self->compare($target) == 0 ? 1 : 0;
+    return $self->compare($target) == 0 ? ATLib::Std::Bool->true : ATLib::Std::Bool->false;
 }
 
 __PACKAGE__->meta->make_immutable();
@@ -128,16 +129,15 @@ no Mouse;
 
 =head1 名前
 
-ATLib::Std::Maybe - 未定義値を値として持つこと許容可能にするジェネリックなクラス
+ATLib::Std::Maybe - 未定義値を値として持つこと許容可能にするジェネリックな標準型
 
 =head1 バージョン
 
-この文書は ATLib::Std version v0.3.1 について説明しています。
+この文書は ATLib::Std version v0.4.0 について説明しています。
 
 =head1 概要
 
-    use ATLib::Std::Maybe;
-    use ATLib::Std::String;
+    use ATLib::Std;
 
     $instance = ATLib::Std::Maybe->of(q{ATLib::Std::String});
     # Or
@@ -172,6 +172,10 @@ $Tが値型ではない場合は、例外L<< ATLib::Std::Exception::Argument >>�
 
 =head1 プロパティ
 
+=head2 C<< $result = $instance->has_value >> -E<gt> L<< ATLib::Std::Bool >>
+
+$instance->valueが値に値が設定されているかどうかを判定します。
+
 =head2 C<< $value = $instance->value($value); -E<gt> Maybe[$T]  >>
 
 インスタンスに格納されている値、参照を取得、または設定します。
@@ -194,7 +198,7 @@ $Tが値型ではない場合は、例外L<< ATLib::Std::Exception::Argument >>�
 既定の実装では、$targetが本インスタンス (ここでは $instance) の派生クラスであるかを判定して結果を返します。
 必要な場合は派生クラスでオーバーライドします。
 
-=head2 C<< $result = $instance->equals($target); >>
+=head2 C<< $result = $instance->equals($target); >> -E<gt> L<< ATLib::Std::Bool >>
 
 $targetが$instanceと等価であるかを判定します。
 既定の実装では、比較可能チェックC<< $instance->_can_equals($target) >>を通過後に参照等価性チェックを行います。
@@ -206,7 +210,7 @@ atdev01 E<lt>mine_t7 at hotmail.comE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2020-2023 atdev01.
+Copyright (C) 2020-2025 atdev01.
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms of the Artistic License 2.0. For details,

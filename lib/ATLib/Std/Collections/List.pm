@@ -4,6 +4,7 @@ extends 'ATLib::Std::Any';
 with qw{ATLib::Std::Role::Generic ATLib::Std::Role::Collection};
 
 use ATLib::Utils qw{as_type_of equals};
+use ATLib::Std::Bool;
 use ATLib::Std::String;
 use ATLib::Std::Int;
 use ATLib::Std::Maybe;
@@ -16,7 +17,7 @@ has '_items_ref' => (
     lazy_build => 1,
 );
 
-sub items
+sub item
 {
     my $self = shift;
     my $index = shift;
@@ -101,7 +102,7 @@ sub contains
 
     if ($self->count() == 0)
     {
-        return 0;
+        return ATLib::Std::Bool->false;
     }
 
     if (!defined $element)
@@ -110,10 +111,10 @@ sub contains
         {
             if (!defined $self->_items_ref->[$i])
             {
-                return 1;
+                return ATLib::Std::Bool->true;
             }
         }
-        return 0;
+        return ATLib::Std::Bool->false;
     }
 
     if (!as_type_of($self->T, $element))
@@ -129,22 +130,22 @@ sub contains
     {
         for my $i (0 .. $self->count() - 1)
         {
-            if ($element->equals($self->items($i)))
+            if ($element->equals($self->item($i)))
             {
-                return 1;
+                return ATLib::Std::Bool->true;
             }
         }
-        return 0;
+        return ATLib::Std::Bool->false;
     }
 
     for my $i (0 .. $self->count() - 1)
     {
         if (equals($self->T, $self->_items_ref->[$i], $element))
         {
-            return 1;
+            return ATLib::Std::Bool->true;
         }
     }
-    return 0;
+    return ATLib::Std::Bool->false;
 }
 
 sub clear
@@ -195,7 +196,7 @@ sub remove
 
     if ($self->count() == 0)
     {
-        return 0;
+        return ATLib::Std::Bool->false;
     }
 
     if (!as_type_of($self->T, $element))
@@ -210,13 +211,13 @@ sub remove
     {
         for my $i (0 .. $self->count() - 1)
         {
-            if ($element->equals($self->items($i)))
+            if ($element->equals($self->item($i)))
             {
                 $self->remove_at($i);
                 return 1;
             }
         }
-        return 0;
+        return ATLib::Std::Bool->false;
     }
 
     for my $i (0 .. $self->count() - 1)
@@ -224,10 +225,10 @@ sub remove
         if (equals($self->T, $self->_items_ref->[$i], $element))
         {
             $self->remove_at($i);
-            return 1;
+            return ATLib::Std::Bool->true;
         }
     }
-    return 0;
+    return ATLib::Std::Bool->false;
 }
 
 __PACKAGE__->meta->make_immutable();
@@ -243,7 +244,7 @@ ATLib::Std::Collections::List - 索引を使用して要素にアクセスでき
 
 =head1 バージョン
 
-この文書は ATLib::Std version v0.3.0 について説明しています。
+この文書は ATLib::Std version v0.4.0 について説明しています。
 
 =head1 概要
 
@@ -258,11 +259,11 @@ ATLib::Std::Collections::List - 索引を使用して要素にアクセスでき
 
     $instance->add($string);
     $instance->add($string);
-    $result = $instance->contains($string); # 1
+    $result = $instance->contains($string); # ATLib::Std::Bool->true
     $count = $instance->count(); # 2
 
     $instance->remove($string);
-    $result = $instance->contains($string); # 1
+    $result = $instance->contains($string); # ATLib::Std::Bool->true
     $count = $instance->count(); # 1
 
     $instance->remove_at(0);
@@ -299,7 +300,7 @@ $T型の要素を格納するリストのインスタンスを生成します。
 
 =head1 プロパティ
 
-=head2 C<< $element = $instance->items($index, $element); -E<gt> T >>
+=head2 C<< $element = $instance->item($index, $element); -E<gt> T >>
 
 索引 $index の位置にある要素を取得します。
 または、索引 $index の位置に要素 $element を設定します。$elementの型がundefか$instance->T型ではない場合は
@@ -311,7 +312,7 @@ $T型の要素を格納するリストのインスタンスを生成します。
 
 =head1 インスタンスメソッド
 
-=head2 C<< $result = $instance->contains($element); >>
+=head2 C<< $result = $instance->contains($element); >> -E<gt> L<< ATLib::Std::Bool >>
 
 要素$elementがインスタンスに格納されているかどうかを判定して返します。
 
@@ -332,10 +333,10 @@ $elementの型がundefか$instance->T型ではない場合は、例外L<< ATLib:
 $indexが要素数以上の場合は、例外L<< ATLib::Std::Exception::Argument >>が発生します。
 また、操作結果のインスタンスを返します。
 
-=head2 C<< $result = $instance->remove($element); >>
+=head2 C<< $result = $instance->remove($element); >> -E<gt> L<ATLib::Std::Bool>
 
 インスタンスの要素から最初に見つかった要素$elementを削除します。
-要素が削除できたかどうかを示す値を返します。
+要素が削除できたかどうかを示す真偽値を返します。
 
 =head1 AUTHOR
 
@@ -343,7 +344,7 @@ atdev01 E<lt>mine_t7 at hotmail.comE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2020-2023 atdev01.
+Copyright (C) 2020-2025 atdev01.
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms of the Artistic License 2.0. For details,

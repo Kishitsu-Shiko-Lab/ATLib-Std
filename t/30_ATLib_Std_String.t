@@ -11,27 +11,27 @@ my $class = q{ATLib::Std::String};
 use_ok($class);
 
 #2
-is($class->is_undef_or_empty(q{String as type of bare.}), 0);
+ok(!$class->is_undef_or_empty(q{String as type of bare.}));
 
 #3
-is($class->is_undef_or_empty(q{}), 1);
+ok($class->is_undef_or_empty(q{}));
 
 #4
 my $base_instance = ATLib::Std::Any->new();
 my $string_value = q{Hello, ATLib::Std::String.};
 my $instance = undef;
-is($class->is_undef_or_empty($instance), 1);
+ok($class->is_undef_or_empty($instance));
 
 #5
 $instance = ATLib::Std::String->from(q{});
-is($class->is_undef_or_empty($instance), 1);
+ok($class->is_undef_or_empty($instance));
 
 #6
 is($instance->type_name, $class);
 
 #7
 $instance = ATLib::Std::String->from($string_value);
-is($class->is_undef_or_empty($instance), 0);
+ok(!$class->is_undef_or_empty($instance));
 
 #8
 isa_ok($instance, $class);
@@ -141,25 +141,25 @@ is($instance->compare(q{Hello, ATLib::Std}), 1);
 is($instance->compare($string_value_bigger), -1);
 
 #43
-is($instance->equals($instance), 1);
+ok($instance->equals($instance));
 
 #44
-is($instance->equals($instance_bigger), 0);
+ok(!$instance->equals($instance_bigger));
 
 #45
 is($instance->_can_equals($string_value), 0);
 
 #46
-is($instance->equals($string_value), 1);
+ok($instance->equals($string_value));
 
 #47
-is($instance->equals($string_value_bigger), 0);
+ok(!$instance->equals($string_value_bigger));
 
 #48
 is($instance->_can_equals(undef), 0);
 
 #49
-is($instance->equals(undef), 0);
+ok(!$instance->equals(undef));
 
 #50
 my $string_value_concat = q{ And ATLib framework.};
@@ -194,17 +194,17 @@ is($mixed_string->get_length(), 16);
 
 #58
 my $starts = $class->from(q{Mixed 混合});
-is($mixed_string->starts_with($starts), 1);
+ok($mixed_string->starts_with($starts));
 
 #59
 my $ends = $class->from(q{混合 String.});
-is($mixed_string->starts_with($ends), 0);
+ok(!$mixed_string->starts_with($ends));
 
 #60
-is($mixed_string->ends_with($starts), 0);
+ok(!$mixed_string->ends_with($starts));
 
 #61
-is($mixed_string->ends_with($ends), 1);
+ok($mixed_string->ends_with($ends));
 
 #62
 my $search = q{混合};

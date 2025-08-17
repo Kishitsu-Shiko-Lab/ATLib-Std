@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-use Test::More tests => 210;
+use Test::More tests => 211;
 
 #1
 my $T = q{ATLib::Std::String};
@@ -16,7 +16,7 @@ isa_ok($instance, $class);
 is($instance->type_name, $class);
 
 #4
-is($instance->count()->equals(0), 1);
+ok($instance->count()->equals(0));
 
 #5
 use ATLib::Std::Any;
@@ -35,57 +35,60 @@ is($instance->count(), $number_of_list);
 for my $i (0 .. $number_of_list - 1)
 {
     my $string = $T->from($test_string[$i]);
-    is($instance->contains($string), 1);
-    isa_ok($instance->items($i), $T);
+    ok($instance->contains($string));
+    isa_ok($instance->item($i), $T);
 }
 
 #106
-is($instance->contains(undef), 0);
+ok(!$instance->contains(undef));
 
 #107
 $instance->add(undef);
 ++$number_of_list;
-is($instance->contains(undef), 1);
+ok($instance->contains(undef));
 
 #108
 is($instance->count(), $number_of_list);
 
 #109
-$instance->remove(undef);
+my $result = $instance->remove(undef);
 --$number_of_list;
-is($instance->contains(undef), 0);
+ok($result);
 
 #110
-is($instance->count(), $number_of_list);
+ok(!$instance->contains(undef));
 
 #111
-is($instance->items(30), $T->from($test_string[30]));
+is($instance->count(), $number_of_list);
 
 #112
-isa_ok($instance->items(30), $T);
+is($instance->item(30), $T->from($test_string[30]));
 
 #113
+isa_ok($instance->item(30), $T);
+
+#114
 $instance->remove_at(30);
 --$number_of_list;
 is($instance->count(), $number_of_list);
 
-#114
-isnt($instance->items(30), $T->from($test_string[30]));
+#115
+isnt($instance->item(30), $T->from($test_string[30]));
 splice(@test_string, 30, 1);
 
-#115 - 163
+#116 - 164
 for my $i (0 .. $number_of_list - 1)
 {
     my $string = $T->from($test_string[$i]);
-    is($instance->contains($string), 1);
+    ok($instance->contains($string));
 }
 
-#164
+#165
 $instance->clear();
 $number_of_list = 0;
 is($instance->count(), $number_of_list);
 
-#165
+#166
 my @test_int = qw{1 2 3 4 5 60 700 8000 90000 100000};
 push @test_int, undef;
 $number_of_list = scalar(@test_int);
@@ -93,26 +96,26 @@ $T = q{ATLib::Std::Int};
 $instance = $class->from($T, @test_int);
 isa_ok($instance, $class);
 
-#166
+#167
 is($instance->count(), $number_of_list);
 
-#167 - 177, 178 - 188
+#168 - 178, 179 - 189
 use ATLib::Utils qw{as_type_of};
 for my $i (0 .. $number_of_list - 1)
 {
-    is($instance->items($i), $test_int[$i]);
-    is(as_type_of($instance->T, $instance->items($i)), 1);
+    is($instance->item($i), $test_int[$i]);
+    is(as_type_of($instance->T, $instance->item($i)), 1);
 }
 
 # Basic type of Mouse
 $T = q{Int};
 $instance = $class->from($T, @test_int);
 
-#189 - 199, 200 - 210
+#190 - 200, 201 - 211
 for my $i (0 .. $number_of_list - 1)
 {
-    is($instance->items($i), $test_int[$i]);
-    is(as_type_of($instance->T, $instance->items($i)), 1);
+    is($instance->item($i), $test_int[$i]);
+    is(as_type_of($instance->T, $instance->item($i)), 1);
 }
 
 done_testing();

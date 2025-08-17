@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-use Test::More tests => 17;
+use Test::More tests => 18;
 use English qw{ -no_match_vars };
 
 use ATLib::Std::String;
@@ -106,6 +106,11 @@ if ($class->caught($EVAL_ERROR))
 is($pass_point_1, 0);
 
 #<<
+
+#18
+my $plain_message = 'Plain message';
+my $exception = ATLib::Std::Exception->new({message => $plain_message});
+isa_ok($exception->message, $class_as_string);
 
 done_testing();
 __END__

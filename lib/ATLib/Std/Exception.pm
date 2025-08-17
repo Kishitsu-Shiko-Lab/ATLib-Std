@@ -4,7 +4,9 @@ extends 'ATLib::Std::Any';
 
 use Carp;
 
+use ATLib::Utils qw(as_type_of);
 use ATLib::Std::String;
+use ATLib::Std::Collections::Dictionary;
 
 # Overloads
 use overload(
@@ -32,6 +34,24 @@ sub BUILD
     $self->_set_stack_trace(ATLib::Std::String->from(Carp::longmess()));
 
     return;
+}
+
+# Builder
+sub BUILDARGS
+{
+    my ($class, $args_ref) = @_;
+
+    $class->SUPER::BUILDARGS($args_ref);
+
+    if (exists $args_ref->{message})
+    {
+        if (!as_type_of('ATLib::Std::String', $args_ref->{message}))
+        {
+            $args_ref->{message} = ATLib::Std::String->from($args_ref->{message});
+        }
+    }
+
+    return $args_ref;
 }
 
 # Class Methods
@@ -80,11 +100,11 @@ __END__
 
 =head1 名前
 
-ATLib::Std::Exception - ATLib::Stdにおける標準型で構造化例外を表すクラス
+ATLib::Std::Exception - 構造化例外を表す標準型
 
 =head1 バージョン
 
-この文書は ATLib::Std version v0.2.0 について説明しています。
+この文書は ATLib::Std version v0.4.0 について説明しています。
 
 =head1 概要
 
@@ -108,7 +128,7 @@ ATLib::Std::Exception - ATLib::Stdにおける標準型で構造化例外を表�
 
     if (ATLib::Std::Exception->caught($EVAL_ERROR))
     {
-      # 構造化例外を補足した場合の処理
+      # 構造化例外を捕捉した場合の処理
     }
     else
     {
@@ -132,7 +152,7 @@ ATLib::Std::Exception は、ATLib::Stdで提供される L<< Mouse >> で実装�
 
 =head2 C<< $instance = ATLib::Std::Exception->new({ message => $message }); >>
 
-C<< $message -E<gt> >> L<< ATLib::Std::String >>
+C<< $message >> -E<gt> L<< ATLib::Std::String >>
 
 $messageを例外メッセージとするインスタンスを生成します。
 $messageは省略可能です。
@@ -197,7 +217,7 @@ atdev01 E<lt>mine_t7 at hotmail.comE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2020-2023 atdev01.
+Copyright (C) 2020-2025 atdev01.
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms of the Artistic License 2.0. For details,

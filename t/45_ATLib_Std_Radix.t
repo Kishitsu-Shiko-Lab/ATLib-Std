@@ -43,18 +43,18 @@ is($carry, -1);
 is($instance, 59);
 
 #12
-is($instance->equals(59), 1);
+ok($instance->equals(59));
 
 #13
 use ATLib::Std::Int;
-is($instance->equals(ATLib::Std::Int->from(59)), 1);
+ok($instance->equals(ATLib::Std::Int->from(59)));
 
 #14
 $carry = $instance->add($radix * 30 + 9);
 is($carry, 31);
 
 #15
-is($instance->equals(8), 1);
+ok($instance->equals(8));
 
 #16
 $carry = $instance->subtract($radix * 2 + 9);

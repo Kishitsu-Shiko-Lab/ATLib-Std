@@ -3,6 +3,7 @@ use Mouse;
 extends 'ATLib::Std::Any';
 
 use ATLib::Utils qw{is_int};
+use ATLib::Std::Bool;
 use ATLib::Std::String;
 use ATLib::Std::Number;
 use ATLib::Std::Int;
@@ -163,7 +164,7 @@ sub _can_equals
 
     if ($target->isa($self->get_full_name()) || $target->isa(q{ATLib::Std::Number}))
     {
-        if ($target->can(q{_value}))
+        if (blessed($target) && $target->can(q{_value}))
         {
             return 1;
         }
@@ -203,7 +204,7 @@ sub equals
     my $self = shift;
     my $target = shift;
 
-    return $self->compare($target) == 0 ? 1 : 0;
+    return $self->compare($target) == 0 ? ATLib::Std::Bool->true : ATLib::Std::Bool->false;
 }
 
 __PACKAGE__->meta->make_immutable();
@@ -214,15 +215,15 @@ no Mouse;
 
 =head1 名前
 
-ATLib::Std::Radix - ATLib::Stdにおける基数クラス
+ATLib::Std::Radix - 基数計算に使用する標準型
 
 =head1 バージョン
 
-この文書は ATLib::Std version v0.3.1 について説明しています。
+この文書は ATLib::Std version v0.4.0 について説明しています。
 
 =head1 概要
 
-    use ATLib::Std::Radix;
+    use ATLib::Std;
 
     my $instance = ATLib::Std::Radix->from(60, 0);
 
@@ -255,15 +256,15 @@ $radixは 0より大きい値を設定する必要があります。また、$va
 
 インスタンスの L<< Mouse >> における型名を取得します。
 
-=head2 C<< $radix = $instance->radix; ->E<<gt>> Int >>
+=head2 C<< $radix = $instance->radix; ->E<gt> Int >>
 
 インスタンスに格納されている基数を取得します。
 
-=head2 C<< $value = $instance->value; ->E<<gt>> Int >>
+=head2 C<< $value = $instance->value; ->E<gt> Int >>
 
 インスタンスに格納されている値を取得します。
 
-=head2 C<< $value = $instance->max_value; ->E<<gt>> Int >>
+=head2 C<< $value = $instance->max_value; ->E<gt> Int >>
 
 インスタンスに格納できる最大値を取得します。
 
@@ -306,7 +307,7 @@ $radixは 0より大きい値を設定する必要があります。また、$va
 既定の実装では、$targetが本インスタンス (ここでは $instance) の派生クラスであるかを判定して結果を返します。
 必要な場合は派生クラスでオーバーライドします。
 
-=head2 C<< $result = $instance->equals($target); >>
+=head2 C<< $result = $instance->equals($target); >> -E<gt> L<< ATLib::Std::Bool >>
 
 $targetが$instanceと等価であるかを判定します。
 既定の実装では、比較可能チェックC<< $instance->_can_equals($target) >>を通過後に参照等価性チェックを行います。
@@ -318,7 +319,7 @@ atdev01 E<lt>mine_t7 at hotmail.comE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2020-2023 atdev01.
+Copyright (C) 2020-2025 atdev01.
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms of the Artistic License 2.0. For details,

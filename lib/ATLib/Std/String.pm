@@ -3,6 +3,7 @@ use Mouse;
 extends 'ATLib::Std::Any';
 
 use ATLib::Utils qw{ as_type_of };
+use ATLib::Std::Bool;
 
 # Overloads
 use overload(
@@ -108,10 +109,10 @@ sub is_undef_or_empty
     my $class = shift;
     my $target = shift;
 
-    return 1 if !defined $target;
-    return 1 if blessed($target) && $target->can(q{_value}) && $target eq q{};
-    return 1 if $target eq q{};
-    return 0;
+    return ATLib::Std::Bool->true if !defined $target;
+    return ATLib::Std::Bool->true if blessed($target) && $target->can(q{_value}) && $target eq q{};
+    return ATLib::Std::Bool->true if $target eq q{};
+    return ATLib::Std::Bool->false;
 }
 
 # Instance Methods
@@ -128,7 +129,7 @@ sub _can_equals
 
     if (!ATLib::Std::String->is_undef_or_empty($target) && $self->SUPER::_can_equals($target))
     {
-        if ($target->can(q{_value}))
+        if (blessed($target) && $target->can(q{_value}))
         {
             return 1;
         }
@@ -160,7 +161,7 @@ sub equals
     my $self = shift;
     my $target = shift;
 
-    return $self->compare($target) == 0 ? 1 : 0;
+    return $self->compare($target) == 0 ? ATLib::Std::Bool->true : ATLib::Std::Bool->false;
 }
 
 sub get_length
@@ -176,9 +177,9 @@ sub starts_with
 
     if ($self =~ m{^($start)}ms)
     {
-        return 1;
+        return ATLib::Std::Bool->true;
     }
-    return 0;
+    return ATLib::Std::Bool->false;
 }
 
 sub ends_with
@@ -188,9 +189,9 @@ sub ends_with
 
     if ($self =~ m{($end)$}ms)
     {
-        return 1;
+        return ATLib::Std::Bool->true;
     }
-    return 0;
+    return ATLib::Std::Bool->false;
 }
 
 sub index_of
@@ -238,6 +239,31 @@ sub trim
     return __PACKAGE__->from($after->as_string());
 }
 
+sub replace
+{
+    my $self = shift;
+    my $old_string = shift;
+    my $new_string = shift;
+
+    if ($self->is_undef_or_empty($old_string))
+    {
+        ATLib::Std::Exception::Argument->new({
+            message    => q{$old_value is not specified.},
+            param_name => q{$old_value},
+        })->throw();
+    }
+
+    if ($self->is_undef_or_empty($new_string))
+    {
+        $new_string = ATLib::Std::String->from('');
+    }
+
+    my $replaced = $self->as_string();
+    $replaced =~ s{ @{[quotemeta($old_string)]} }{ $new_string }gxms;
+
+    return __PACKAGE__->from($replaced);
+}
+
 sub substring
 {
     my $self = shift;
@@ -281,15 +307,15 @@ __END__
 
 =head1 名前
 
-ATLib::Std::String - ATLib::Stdでにおける標準型で文字列を表すクラス
+ATLib::Std::String - 文字列を表す標準型
 
 =head1 バージョン
 
-この文書は ATLib::Std version v0.3.1 について説明しています。
+この文書は ATLib::Std version v0.4.0 について説明しています。
 
 =head1 概要
 
-    use ATLib::Std::String;
+    use ATLib::Std;
 
     my $instance = ATLib::Std::String->from(q{Hello, ATLib::Std::String});
     my $instance2 = ATLib::Std::String->from($instance);
@@ -304,12 +330,12 @@ ATLib::Std::String - ATLib::Stdでにおける標準型で文字列を表すク�
     # You can use operator to compare; lt, le, gt, ge, eq, and cmp.
     my $result = $instance cmp q{Hello}; # -1
 
-    my $result = $instance->equals(q{Hello, ATLib::Std::String}); # 1
+    my $result = $instance->equals(q{Hello, ATLib::Std::String});
 
     my $new_instance = $instance . q{, World.};
 
-    my $string = $instance->starts_with(q{Hello,});
-    my $string = $instance->ends_with(q{World.});
+    my $result = $instance->starts_with(q{Hello,});
+    my $result = $instance->ends_with(q{World.});
 
     my $index = $instance->index_of(q{,}); # 5
 
@@ -319,6 +345,8 @@ ATLib::Std::String - ATLib::Stdでにおける標準型で文字列を表すク�
     my $string = $instance->trim_start();
     my $string = $instance->trim_end();
     my $string = $instance->trim();
+
+    my $string = $instance->replace(',', ''); # Hello ATLib::Std::String
 
     my $string = $instance->substring(0, 5); # Hello
 
@@ -358,7 +386,7 @@ $valueがATLib::Std::Stringのインスタンスの場合は、その値で新�
 
 =head1 クラスメソッド
 
-=head2 C<< $result = ATLib::Std::String->is_undef_or_empty($string); >>
+=head2 C<< $result = ATLib::Std::String->is_undef_or_empty($string); >> -E<gt> L<< ATLib::Std::Bool >>
 
 $stringがundefか、または空文字列かどうかを判定します。
 
@@ -390,7 +418,7 @@ $stringがundefか、または空文字列かどうかを判定します。
 $instanceと$targetを文字列比較します。
 等しい場合は 0、$instanceが大きい場合は 1、小さい場合は -1を返します。
 
-=head2 C<< $result = $instance->equals($target); >>
+=head2 C<< $result = $instance->equals($target); >> -E<gt> L<< ATLib::Std::Bool >>
 
 $targetが$instanceと等価であるかを判定します。
 判定には、C<< $instance->compare($target) >> が使用されます。
@@ -400,11 +428,11 @@ $targetが$instanceと等価であるかを判定します。
 
 格納されている文字列の長さを返します。
 
-=head2 C<< $result = $instance->starts_with($start);  >>
+=head2 C<< $result = $instance->starts_with($start);  >> -E<gt> L<< ATLib::Std::Bool >>
 
 文字列が指定した文字列 $start で始まるかどうかを判定します。
 
-=head2 C<< $result = $instance->ends_with($end);  >>
+=head2 C<< $result = $instance->ends_with($end);  >> -E<gt> L<< ATLib::Std::Bool >>
 
 文字列が指定した文字列 $end で終わるかどうかを判定します。
 
@@ -432,6 +460,11 @@ $targetが$instanceと等価であるかを判定します。
 
 文字列の先頭と末尾の空白を削除した新しい文字列を返します。
 
+=head2 C<< $string = $instance->replace($old_string, $new_string); >> -E<gt> >> L<< ATLib::Std::String >>
+
+文字列中の $old_string を $new_string に置換した結果の新しい文字列を返します。
+$old_string が未指定の場合は、例外 L<< ATLib::Std::Exception::Argument >> が発生します。
+
 =head2 C<< $string = $instance->substring($offset[, $length]); -E<gt> >> L<< ATLib::Std::String >>
 
 文字列の指定した位置 $offset から指定した長さ $length の新しい部分文字列を返します。
@@ -447,7 +480,7 @@ atdev01 E<lt>mine_t7 at hotmail.comE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2020-2023 atdev01.
+Copyright (C) 2020-2025 atdev01.
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms of the Artistic License 2.0. For details,

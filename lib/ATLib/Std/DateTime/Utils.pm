@@ -75,7 +75,7 @@ sub _insert_leap_seconds_utc_with_year_of_month_of
     my $leap_seconds_utc_year_of_month_of;
     if ($leap_seconds_utc_year_of->contains_key($year))
     {
-        $leap_seconds_utc_year_of_month_of = $leap_seconds_utc_year_of->items($year);
+        $leap_seconds_utc_year_of_month_of = $leap_seconds_utc_year_of->item($year);
         $leap_seconds_utc_year_of_month_of->add($month, $seconds);
     }
     else
@@ -94,13 +94,13 @@ sub get_leap_seconds_utc
 
     if ($leap_seconds_utc_year_of->contains_key($second_ref->year))
     {
-        my $leap_seconds_utc_year_of_month_of = $leap_seconds_utc_year_of->items($second_ref->year);
+        my $leap_seconds_utc_year_of_month_of = $leap_seconds_utc_year_of->item($second_ref->year);
         if ($leap_seconds_utc_year_of_month_of->contains_key($second_ref->month))
         {
             if ($second_ref->day == $second_ref->last_day
                 && $second_ref->hour == 23 && $second_ref->minute == 59)
             {
-                return $leap_seconds_utc_year_of_month_of->items($second_ref->month);
+                return $leap_seconds_utc_year_of_month_of->item($second_ref->month);
             }
         }
     }
@@ -119,7 +119,7 @@ ATLib::Std::DateTime::Utils - ATLib::Std::DateTimeの部分管理クラスで使
 
 =head1 バージョン
 
-この文書は ATLib::Std version v0.3.1 について説明しています。
+この文書は ATLib::Std version v0.4.0 について説明しています。
 
 =head1 概要
 
@@ -164,7 +164,7 @@ atdev01 E<lt>mine_t7 at hotmail.comE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2020-2023 atdev01.
+Copyright (C) 2020-2025 atdev01.
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms of the Artistic License 2.0. For details,

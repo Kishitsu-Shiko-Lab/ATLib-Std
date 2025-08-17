@@ -229,6 +229,8 @@ package B::PADNAME {
 sub COP_SEQ_RANGE_HIGH;
 sub COP_SEQ_RANGE_LOW;
 sub FLAGS;
+sub GEN;
+sub IsUndef;
 sub LEN;
 sub OURSTASH;
 sub PARENT_FAKELEX_FLAGS;
@@ -296,11 +298,14 @@ sub HASH;
 }
 package B::SV {
 sub FLAGS;
+sub IsBOOL;
 sub MAGICAL;
 sub POK;
 sub REFCNT;
 sub ROK;
 sub SvTYPE;
+sub TRUE;
+sub TRUE_nomg;
 sub object_2svref;
 }
 package B::SVOP {
@@ -314,338 +319,6 @@ package B::UNOP_AUX {
 sub aux_list;
 sub string;
 }
-package Cairo {
-sub HAS_FT_FONT;
-sub HAS_PDF_SURFACE;
-sub HAS_PNG_FUNCTIONS;
-sub HAS_PS_SURFACE;
-sub HAS_RECORDING_SURFACE;
-sub HAS_SVG_SURFACE;
-sub LIB_VERSION;
-sub LIB_VERSION_ENCODE;
-sub VERSION_ENCODE;
-sub lib_version;
-sub lib_version_string;
-sub version;
-sub version_string;
-}
-package Cairo::Context {
-sub DESTROY;
-sub append_path;
-sub arc;
-sub arc_negative;
-sub clip;
-sub clip_extents;
-sub clip_preserve;
-sub close_path;
-sub copy_clip_rectangle_list;
-sub copy_page;
-sub copy_path;
-sub copy_path_flat;
-sub create;
-sub curve_to;
-sub device_to_user;
-sub device_to_user_distance;
-sub fill;
-sub fill_extents;
-sub fill_preserve;
-sub font_extents;
-sub get_antialias;
-sub get_current_point;
-sub get_dash;
-sub get_fill_rule;
-sub get_font_face;
-sub get_font_matrix;
-sub get_font_options;
-sub get_group_target;
-sub get_line_cap;
-sub get_line_join;
-sub get_line_width;
-sub get_matrix;
-sub get_miter_limit;
-sub get_operator;
-sub get_scaled_font;
-sub get_source;
-sub get_target;
-sub get_tolerance;
-sub glyph_extents;
-sub glyph_path;
-sub has_current_point;
-sub identity_matrix;
-sub in_clip;
-sub in_fill;
-sub in_stroke;
-sub line_to;
-sub mask;
-sub mask_surface;
-sub move_to;
-sub new_path;
-sub new_sub_path;
-sub paint;
-sub paint_with_alpha;
-sub path_extents;
-sub pop_group;
-sub pop_group_to_source;
-sub push_group;
-sub push_group_with_content;
-sub rectangle;
-sub rel_curve_to;
-sub rel_line_to;
-sub rel_move_to;
-sub reset_clip;
-sub restore;
-sub rotate;
-sub save;
-sub scale;
-sub select_font_face;
-sub set_antialias;
-sub set_dash;
-sub set_fill_rule;
-sub set_font_face;
-sub set_font_matrix;
-sub set_font_options;
-sub set_font_size;
-sub set_line_cap;
-sub set_line_join;
-sub set_line_width;
-sub set_matrix;
-sub set_miter_limit;
-sub set_operator;
-sub set_scaled_font;
-sub set_source;
-sub set_source_rgb;
-sub set_source_rgba;
-sub set_source_surface;
-sub set_tolerance;
-sub show_glyphs;
-sub show_page;
-sub show_text;
-sub show_text_glyphs;
-sub status;
-sub stroke;
-sub stroke_extents;
-sub stroke_preserve;
-sub tag_begin;
-sub tag_end;
-sub text_extents;
-sub text_path;
-sub transform;
-sub translate;
-sub user_to_device;
-sub user_to_device_distance;
-}
-package Cairo::FontFace {
-sub DESTROY;
-sub get_type;
-sub status;
-}
-package Cairo::FontOptions {
-sub DESTROY;
-sub create;
-sub equal;
-sub get_antialias;
-sub get_hint_metrics;
-sub get_hint_style;
-sub get_subpixel_order;
-sub hash;
-sub merge;
-sub set_antialias;
-sub set_hint_metrics;
-sub set_hint_style;
-sub set_subpixel_order;
-sub status;
-}
-package Cairo::Format {
-sub stride_for_width;
-}
-package Cairo::FtFontFace {
-sub create;
-}
-package Cairo::Gradient {
-sub add_color_stop_rgb;
-sub add_color_stop_rgba;
-sub get_color_stops;
-}
-package Cairo::ImageSurface {
-sub create;
-sub create_for_data;
-sub create_from_png;
-sub create_from_png_stream;
-sub get_data;
-sub get_format;
-sub get_height;
-sub get_stride;
-sub get_width;
-}
-package Cairo::LinearGradient {
-sub create;
-sub get_points;
-}
-package Cairo::Matrix {
-sub DESTROY;
-sub init;
-sub init_identity;
-sub init_rotate;
-sub init_scale;
-sub init_translate;
-sub invert;
-sub multiply;
-sub rotate;
-sub scale;
-sub transform_distance;
-sub transform_point;
-sub translate;
-}
-package Cairo::Path {
-sub DESTROY;
-sub FETCH;
-sub FETCHSIZE;
-}
-package Cairo::Path::Data {
-sub EXISTS;
-sub FETCH;
-sub FIRSTKEY;
-sub NEXTKEY;
-sub STORE;
-}
-package Cairo::Path::Point {
-sub FETCH;
-sub FETCHSIZE;
-sub STORE;
-}
-package Cairo::Path::Points {
-sub FETCH;
-sub FETCHSIZE;
-sub STORE;
-}
-package Cairo::Pattern {
-sub DESTROY;
-sub get_extend;
-sub get_filter;
-sub get_matrix;
-sub get_type;
-sub set_extend;
-sub set_filter;
-sub set_matrix;
-sub status;
-}
-package Cairo::PdfSurface {
-sub add_outline;
-sub create;
-sub create_for_stream;
-sub get_versions;
-sub restrict_to_version;
-sub set_metadata;
-sub set_page_label;
-sub set_size;
-sub set_thumbnail_size;
-sub version_to_string;
-}
-package Cairo::PsSurface {
-sub create;
-sub create_for_stream;
-sub dsc_begin_page_setup;
-sub dsc_begin_setup;
-sub dsc_comment;
-sub get_eps;
-sub get_levels;
-sub level_to_string;
-sub restrict_to_level;
-sub set_eps;
-sub set_size;
-}
-package Cairo::RadialGradient {
-sub create;
-sub get_circles;
-}
-package Cairo::RecordingSurface {
-sub create;
-sub get_extents;
-sub ink_extents;
-}
-package Cairo::Region {
-sub DESTROY;
-sub contains_point;
-sub contains_rectangle;
-sub create;
-sub equal;
-sub get_extents;
-sub get_rectangle;
-sub intersect;
-sub intersect_rectangle;
-sub is_empty;
-sub num_rectangles;
-sub status;
-sub subtract;
-sub subtract_rectangle;
-sub translate;
-sub union;
-sub union_rectangle;
-sub xor;
-sub xor_rectangle;
-}
-package Cairo::ScaledFont {
-sub DESTROY;
-sub create;
-sub extents;
-sub get_ctm;
-sub get_font_face;
-sub get_font_matrix;
-sub get_font_options;
-sub get_scale_matrix;
-sub get_type;
-sub glyph_extents;
-sub status;
-sub text_extents;
-sub text_to_glyphs;
-}
-package Cairo::SolidPattern {
-sub create_rgb;
-sub create_rgba;
-sub get_rgba;
-}
-package Cairo::Surface {
-sub DESTROY;
-sub copy_page;
-sub create_for_rectangle;
-sub create_similar;
-sub finish;
-sub flush;
-sub get_content;
-sub get_device_offset;
-sub get_fallback_resolution;
-sub get_font_options;
-sub get_mime_data;
-sub get_type;
-sub has_show_text_glyphs;
-sub mark_dirty;
-sub mark_dirty_rectangle;
-sub set_device_offset;
-sub set_fallback_resolution;
-sub set_mime_data;
-sub show_page;
-sub status;
-sub supports_mime_type;
-sub write_to_png;
-sub write_to_png_stream;
-}
-package Cairo::SurfacePattern {
-sub create;
-sub get_surface;
-}
-package Cairo::SvgSurface {
-sub create;
-sub create_for_stream;
-sub get_versions;
-sub restrict_to_version;
-sub version_to_string;
-}
-package Cairo::ToyFontFace {
-sub create;
-sub get_family;
-sub get_slant;
-sub get_weight;
-}
 package Carp {
 sub _maybe_isa;
 sub downgrade;
@@ -653,6 +326,14 @@ sub is_utf8;
 }
 package Clone {
 sub clone($;$) ;
+}
+package Compiler::Lexer {
+sub DESTROY;
+sub _new;
+sub deparse;
+sub get_groups_by_syntax_level;
+sub get_used_modules;
+sub tokenize;
 }
 package Compress::Raw::Bunzip2 {
 sub DESTROY;
@@ -681,6 +362,7 @@ sub total_out_lo32;
 sub uncompressedBytes;
 }
 package Compress::Raw::Zlib {
+sub ZLIBNG_VER_STATUS;
 sub ZLIB_VERNUM;
 sub _deflateInit;
 sub _inflateInit;
@@ -690,8 +372,13 @@ sub adler32_combine;
 sub constant;
 sub crc32;
 sub crc32_combine;
+sub is_zlib_native;
+sub is_zlibng;
+sub is_zlibng_compat;
+sub is_zlibng_native;
 sub zlibCompileFlags;
 sub zlib_version;
+sub zlibng_version;
 }
 package Compress::Raw::Zlib::deflateStream {
 sub DESTROY;
@@ -753,83 +440,6 @@ sub uncompressedBytes;
 package Config {
 sub AUTOLOAD;
 }
-package Cpanel::JSON::XS {
-sub CLONE;
-sub DESTROY;
-sub _from_json($;$$) ;
-sub _to_json($;$) ;
-sub allow_barekey;
-sub allow_bignum;
-sub allow_blessed;
-sub allow_dupkeys;
-sub allow_nonref;
-sub allow_singlequote;
-sub allow_stringify;
-sub allow_tags;
-sub allow_unknown;
-sub ascii;
-sub binary;
-sub canonical;
-sub convert_blessed;
-sub decode;
-sub decode_json($;$$) ;
-sub decode_prefix;
-sub dupkeys_as_arrayref;
-sub encode;
-sub encode_json($;$) ;
-sub escape_slash;
-sub filter_json_object;
-sub filter_json_single_key_object;
-sub get_allow_barekey;
-sub get_allow_bignum;
-sub get_allow_blessed;
-sub get_allow_dupkeys;
-sub get_allow_nonref;
-sub get_allow_singlequote;
-sub get_allow_stringify;
-sub get_allow_tags;
-sub get_allow_unknown;
-sub get_ascii;
-sub get_binary;
-sub get_canonical;
-sub get_convert_blessed;
-sub get_dupkeys_as_arrayref;
-sub get_escape_slash;
-sub get_indent;
-sub get_indent_length;
-sub get_latin1;
-sub get_max_depth;
-sub get_max_size;
-sub get_relaxed;
-sub get_require_types;
-sub get_shrink;
-sub get_space_after;
-sub get_space_before;
-sub get_stringify_infnan;
-sub get_type_all_string;
-sub get_unblessed_bool;
-sub get_utf8;
-sub incr_parse;
-sub incr_reset;
-sub incr_skip;
-sub indent;
-sub indent_length;
-sub latin1;
-sub max_depth;
-sub max_size;
-sub new;
-sub pretty;
-sub relaxed;
-sub require_types;
-sub shrink;
-sub sort_by;
-sub space_after;
-sub space_before;
-sub stringify_infnan;
-sub type_all_string;
-sub unblessed_bool;
-sub utf8;
-}
 package Cwd {
 sub CLONE;
 sub abs_path;
@@ -837,17 +447,498 @@ sub fastcwd;
 sub getcwd;
 sub realpath;
 }
-package DB {
-sub DB_profiler;
-sub _CHECK;
-sub _END;
-sub _INIT;
-sub _finish;
-sub disable_profile;
-sub enable_profile;
-sub finish_profile;
-sub init_profiler;
-sub set_option;
+package DBD::SQLite {
+sub ALTER_TABLE() ;
+sub ANALYZE() ;
+sub ATTACH() ;
+sub COPY() ;
+sub CREATE_INDEX() ;
+sub CREATE_TABLE() ;
+sub CREATE_TEMP_INDEX() ;
+sub CREATE_TEMP_TABLE() ;
+sub CREATE_TEMP_TRIGGER() ;
+sub CREATE_TEMP_VIEW() ;
+sub CREATE_TRIGGER() ;
+sub CREATE_VIEW() ;
+sub CREATE_VTABLE() ;
+sub DELETE() ;
+sub DENY() ;
+sub DETACH() ;
+sub DROP_INDEX() ;
+sub DROP_TABLE() ;
+sub DROP_TEMP_INDEX() ;
+sub DROP_TEMP_TABLE() ;
+sub DROP_TEMP_TRIGGER() ;
+sub DROP_TEMP_VIEW() ;
+sub DROP_TRIGGER() ;
+sub DROP_VIEW() ;
+sub DROP_VTABLE() ;
+sub FUNCTION() ;
+sub IGNORE() ;
+sub INSERT() ;
+sub OK() ;
+sub OPEN_CREATE() ;
+sub OPEN_EXRESCODE() ;
+sub OPEN_FULLMUTEX() ;
+sub OPEN_MEMORY() ;
+sub OPEN_NOFOLLOW() ;
+sub OPEN_NOMUTEX() ;
+sub OPEN_PRIVATECACHE() ;
+sub OPEN_READONLY() ;
+sub OPEN_READWRITE() ;
+sub OPEN_SHAREDCACHE() ;
+sub OPEN_SUPER_JOURNAL() ;
+sub OPEN_URI() ;
+sub PRAGMA() ;
+sub READ() ;
+sub RECURSIVE() ;
+sub REINDEX() ;
+sub SAVEPOINT() ;
+sub SELECT() ;
+sub TRANSACTION() ;
+sub UPDATE() ;
+sub _const__authorizer_action_codes() ;
+sub _const__authorizer_action_codes_3006008() ;
+sub _const__authorizer_action_codes_3008003() ;
+sub _const__authorizer_return_codes() ;
+sub _const__flags_for_file_open_operations() ;
+sub _const__flags_for_file_open_operations_3006002() ;
+sub _const__flags_for_file_open_operations_3006018() ;
+sub _const__flags_for_file_open_operations_3007007() ;
+sub _const__flags_for_file_open_operations_3007013() ;
+sub _const__flags_for_file_open_operations_3031000() ;
+sub _const__flags_for_file_open_operations_3033000() ;
+sub _const__flags_for_file_open_operations_3037000() ;
+sub compile_options;
+sub sqlite_status;
+sub strglob;
+sub strlike;
+}
+package DBD::SQLite::Constants {
+sub SQLITE_ABORT() ;
+sub SQLITE_ABORT_ROLLBACK() ;
+sub SQLITE_ALTER_TABLE() ;
+sub SQLITE_ANALYZE() ;
+sub SQLITE_ATTACH() ;
+sub SQLITE_AUTH() ;
+sub SQLITE_AUTH_USER() ;
+sub SQLITE_BLOB() ;
+sub SQLITE_BUSY() ;
+sub SQLITE_BUSY_RECOVERY() ;
+sub SQLITE_BUSY_SNAPSHOT() ;
+sub SQLITE_BUSY_TIMEOUT() ;
+sub SQLITE_CANTOPEN() ;
+sub SQLITE_CANTOPEN_CONVPATH() ;
+sub SQLITE_CANTOPEN_DIRTYWAL() ;
+sub SQLITE_CANTOPEN_FULLPATH() ;
+sub SQLITE_CANTOPEN_ISDIR() ;
+sub SQLITE_CANTOPEN_NOTEMPDIR() ;
+sub SQLITE_CANTOPEN_SYMLINK() ;
+sub SQLITE_CONSTRAINT() ;
+sub SQLITE_CONSTRAINT_CHECK() ;
+sub SQLITE_CONSTRAINT_COMMITHOOK() ;
+sub SQLITE_CONSTRAINT_DATATYPE() ;
+sub SQLITE_CONSTRAINT_FOREIGNKEY() ;
+sub SQLITE_CONSTRAINT_FUNCTION() ;
+sub SQLITE_CONSTRAINT_NOTNULL() ;
+sub SQLITE_CONSTRAINT_PINNED() ;
+sub SQLITE_CONSTRAINT_PRIMARYKEY() ;
+sub SQLITE_CONSTRAINT_ROWID() ;
+sub SQLITE_CONSTRAINT_TRIGGER() ;
+sub SQLITE_CONSTRAINT_UNIQUE() ;
+sub SQLITE_CONSTRAINT_VTAB() ;
+sub SQLITE_COPY() ;
+sub SQLITE_CORRUPT() ;
+sub SQLITE_CORRUPT_INDEX() ;
+sub SQLITE_CORRUPT_SEQUENCE() ;
+sub SQLITE_CORRUPT_VTAB() ;
+sub SQLITE_CREATE_INDEX() ;
+sub SQLITE_CREATE_TABLE() ;
+sub SQLITE_CREATE_TEMP_INDEX() ;
+sub SQLITE_CREATE_TEMP_TABLE() ;
+sub SQLITE_CREATE_TEMP_TRIGGER() ;
+sub SQLITE_CREATE_TEMP_VIEW() ;
+sub SQLITE_CREATE_TRIGGER() ;
+sub SQLITE_CREATE_VIEW() ;
+sub SQLITE_CREATE_VTABLE() ;
+sub SQLITE_DBCONFIG_DEFENSIVE() ;
+sub SQLITE_DBCONFIG_DQS_DDL() ;
+sub SQLITE_DBCONFIG_DQS_DML() ;
+sub SQLITE_DBCONFIG_ENABLE_FKEY() ;
+sub SQLITE_DBCONFIG_ENABLE_FTS3_TOKENIZER() ;
+sub SQLITE_DBCONFIG_ENABLE_LOAD_EXTENSION() ;
+sub SQLITE_DBCONFIG_ENABLE_QPSG() ;
+sub SQLITE_DBCONFIG_ENABLE_TRIGGER() ;
+sub SQLITE_DBCONFIG_ENABLE_VIEW() ;
+sub SQLITE_DBCONFIG_LEGACY_ALTER_TABLE() ;
+sub SQLITE_DBCONFIG_LEGACY_FILE_FORMAT() ;
+sub SQLITE_DBCONFIG_LOOKASIDE() ;
+sub SQLITE_DBCONFIG_MAINDBNAME() ;
+sub SQLITE_DBCONFIG_MAX() ;
+sub SQLITE_DBCONFIG_NO_CKPT_ON_CLOSE() ;
+sub SQLITE_DBCONFIG_RESET_DATABASE() ;
+sub SQLITE_DBCONFIG_REVERSE_SCANORDER() ;
+sub SQLITE_DBCONFIG_STMT_SCANSTATUS() ;
+sub SQLITE_DBCONFIG_TRIGGER_EQP() ;
+sub SQLITE_DBCONFIG_TRUSTED_SCHEMA() ;
+sub SQLITE_DBCONFIG_WRITABLE_SCHEMA() ;
+sub SQLITE_DELETE() ;
+sub SQLITE_DENY() ;
+sub SQLITE_DETACH() ;
+sub SQLITE_DETERMINISTIC() ;
+sub SQLITE_DIRECTONLY() ;
+sub SQLITE_DONE() ;
+sub SQLITE_DROP_INDEX() ;
+sub SQLITE_DROP_TABLE() ;
+sub SQLITE_DROP_TEMP_INDEX() ;
+sub SQLITE_DROP_TEMP_TABLE() ;
+sub SQLITE_DROP_TEMP_TRIGGER() ;
+sub SQLITE_DROP_TEMP_VIEW() ;
+sub SQLITE_DROP_TRIGGER() ;
+sub SQLITE_DROP_VIEW() ;
+sub SQLITE_DROP_VTABLE() ;
+sub SQLITE_EMPTY() ;
+sub SQLITE_ERROR() ;
+sub SQLITE_ERROR_MISSING_COLLSEQ() ;
+sub SQLITE_ERROR_RETRY() ;
+sub SQLITE_ERROR_SNAPSHOT() ;
+sub SQLITE_FLOAT() ;
+sub SQLITE_FORMAT() ;
+sub SQLITE_FULL() ;
+sub SQLITE_FUNCTION() ;
+sub SQLITE_IGNORE() ;
+sub SQLITE_INNOCUOUS() ;
+sub SQLITE_INSERT() ;
+sub SQLITE_INTEGER() ;
+sub SQLITE_INTERNAL() ;
+sub SQLITE_INTERRUPT() ;
+sub SQLITE_IOERR() ;
+sub SQLITE_IOERR_ACCESS() ;
+sub SQLITE_IOERR_AUTH() ;
+sub SQLITE_IOERR_BEGIN_ATOMIC() ;
+sub SQLITE_IOERR_BLOCKED() ;
+sub SQLITE_IOERR_CHECKRESERVEDLOCK() ;
+sub SQLITE_IOERR_CLOSE() ;
+sub SQLITE_IOERR_COMMIT_ATOMIC() ;
+sub SQLITE_IOERR_CONVPATH() ;
+sub SQLITE_IOERR_CORRUPTFS() ;
+sub SQLITE_IOERR_DATA() ;
+sub SQLITE_IOERR_DELETE() ;
+sub SQLITE_IOERR_DELETE_NOENT() ;
+sub SQLITE_IOERR_DIR_CLOSE() ;
+sub SQLITE_IOERR_DIR_FSYNC() ;
+sub SQLITE_IOERR_FSTAT() ;
+sub SQLITE_IOERR_FSYNC() ;
+sub SQLITE_IOERR_GETTEMPPATH() ;
+sub SQLITE_IOERR_IN_PAGE() ;
+sub SQLITE_IOERR_LOCK() ;
+sub SQLITE_IOERR_MMAP() ;
+sub SQLITE_IOERR_NOMEM() ;
+sub SQLITE_IOERR_RDLOCK() ;
+sub SQLITE_IOERR_READ() ;
+sub SQLITE_IOERR_ROLLBACK_ATOMIC() ;
+sub SQLITE_IOERR_SEEK() ;
+sub SQLITE_IOERR_SHMLOCK() ;
+sub SQLITE_IOERR_SHMMAP() ;
+sub SQLITE_IOERR_SHMOPEN() ;
+sub SQLITE_IOERR_SHMSIZE() ;
+sub SQLITE_IOERR_SHORT_READ() ;
+sub SQLITE_IOERR_TRUNCATE() ;
+sub SQLITE_IOERR_UNLOCK() ;
+sub SQLITE_IOERR_VNODE() ;
+sub SQLITE_IOERR_WRITE() ;
+sub SQLITE_LIMIT_ATTACHED() ;
+sub SQLITE_LIMIT_COLUMN() ;
+sub SQLITE_LIMIT_COMPOUND_SELECT() ;
+sub SQLITE_LIMIT_EXPR_DEPTH() ;
+sub SQLITE_LIMIT_FUNCTION_ARG() ;
+sub SQLITE_LIMIT_LENGTH() ;
+sub SQLITE_LIMIT_LIKE_PATTERN_LENGTH() ;
+sub SQLITE_LIMIT_SQL_LENGTH() ;
+sub SQLITE_LIMIT_TRIGGER_DEPTH() ;
+sub SQLITE_LIMIT_VARIABLE_NUMBER() ;
+sub SQLITE_LIMIT_VDBE_OP() ;
+sub SQLITE_LIMIT_WORKER_THREADS() ;
+sub SQLITE_LOCKED() ;
+sub SQLITE_LOCKED_SHAREDCACHE() ;
+sub SQLITE_LOCKED_VTAB() ;
+sub SQLITE_MISMATCH() ;
+sub SQLITE_MISUSE() ;
+sub SQLITE_NOLFS() ;
+sub SQLITE_NOMEM() ;
+sub SQLITE_NOTADB() ;
+sub SQLITE_NOTFOUND() ;
+sub SQLITE_NOTICE() ;
+sub SQLITE_NOTICE_RBU() ;
+sub SQLITE_NOTICE_RECOVER_ROLLBACK() ;
+sub SQLITE_NOTICE_RECOVER_WAL() ;
+sub SQLITE_NULL() ;
+sub SQLITE_OK() ;
+sub SQLITE_OK_SYMLINK() ;
+sub SQLITE_OPEN_CREATE() ;
+sub SQLITE_OPEN_EXRESCODE() ;
+sub SQLITE_OPEN_FULLMUTEX() ;
+sub SQLITE_OPEN_MEMORY() ;
+sub SQLITE_OPEN_NOFOLLOW() ;
+sub SQLITE_OPEN_NOMUTEX() ;
+sub SQLITE_OPEN_PRIVATECACHE() ;
+sub SQLITE_OPEN_READONLY() ;
+sub SQLITE_OPEN_READWRITE() ;
+sub SQLITE_OPEN_SHAREDCACHE() ;
+sub SQLITE_OPEN_SUPER_JOURNAL() ;
+sub SQLITE_OPEN_URI() ;
+sub SQLITE_PERM() ;
+sub SQLITE_PRAGMA() ;
+sub SQLITE_PROTOCOL() ;
+sub SQLITE_RANGE() ;
+sub SQLITE_READ() ;
+sub SQLITE_READONLY() ;
+sub SQLITE_READONLY_CANTINIT() ;
+sub SQLITE_READONLY_CANTLOCK() ;
+sub SQLITE_READONLY_DBMOVED() ;
+sub SQLITE_READONLY_DIRECTORY() ;
+sub SQLITE_READONLY_RECOVERY() ;
+sub SQLITE_READONLY_ROLLBACK() ;
+sub SQLITE_RECURSIVE() ;
+sub SQLITE_REINDEX() ;
+sub SQLITE_RESULT_SUBTYPE() ;
+sub SQLITE_ROW() ;
+sub SQLITE_SAVEPOINT() ;
+sub SQLITE_SCHEMA() ;
+sub SQLITE_SELECT() ;
+sub SQLITE_SUBTYPE() ;
+sub SQLITE_TEXT() ;
+sub SQLITE_TOOBIG() ;
+sub SQLITE_TRANSACTION() ;
+sub SQLITE_TXN_NONE() ;
+sub SQLITE_TXN_READ() ;
+sub SQLITE_TXN_WRITE() ;
+sub SQLITE_UPDATE() ;
+sub SQLITE_VERSION_NUMBER() ;
+sub SQLITE_WARNING() ;
+sub SQLITE_WARNING_AUTOINDEX() ;
+sub _const_allowed_return_values_from_sqlite3_txn_state_3034000() ;
+sub _const_authorizer_action_codes() ;
+sub _const_authorizer_action_codes_3006008() ;
+sub _const_authorizer_action_codes_3008003() ;
+sub _const_authorizer_return_codes() ;
+sub _const_compile_time_library_version_numbers() ;
+sub _const_database_connection_configuration_options_3007000() ;
+sub _const_database_connection_configuration_options_3007006() ;
+sub _const_database_connection_configuration_options_3012002() ;
+sub _const_database_connection_configuration_options_3013000() ;
+sub _const_database_connection_configuration_options_3015000() ;
+sub _const_database_connection_configuration_options_3016000() ;
+sub _const_database_connection_configuration_options_3020000() ;
+sub _const_database_connection_configuration_options_3022000() ;
+sub _const_database_connection_configuration_options_3024000() ;
+sub _const_database_connection_configuration_options_3026000() ;
+sub _const_database_connection_configuration_options_3028000() ;
+sub _const_database_connection_configuration_options_3029000() ;
+sub _const_database_connection_configuration_options_3030000() ;
+sub _const_database_connection_configuration_options_3031000() ;
+sub _const_database_connection_configuration_options_3042000() ;
+sub _const_extended_result_codes_3006002() ;
+sub _const_extended_result_codes_3006005() ;
+sub _const_extended_result_codes_3006007() ;
+sub _const_extended_result_codes_3006012() ;
+sub _const_extended_result_codes_3007000() ;
+sub _const_extended_result_codes_3007007() ;
+sub _const_extended_result_codes_3007011() ;
+sub _const_extended_result_codes_3007012() ;
+sub _const_extended_result_codes_3007015() ;
+sub _const_extended_result_codes_3007016() ;
+sub _const_extended_result_codes_3007017() ;
+sub _const_extended_result_codes_3008000() ;
+sub _const_extended_result_codes_3008001() ;
+sub _const_extended_result_codes_3008002() ;
+sub _const_extended_result_codes_3008003() ;
+sub _const_extended_result_codes_3008007() ;
+sub _const_extended_result_codes_3009000() ;
+sub _const_extended_result_codes_3010000() ;
+sub _const_extended_result_codes_3021000() ;
+sub _const_extended_result_codes_3022000() ;
+sub _const_extended_result_codes_3024000() ;
+sub _const_extended_result_codes_3025000() ;
+sub _const_extended_result_codes_3031000() ;
+sub _const_extended_result_codes_3032000() ;
+sub _const_extended_result_codes_3034000() ;
+sub _const_extended_result_codes_3037000() ;
+sub _const_extended_result_codes_3041000() ;
+sub _const_extended_result_codes_3043000() ;
+sub _const_flags_for_file_open_operations() ;
+sub _const_flags_for_file_open_operations_3006002() ;
+sub _const_flags_for_file_open_operations_3006018() ;
+sub _const_flags_for_file_open_operations_3007007() ;
+sub _const_flags_for_file_open_operations_3007013() ;
+sub _const_flags_for_file_open_operations_3031000() ;
+sub _const_flags_for_file_open_operations_3033000() ;
+sub _const_flags_for_file_open_operations_3037000() ;
+sub _const_function_flags_3008003() ;
+sub _const_function_flags_3030000() ;
+sub _const_function_flags_3031000() ;
+sub _const_function_flags_3044001() ;
+sub _const_fundamental_datatypes() ;
+sub _const_result_codes() ;
+sub _const_result_codes_3007017() ;
+sub _const_run_time_limit_categories() ;
+sub _const_run_time_limit_categories_3006018() ;
+sub _const_run_time_limit_categories_3008007() ;
+}
+package DBD::SQLite::db {
+sub DESTROY;
+sub FETCH;
+sub SQL_ALL_TYPES() ;
+sub SQL_ARRAY() ;
+sub SQL_ARRAY_LOCATOR() ;
+sub SQL_BIGINT() ;
+sub SQL_BINARY() ;
+sub SQL_BIT() ;
+sub SQL_BLOB() ;
+sub SQL_BLOB_LOCATOR() ;
+sub SQL_BOOLEAN() ;
+sub SQL_CHAR() ;
+sub SQL_CLOB() ;
+sub SQL_CLOB_LOCATOR() ;
+sub SQL_DATE() ;
+sub SQL_DATETIME() ;
+sub SQL_DECIMAL() ;
+sub SQL_DOUBLE() ;
+sub SQL_FLOAT() ;
+sub SQL_GUID() ;
+sub SQL_INTEGER() ;
+sub SQL_INTERVAL() ;
+sub SQL_INTERVAL_DAY() ;
+sub SQL_INTERVAL_DAY_TO_HOUR() ;
+sub SQL_INTERVAL_DAY_TO_MINUTE() ;
+sub SQL_INTERVAL_DAY_TO_SECOND() ;
+sub SQL_INTERVAL_HOUR() ;
+sub SQL_INTERVAL_HOUR_TO_MINUTE() ;
+sub SQL_INTERVAL_HOUR_TO_SECOND() ;
+sub SQL_INTERVAL_MINUTE() ;
+sub SQL_INTERVAL_MINUTE_TO_SECOND() ;
+sub SQL_INTERVAL_MONTH() ;
+sub SQL_INTERVAL_SECOND() ;
+sub SQL_INTERVAL_YEAR() ;
+sub SQL_INTERVAL_YEAR_TO_MONTH() ;
+sub SQL_LONGVARBINARY() ;
+sub SQL_LONGVARCHAR() ;
+sub SQL_MULTISET() ;
+sub SQL_MULTISET_LOCATOR() ;
+sub SQL_NUMERIC() ;
+sub SQL_REAL() ;
+sub SQL_REF() ;
+sub SQL_ROW() ;
+sub SQL_SMALLINT() ;
+sub SQL_TIME() ;
+sub SQL_TIMESTAMP() ;
+sub SQL_TINYINT() ;
+sub SQL_TYPE_DATE() ;
+sub SQL_TYPE_TIME() ;
+sub SQL_TYPE_TIMESTAMP() ;
+sub SQL_TYPE_TIMESTAMP_WITH_TIMEZONE() ;
+sub SQL_TYPE_TIME_WITH_TIMEZONE() ;
+sub SQL_UDT() ;
+sub SQL_UDT_LOCATOR() ;
+sub SQL_UNKNOWN_TYPE() ;
+sub SQL_VARBINARY() ;
+sub SQL_VARCHAR() ;
+sub SQL_WCHAR() ;
+sub SQL_WLONGVARCHAR() ;
+sub SQL_WVARCHAR() ;
+sub STORE;
+sub _do;
+sub _login;
+sub backup_from_dbh;
+sub backup_from_file;
+sub backup_to_dbh;
+sub backup_to_file;
+sub busy_timeout;
+sub collation_needed;
+sub commit;
+sub commit_hook;
+sub create_aggregate;
+sub create_collation;
+sub create_function;
+sub create_module;
+sub db_config;
+sub db_filename;
+sub db_status;
+sub disconnect;
+sub enable_load_extension;
+sub error_offset;
+sub get_autocommit;
+sub last_insert_id;
+sub last_insert_rowid;
+sub limit;
+sub load_extension;
+sub profile;
+sub progress_handler;
+sub register_fts3_perl_tokenizer;
+sub rollback;
+sub rollback_hook;
+sub selectall_arrayref;
+sub selectrow_array;
+sub selectrow_arrayref;
+sub set_authorizer;
+sub sqlite_backup_from_dbh;
+sub sqlite_backup_from_file;
+sub sqlite_backup_to_dbh;
+sub sqlite_backup_to_file;
+sub sqlite_busy_timeout;
+sub sqlite_collation_needed;
+sub sqlite_commit_hook;
+sub sqlite_create_aggregate;
+sub sqlite_create_collation;
+sub sqlite_create_function;
+sub sqlite_create_module;
+sub sqlite_db_config;
+sub sqlite_db_filename;
+sub sqlite_db_status;
+sub sqlite_enable_load_extension;
+sub sqlite_error_offset;
+sub sqlite_get_autocommit;
+sub sqlite_last_insert_rowid;
+sub sqlite_limit;
+sub sqlite_load_extension;
+sub sqlite_profile;
+sub sqlite_progress_handler;
+sub sqlite_register_fts3_perl_tokenizer;
+sub sqlite_rollback_hook;
+sub sqlite_set_authorizer;
+sub sqlite_table_column_metadata;
+sub sqlite_trace;
+sub sqlite_txn_state;
+sub sqlite_update_hook;
+sub table_column_metadata;
+sub txn_state;
+sub update_hook;
+}
+package DBD::SQLite::dr {
+sub dbixs_revision;
+sub discon_all_;
+sub disconnect_all;
+}
+package DBD::SQLite::st {
+sub DESTROY;
+sub FETCH;
+sub FETCH_attrib;
+sub STORE;
+sub _prepare;
+sub bind_col;
+sub bind_param;
+sub bind_param_inout;
+sub blob_read;
+sub execute;
+sub fetch;
+sub fetchall_arrayref;
+sub fetchrow;
+sub fetchrow_array;
+sub fetchrow_arrayref;
+sub finish;
+sub rows;
+sub sqlite_st_status;
+sub st_status;
 }
 package DBD::_::common {
 sub DELETE;
@@ -1149,17 +1240,17 @@ package Data::Dumper {
 sub Dumpxs($;$$) ;
 sub _vstring($) ;
 }
-package Devel::NYTProf::Data {
-sub load_profile_data_from_file;
-}
-package Devel::NYTProf::Test {
-sub example_xsub;
-sub example_xsub_eval;
-sub set_errno;
-sub ticks_for_usleep;
-}
-package Devel::NYTProf::Util {
-sub trace_level;
+package DateTime {
+sub _accumulated_leap_seconds($$) ;
+sub _day_has_leap_second($$) ;
+sub _day_length($$) ;
+sub _is_leap_year($$) ;
+sub _normalize_leap_seconds($$$) ;
+sub _normalize_tai_seconds($$$) ;
+sub _rd2ymd($$;$) ;
+sub _seconds_as_components($$;$$) ;
+sub _time_as_seconds($$$$) ;
+sub _ymd2rd($$$$) ;
 }
 package Devel::Peek {
 sub CvGV;
@@ -1173,6 +1264,9 @@ sub mstat;
 sub mstats2hash($\%;$) ;
 sub mstats_fillhash(\%;$) ;
 sub runops_debug;
+}
+package Devel::StackTrace {
+sub blessed($) ;
 }
 package Digest::MD5 {
 sub DESTROY;
@@ -1200,6 +1294,7 @@ sub algorithm($) ;
 sub b64digest($) ;
 sub clone($) ;
 sub digest($) ;
+sub getcwd;
 sub hashsize($) ;
 sub hexdigest($) ;
 sub hmac_sha1(;@) ;
@@ -1353,6 +1448,16 @@ package Encode::utf8 {
 sub decode;
 sub encode;
 }
+package Eval::Closure {
+sub reftype($) ;
+}
+package Exception::Class {
+sub blessed($) ;
+sub reftype($) ;
+}
+package Exception::Class::Base {
+sub blessed($) ;
+}
 package Fcntl {
 sub AUTOLOAD;
 sub FCREAT() ;
@@ -1426,6 +1531,10 @@ sub bsd_glob;
 sub bsd_glob_override;
 sub csh_glob;
 }
+package File::ShareDir {
+sub _STRING($) ;
+sub firstres(&@) ;
+}
 package File::Spec::Unix {
 sub _fn_canonpath;
 sub _fn_catdir;
@@ -1483,480 +1592,6 @@ sub strerror;
 sub sync;
 sub sync_mode;
 sub syserrno;
-}
-package Glib {
-sub CHECK_VERSION;
-sub GET_VERSION_INFO;
-sub MAJOR_VERSION;
-sub MICRO_VERSION;
-sub MINOR_VERSION;
-sub critical;
-sub debug;
-sub error;
-sub filename_display_basename;
-sub filename_display_name;
-sub filename_from_unicode($) ;
-sub filename_from_uri($) ;
-sub filename_to_unicode($) ;
-sub filename_to_uri($$) ;
-sub get_application_name;
-sub get_home_dir;
-sub get_language_names;
-sub get_prgname;
-sub get_real_name;
-sub get_system_config_dirs;
-sub get_system_data_dirs;
-sub get_tmp_dir;
-sub get_user_cache_dir;
-sub get_user_config_dir;
-sub get_user_data_dir;
-sub get_user_name;
-sub get_user_special_dir;
-sub info;
-sub install_exception_handler;
-sub log;
-sub main_depth;
-sub major_version;
-sub message;
-sub micro_version;
-sub minor_version;
-sub remove_exception_handler;
-sub set_application_name;
-sub set_prgname;
-sub strerror;
-sub strsignal;
-sub warning;
-}
-package Glib::BookmarkFile {
-sub DESTROY;
-sub add_application;
-sub add_group;
-sub get_added;
-sub get_app_info;
-sub get_applications;
-sub get_description;
-sub get_groups;
-sub get_icon;
-sub get_is_private;
-sub get_mime_type;
-sub get_modified;
-sub get_size;
-sub get_title;
-sub get_uris;
-sub get_visited;
-sub has_application;
-sub has_group;
-sub has_item;
-sub load_from_data;
-sub load_from_data_dirs;
-sub load_from_file;
-sub move_item;
-sub new;
-sub remove_application;
-sub remove_group;
-sub remove_item;
-sub set_added;
-sub set_app_info;
-sub set_description;
-sub set_groups;
-sub set_icon;
-sub set_is_private;
-sub set_mime_type;
-sub set_modified;
-sub set_title;
-sub set_visited;
-sub to_data;
-sub to_file;
-}
-package Glib::Boxed {
-sub DESTROY;
-sub copy;
-}
-package Glib::Bytes {
-sub compare;
-sub equal;
-sub get_data;
-sub get_size;
-sub hash;
-sub new;
-}
-package Glib::Child {
-sub watch_add;
-}
-package Glib::Error {
-sub matches;
-sub new;
-sub register;
-sub throw;
-}
-package Glib::Flags {
-sub all;
-sub as_arrayref($;@) ;
-sub bool($;@) ;
-sub eq;
-sub ge;
-sub intersect;
-sub ne;
-sub new;
-sub sub;
-sub union;
-sub xor;
-}
-package Glib::IO {
-sub add_watch;
-}
-package Glib::Idle {
-sub add;
-}
-package Glib::KeyFile {
-sub DESTROY;
-sub get_boolean;
-sub get_boolean_list;
-sub get_comment;
-sub get_double;
-sub get_double_list;
-sub get_groups;
-sub get_integer;
-sub get_integer_list;
-sub get_keys;
-sub get_locale_string;
-sub get_locale_string_list;
-sub get_start_group;
-sub get_string;
-sub get_string_list;
-sub get_value;
-sub has_group;
-sub has_key;
-sub load_from_data;
-sub load_from_data_dirs;
-sub load_from_dirs;
-sub load_from_file;
-sub new;
-sub remove_comment;
-sub remove_group;
-sub remove_key;
-sub set_boolean;
-sub set_boolean_list;
-sub set_comment;
-sub set_double;
-sub set_double_list;
-sub set_integer;
-sub set_integer_list;
-sub set_list_separator;
-sub set_locale_string;
-sub set_locale_string_list;
-sub set_string;
-sub set_string_list;
-sub set_value;
-sub to_data;
-}
-package Glib::Log {
-sub default_handler;
-sub remove_handler;
-sub set_always_fatal;
-sub set_default_handler;
-sub set_fatal_mask;
-sub set_handler;
-}
-package Glib::MainContext {
-sub DESTROY;
-sub default;
-sub is_owner;
-sub iteration;
-sub new;
-sub pending;
-}
-package Glib::MainLoop {
-sub DESTROY;
-sub get_context;
-sub is_running;
-sub new;
-sub quit;
-sub run;
-}
-package Glib::Markup {
-sub escape_text;
-}
-package Glib::Object {
-sub CLONE;
-sub DESTROY;
-sub find_property;
-sub freeze_notify;
-sub get;
-sub get_data;
-sub get_pointer;
-sub get_property;
-sub list_properties;
-sub new;
-sub new_from_pointer;
-sub notify;
-sub set;
-sub set_data;
-sub set_property;
-sub set_threadsafe;
-sub signal_add_emission_hook;
-sub signal_chain_from_overridden;
-sub signal_connect;
-sub signal_connect_after;
-sub signal_connect_swapped;
-sub signal_emit;
-sub signal_get_invocation_hint;
-sub signal_handler_block;
-sub signal_handler_disconnect;
-sub signal_handler_is_connected;
-sub signal_handler_unblock;
-sub signal_handlers_block_by_func;
-sub signal_handlers_disconnect_by_func;
-sub signal_handlers_unblock_by_func;
-sub signal_query;
-sub signal_remove_emission_hook;
-sub signal_stop_emission_by_name;
-sub thaw_notify;
-}
-package Glib::Object::Introspection {
-sub CHECK_VERSION;
-sub _add_interface;
-sub _construct_boxed;
-sub _fetch_constant;
-sub _find_non_perl_parents;
-sub _find_vfuncs_with_implementation;
-sub _get_field;
-sub _install_overrides;
-sub _invoke_fallback_vfunc;
-sub _load_library;
-sub _register_boxed_synonym;
-sub _register_types;
-sub _set_field;
-sub _use_generic_signal_marshaller_for;
-sub convert_enum_to_sv;
-sub convert_flags_to_sv;
-sub convert_sv_to_enum;
-sub convert_sv_to_flags;
-sub invoke;
-}
-package Glib::Object::Introspection::GValueWrapper {
-sub DESTROY;
-sub get_value;
-sub new;
-}
-package Glib::Object::Introspection::_FuncWrapper {
-sub DESTROY;
-sub _invoke;
-}
-package Glib::Object::_LazyLoader {
-sub _load;
-}
-package Glib::OptionContext {
-sub add_group;
-sub add_main_entries;
-sub get_help_enabled;
-sub get_ignore_unknown_options;
-sub get_main_group;
-sub new;
-sub parse;
-sub set_help_enabled;
-sub set_ignore_unknown_options;
-sub set_main_group;
-}
-package Glib::OptionGroup {
-sub new;
-sub set_translate_func;
-sub set_translation_domain;
-}
-package Glib::Param::Char {
-sub get_maximum;
-sub get_minimum;
-}
-package Glib::Param::Double {
-sub get_epsilon;
-sub get_maximum;
-sub get_minimum;
-}
-package Glib::Param::Enum {
-sub get_enum_class;
-}
-package Glib::Param::Flags {
-sub get_flags_class;
-}
-package Glib::Param::Float {
-sub get_epsilon;
-sub get_maximum;
-sub get_minimum;
-}
-package Glib::Param::GType {
-sub get_is_a_type;
-}
-package Glib::Param::Int {
-sub get_maximum;
-sub get_minimum;
-}
-package Glib::Param::Int64 {
-sub get_maximum;
-sub get_minimum;
-}
-package Glib::Param::Long {
-sub get_maximum;
-sub get_minimum;
-}
-package Glib::Param::UChar {
-sub get_maximum;
-sub get_minimum;
-}
-package Glib::Param::UInt {
-sub get_maximum;
-sub get_minimum;
-}
-package Glib::Param::UInt64 {
-sub get_maximum;
-sub get_minimum;
-}
-package Glib::Param::ULong {
-sub get_maximum;
-sub get_minimum;
-}
-package Glib::ParamSpec {
-sub DESTROY;
-sub IV;
-sub UV;
-sub boolean;
-sub boxed;
-sub char;
-sub double;
-sub enum;
-sub flags;
-sub float;
-sub get_blurb;
-sub get_default_value;
-sub get_flags;
-sub get_name;
-sub get_nick;
-sub get_owner_type;
-sub get_redirect_target;
-sub get_value_type;
-sub gtype;
-sub int64;
-sub int;
-sub long;
-sub object;
-sub override;
-sub param_spec;
-sub scalar;
-sub string;
-sub uchar;
-sub uint64;
-sub uint;
-sub ulong;
-sub unichar;
-sub value_validate;
-sub values_cmp;
-}
-package Glib::Source {
-sub remove;
-}
-package Glib::Timeout {
-sub add;
-sub add_seconds;
-}
-package Glib::Type {
-sub list_ancestors;
-sub list_interfaces;
-sub list_signals;
-sub list_values;
-sub package_from_cname;
-sub register;
-sub register_enum;
-sub register_flags;
-sub register_object;
-}
-package Glib::Variant {
-sub DESTROY;
-sub byteswap;
-sub classify;
-sub compare;
-sub equal;
-sub get_boolean;
-sub get_byte;
-sub get_bytestring;
-sub get_child_value;
-sub get_double;
-sub get_handle;
-sub get_int16;
-sub get_int32;
-sub get_int64;
-sub get_maybe;
-sub get_normal_form;
-sub get_size;
-sub get_string;
-sub get_type;
-sub get_type_string;
-sub get_uint16;
-sub get_uint32;
-sub get_uint64;
-sub get_variant;
-sub hash;
-sub is_container;
-sub is_normal_form;
-sub is_object_path;
-sub is_of_type;
-sub is_signature;
-sub lookup_value;
-sub n_children;
-sub new_array;
-sub new_boolean;
-sub new_byte;
-sub new_bytestring;
-sub new_dict_entry;
-sub new_double;
-sub new_handle;
-sub new_int16;
-sub new_int32;
-sub new_int64;
-sub new_maybe;
-sub new_object_path;
-sub new_signature;
-sub new_string;
-sub new_tuple;
-sub new_uint16;
-sub new_uint32;
-sub new_uint64;
-sub new_variant;
-sub parse;
-sub print;
-}
-package Glib::VariantDict {
-sub contains;
-sub end;
-sub insert_value;
-sub lookup_value;
-sub new;
-sub remove;
-}
-package Glib::VariantType {
-sub element;
-sub equal;
-sub first;
-sub get_string;
-sub hash;
-sub is_array;
-sub is_basic;
-sub is_container;
-sub is_definite;
-sub is_dict_entry;
-sub is_maybe;
-sub is_subtype_of;
-sub is_tuple;
-sub is_variant;
-sub key;
-sub n_items;
-sub new;
-sub new_array;
-sub new_dict_entry;
-sub new_maybe;
-sub new_tuple;
-sub next;
-sub string_is_valid;
-sub string_scan;
-sub value;
 }
 package HTML::Entities {
 sub UNICODE_SUPPORT() ;
@@ -2564,6 +2199,7 @@ sub SvREADONLY(\[$%@];$) ;
 sub SvREFCNT(\[$%@];$) ;
 sub V;
 sub hv_clear_placeholders(\%) ;
+sub stack_refcounted;
 }
 package JSON::XS {
 sub CLONE;
@@ -2615,6 +2251,155 @@ sub space_after;
 sub space_before;
 sub utf8;
 }
+package List::MoreUtils {
+sub _XScompiled;
+sub after(&@) ;
+sub after_incl(&@) ;
+sub all(&@) ;
+sub all_u(&@) ;
+sub any(&@) ;
+sub any_u(&@) ;
+sub apply(&@) ;
+sub arrayify;
+sub before(&@) ;
+sub before_incl(&@) ;
+sub binsert(&$\@) ;
+sub bremove(&\@) ;
+sub bsearch(&@) ;
+sub bsearch_index(&@) ;
+sub bsearch_insert(&$\@) ;
+sub bsearch_remove(&\@) ;
+sub bsearchidx(&@) ;
+sub distinct(@) ;
+sub duplicates(@) ;
+sub each_array(\@;\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@) ;
+sub each_arrayref;
+sub equal_range(&@) ;
+sub false(&@) ;
+sub first_index(&@) ;
+sub first_result(&@) ;
+sub first_value(&@) ;
+sub firstidx(&@) ;
+sub firstres(&@) ;
+sub firstval(&@) ;
+sub frequency(@) ;
+sub indexes(&@) ;
+sub insert_after(&$\@) ;
+sub insert_after_string($$\@) ;
+sub last_index(&@) ;
+sub last_result(&@) ;
+sub last_value(&@) ;
+sub lastidx(&@) ;
+sub lastres(&@) ;
+sub lastval(&@) ;
+sub listcmp(\@\@;\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@) ;
+sub lower_bound(&@) ;
+sub mesh(\@\@;\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@) ;
+sub minmax(@) ;
+sub minmaxstr(@) ;
+sub mode(@) ;
+sub natatime($@) ;
+sub none(&@) ;
+sub none_u(&@) ;
+sub notall(&@) ;
+sub notall_u(&@) ;
+sub occurrences(@) ;
+sub one(&@) ;
+sub one_u(&@) ;
+sub only_index(&@) ;
+sub only_result(&@) ;
+sub only_value(&@) ;
+sub onlyidx(&@) ;
+sub onlyres(&@) ;
+sub onlyval(&@) ;
+sub pairwise(&\@\@) ;
+sub part(&@) ;
+sub qsort(&\@) ;
+sub reduce_0(&@) ;
+sub reduce_1(&@) ;
+sub reduce_u(&@) ;
+sub samples($@) ;
+sub singleton(@) ;
+sub slide(&@) ;
+sub slideatatime($@) ;
+sub true(&@) ;
+sub uniq(@) ;
+sub upper_bound(&@) ;
+sub zip(\@\@;\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@) ;
+sub zip6(\@\@;\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@) ;
+sub zip_unflatten(\@\@;\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@) ;
+}
+package List::MoreUtils::XS {
+sub _XScompiled;
+sub _array_iterator(;$) ;
+sub _slideatatime_iterator() ;
+sub after(&@) ;
+sub after_incl(&@) ;
+sub all(&@) ;
+sub all_u(&@) ;
+sub any(&@) ;
+sub any_u(&@) ;
+sub apply(&@) ;
+sub arrayify;
+sub before(&@) ;
+sub before_incl(&@) ;
+sub binsert(&$\@) ;
+sub bremove(&\@) ;
+sub bsearch(&@) ;
+sub bsearchidx(&@) ;
+sub duplicates(@) ;
+sub each_array(\@;\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@) ;
+sub each_arrayref;
+sub equal_range(&@) ;
+sub false(&@) ;
+sub firstidx(&@) ;
+sub firstres(&@) ;
+sub firstval(&@) ;
+sub frequency(@) ;
+sub indexes(&@) ;
+sub insert_after(&$\@) ;
+sub insert_after_string($$\@) ;
+sub lastidx(&@) ;
+sub lastres(&@) ;
+sub lastval(&@) ;
+sub listcmp(\@\@;\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@) ;
+sub lower_bound(&@) ;
+sub mesh(\@\@;\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@) ;
+sub minmax(@) ;
+sub minmaxstr(@) ;
+sub mode(@) ;
+sub natatime($@) ;
+sub none(&@) ;
+sub none_u(&@) ;
+sub notall(&@) ;
+sub notall_u(&@) ;
+sub occurrences(@) ;
+sub one(&@) ;
+sub one_u(&@) ;
+sub onlyidx(&@) ;
+sub onlyres(&@) ;
+sub onlyval(&@) ;
+sub pairwise(&\@\@) ;
+sub part(&@) ;
+sub qsort(&\@) ;
+sub reduce_0(&@) ;
+sub reduce_1(&@) ;
+sub reduce_u(&@) ;
+sub samples($@) ;
+sub singleton(@) ;
+sub slide(&@) ;
+sub slideatatime($@) ;
+sub true(&@) ;
+sub uniq(@) ;
+sub upper_bound(&@) ;
+sub zip6(\@\@;\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@\@) ;
+}
+package List::MoreUtils::XS_ea {
+sub DESTROY;
+}
+package List::MoreUtils::XS_sa {
+sub DESTROY;
+}
 package List::Util {
 sub all(&@) ;
 sub any(&@) ;
@@ -2652,28 +2437,6 @@ sub zip;
 sub zip_longest;
 sub zip_shortest;
 }
-package Locale::gettext {
-sub LC_SYNTAX;
-sub LC_TOD;
-sub bind_textdomain_codeset;
-sub bindtextdomain;
-sub bytes2str($$;$) ;
-sub constant;
-sub dcgettext;
-sub dcngettext;
-sub decode($$;$) ;
-sub decode_utf8($;$) ;
-sub dgettext;
-sub dngettext;
-sub encode($$;$) ;
-sub encode_utf8($) ;
-sub gettext;
-sub localeconv;
-sub ngettext;
-sub setlocale;
-sub str2bytes($$;$) ;
-sub textdomain;
-}
 package MIME::Base64 {
 sub decode($) ;
 sub decode_base64($) ;
@@ -2681,6 +2444,9 @@ sub decoded_base64_length($) ;
 sub encode($;$) ;
 sub encode_base64($;$) ;
 sub encoded_base64_length($;$) ;
+}
+package MIME::Charset {
+sub is_utf8($;$) ;
 }
 package MIME::QuotedPrint {
 sub decode_qp($) ;
@@ -2857,6 +2623,7 @@ sub _parameterize_Maybe_for;
 package NDBM_File {
 sub DELETE;
 sub DESTROY;
+sub EXISTS;
 sub FETCH;
 sub FIRSTKEY;
 sub NEXTKEY;
@@ -2916,8 +2683,14 @@ sub BIO_ssl_copy_session_id($$) ;
 sub BIO_ssl_shutdown($) ;
 sub BIO_wpending($) ;
 sub BIO_write($$) ;
+sub BN_clear($) ;
+sub BN_clear_free($) ;
+sub BN_dup($) ;
+sub BN_free($) ;
 sub CIPHER_description($;$$) ;
+sub CIPHER_find($$) ;
 sub CIPHER_get_bits($;@) ;
+sub CIPHER_get_handshake_digest($) ;
 sub CIPHER_get_name($) ;
 sub CIPHER_get_version($) ;
 sub CLONE(;@) ;
@@ -2981,6 +2754,7 @@ sub CTX_set_cert_verify_callback($$;$) ;
 sub CTX_set_cipher_list($$) ;
 sub CTX_set_ciphersuites($$) ;
 sub CTX_set_client_CA_list($$) ;
+sub CTX_set_client_hello_cb($$;$) ;
 sub CTX_set_default_passwd_cb($;$) ;
 sub CTX_set_default_passwd_cb_userdata($;$) ;
 sub CTX_set_default_verify_paths($) ;
@@ -2997,6 +2771,9 @@ sub CTX_set_num_tickets($$) ;
 sub CTX_set_options($$) ;
 sub CTX_set_post_handshake_auth($$) ;
 sub CTX_set_psk_client_callback($;$) ;
+sub CTX_set_psk_find_session_callback($;$) ;
+sub CTX_set_psk_server_callback($;$) ;
+sub CTX_set_psk_use_session_callback($;$) ;
 sub CTX_set_purpose($$) ;
 sub CTX_set_quiet_shutdown($$) ;
 sub CTX_set_read_ahead($$) ;
@@ -3025,6 +2802,7 @@ sub CTX_use_RSAPrivateKey_file($$$) ;
 sub CTX_use_certificate($$) ;
 sub CTX_use_certificate_chain_file($$) ;
 sub CTX_use_certificate_file($$$) ;
+sub CTX_use_psk_identity_hint($$) ;
 sub CTX_v23_new() ;
 sub DH_free($) ;
 sub EC_KEY_free($) ;
@@ -3051,6 +2829,9 @@ sub EVP_DigestUpdate($$) ;
 sub EVP_MD_CTX_create() ;
 sub EVP_MD_CTX_destroy($) ;
 sub EVP_MD_CTX_md($) ;
+sub EVP_MD_get0_description($) ;
+sub EVP_MD_get0_name($) ;
+sub EVP_MD_get_type($) ;
 sub EVP_MD_size($) ;
 sub EVP_MD_type($) ;
 sub EVP_PKEY_assign_EC_KEY($$) ;
@@ -3060,6 +2841,7 @@ sub EVP_PKEY_copy_parameters($$) ;
 sub EVP_PKEY_free($) ;
 sub EVP_PKEY_id($) ;
 sub EVP_PKEY_new() ;
+sub EVP_PKEY_security_bits($) ;
 sub EVP_PKEY_size($) ;
 sub EVP_add_digest($) ;
 sub EVP_get_cipherbyname($) ;
@@ -3099,9 +2881,17 @@ sub OCSP_response_results($;@) ;
 sub OCSP_response_status($) ;
 sub OCSP_response_status_str($) ;
 sub OCSP_response_verify($$;$$) ;
+sub OPENSSL_INIT_free($) ;
+sub OPENSSL_INIT_new() ;
+sub OPENSSL_INIT_set_config_appname($$) ;
+sub OPENSSL_INIT_set_config_file_flags($$) ;
+sub OPENSSL_INIT_set_config_filename($$) ;
 sub OPENSSL_add_all_algorithms_conf() ;
 sub OPENSSL_add_all_algorithms_noconf() ;
+sub OPENSSL_cleanup() ;
 sub OPENSSL_info($) ;
+sub OPENSSL_init_crypto($;$) ;
+sub OPENSSL_init_ssl($;$) ;
 sub OPENSSL_version_build_metadata() ;
 sub OPENSSL_version_major() ;
 sub OPENSSL_version_minor() ;
@@ -3197,10 +2987,12 @@ sub RAND_write_file($) ;
 sub RIPEMD160($) ;
 sub RSA_free($) ;
 sub RSA_generate_key($$;$$) ;
+sub RSA_get_key_parameters($) ;
 sub SCM_CONNECT() ;
 sub SCM_CREDS() ;
 sub SESSION_dup($) ;
 sub SESSION_free($) ;
+sub SESSION_get0_cipher($) ;
 sub SESSION_get_app_data($) ;
 sub SESSION_get_ex_data($$) ;
 sub SESSION_get_ex_new_index($;$$$$) ;
@@ -3211,8 +3003,11 @@ sub SESSION_is_resumable($) ;
 sub SESSION_new() ;
 sub SESSION_print($$) ;
 sub SESSION_print_fp($$) ;
+sub SESSION_set1_master_key($$) ;
 sub SESSION_set_app_data($$) ;
+sub SESSION_set_cipher($$) ;
 sub SESSION_set_ex_data($$$) ;
+sub SESSION_set_protocol_version($$) ;
 sub SESSION_set_time($$) ;
 sub SESSION_set_timeout($$) ;
 sub SESSION_up_ref($) ;
@@ -3253,6 +3048,8 @@ sub X509V3_EXT_d2i($) ;
 sub X509V3_EXT_print($;$$) ;
 sub X509_CRL_digest($$) ;
 sub X509_CRL_free($) ;
+sub X509_CRL_get0_lastUpdate($) ;
+sub X509_CRL_get0_nextUpdate($) ;
 sub X509_CRL_get_ext($$) ;
 sub X509_CRL_get_ext_by_NID($$;$) ;
 sub X509_CRL_get_ext_count($) ;
@@ -3261,6 +3058,8 @@ sub X509_CRL_get_lastUpdate($) ;
 sub X509_CRL_get_nextUpdate($) ;
 sub X509_CRL_get_version($) ;
 sub X509_CRL_new() ;
+sub X509_CRL_set1_lastUpdate($$) ;
+sub X509_CRL_set1_nextUpdate($$) ;
 sub X509_CRL_set_issuer_name($$) ;
 sub X509_CRL_set_lastUpdate($$) ;
 sub X509_CRL_set_nextUpdate($$) ;
@@ -3358,6 +3157,8 @@ sub X509_check_ip($$;$) ;
 sub X509_check_ip_asc($$;$) ;
 sub X509_digest($$) ;
 sub X509_free($) ;
+sub X509_get0_notAfter($) ;
+sub X509_get0_notBefore($) ;
 sub X509_get0_serialNumber($) ;
 sub X509_get_X509_PUBKEY($) ;
 sub X509_get_app_data($) ;
@@ -3375,6 +3176,8 @@ sub X509_get_serialNumber($) ;
 sub X509_get_subjectAltNames($) ;
 sub X509_get_subject_name($) ;
 sub X509_get_version($) ;
+sub X509_getm_notAfter($) ;
+sub X509_getm_notBefore($) ;
 sub X509_gmtime_adj($$) ;
 sub X509_issuer_and_serial_hash($) ;
 sub X509_issuer_name_hash($) ;
@@ -3418,6 +3221,15 @@ sub callback_ctrl($$$) ;
 sub check_private_key($) ;
 sub clear($) ;
 sub clear_num_renegotiations($) ;
+sub client_hello_get0_ciphers($) ;
+sub client_hello_get0_compression_methods($) ;
+sub client_hello_get0_ext($$) ;
+sub client_hello_get0_legacy_version($) ;
+sub client_hello_get0_random($) ;
+sub client_hello_get0_session_id($) ;
+sub client_hello_get1_extensions_present($) ;
+sub client_hello_get_extension_order($) ;
+sub client_hello_isv2($) ;
 sub client_version($) ;
 sub connect($) ;
 sub constant($) ;
@@ -3592,6 +3404,9 @@ sub set_post_handshake_auth($$) ;
 sub set_pref_cipher($$) ;
 sub set_proxy($$;**) ;
 sub set_psk_client_callback($;$) ;
+sub set_psk_find_session_callback($;$) ;
+sub set_psk_server_callback($;$) ;
+sub set_psk_use_session_callback($;$) ;
 sub set_purpose($$) ;
 sub set_quiet_shutdown($$) ;
 sub set_read_ahead($;$) ;
@@ -3666,6 +3481,7 @@ sub use_certificate($$) ;
 sub use_certificate_ASN1($$$) ;
 sub use_certificate_chain_file($$) ;
 sub use_certificate_file($$$) ;
+sub use_psk_identity_hint($$) ;
 sub verify_client_post_handshake($) ;
 sub version($) ;
 sub want($) ;
@@ -3676,6 +3492,348 @@ sub want_write;
 sub write($$) ;
 sub write_ex($$) ;
 sub write_partial($$$$) ;
+}
+package NetSNMP::ASN {
+sub constant($) ;
+}
+package NetSNMP::OID {
+sub RECEIVED_MESSAGE;
+sub SNMPERR_BAD_ADDRESS;
+sub SNMPERR_BAD_LOCPORT;
+sub SNMPERR_BAD_SESSION;
+sub SNMPERR_GENERR;
+sub SNMPERR_TOO_LONG;
+sub SNMP_API_SINGLE;
+sub SNMP_API_TRADITIONAL;
+sub SNMP_DEFAULT_ADDRESS;
+sub SNMP_DEFAULT_COMMUNITY_LEN;
+sub SNMP_DEFAULT_ENTERPRISE_LENGTH;
+sub SNMP_DEFAULT_ERRINDEX;
+sub SNMP_DEFAULT_ERRSTAT;
+sub SNMP_DEFAULT_PEERNAME;
+sub SNMP_DEFAULT_REMPORT;
+sub SNMP_DEFAULT_REQID;
+sub SNMP_DEFAULT_RETRIES;
+sub SNMP_DEFAULT_TIME;
+sub SNMP_DEFAULT_TIMEOUT;
+sub SNMP_DEFAULT_VERSION;
+sub TIMED_OUT;
+sub _snmp_oid_compare($$) ;
+sub constant($) ;
+sub newptr($) ;
+}
+package NetSNMP::TrapReceiver {
+sub constant($) ;
+sub register($$) ;
+}
+package NetSNMP::agent {
+sub NETSNMP_DS_AGENT_AGENTX_MASTER;
+sub NETSNMP_DS_AGENT_AGENTX_PING_INTERVAL;
+sub NETSNMP_DS_AGENT_AGENTX_RETRIES;
+sub NETSNMP_DS_AGENT_AGENTX_TIMEOUT;
+sub NETSNMP_DS_AGENT_CACHE_TIMEOUT;
+sub NETSNMP_DS_AGENT_DISABLE_PERL;
+sub NETSNMP_DS_AGENT_DONT_LOG_TCPWRAPPERS_CONNECTS;
+sub NETSNMP_DS_AGENT_DONT_RETAIN_NOTIFICATIONS;
+sub NETSNMP_DS_AGENT_FLAGS;
+sub NETSNMP_DS_AGENT_GROUPID;
+sub NETSNMP_DS_AGENT_INTERNAL_SECLEVEL;
+sub NETSNMP_DS_AGENT_INTERNAL_SECNAME;
+sub NETSNMP_DS_AGENT_INTERNAL_VERSION;
+sub NETSNMP_DS_AGENT_LEAVE_PIDFILE;
+sub NETSNMP_DS_AGENT_MAX_GETBULKREPEATS;
+sub NETSNMP_DS_AGENT_MAX_GETBULKRESPONSES;
+sub NETSNMP_DS_AGENT_NO_CACHING;
+sub NETSNMP_DS_AGENT_NO_CONNECTION_WARNINGS;
+sub NETSNMP_DS_AGENT_NO_ROOT_ACCESS;
+sub NETSNMP_DS_AGENT_PERL_INIT_FILE;
+sub NETSNMP_DS_AGENT_PORTS;
+sub NETSNMP_DS_AGENT_PROGNAME;
+sub NETSNMP_DS_AGENT_QUIT_IMMEDIATELY;
+sub NETSNMP_DS_AGENT_ROLE;
+sub NETSNMP_DS_AGENT_SKIPNFSINHOSTRESOURCES;
+sub NETSNMP_DS_AGENT_STRICT_DISMAN;
+sub NETSNMP_DS_AGENT_USERID;
+sub NETSNMP_DS_AGENT_VERBOSE;
+sub NETSNMP_DS_AGENT_X_DIR_PERM;
+sub NETSNMP_DS_AGENT_X_SOCKET;
+sub NETSNMP_DS_AGENT_X_SOCK_GROUP;
+sub NETSNMP_DS_AGENT_X_SOCK_PERM;
+sub NETSNMP_DS_AGENT_X_SOCK_USER;
+sub NETSNMP_DS_APPLICATION_ID;
+sub NETSNMP_DS_LIBRARY_ID;
+sub NETSNMP_DS_LIB_16BIT_IDS;
+sub NETSNMP_DS_LIB_2DIGIT_HEX_OUTPUT;
+sub NETSNMP_DS_LIB_ALARM_DONT_USE_SIG;
+sub NETSNMP_DS_LIB_APPEND_LOGFILES;
+sub NETSNMP_DS_LIB_APPTYPE;
+sub NETSNMP_DS_LIB_APPTYPES;
+sub NETSNMP_DS_LIB_AUTHLOCALIZEDKEY;
+sub NETSNMP_DS_LIB_AUTHMASTERKEY;
+sub NETSNMP_DS_LIB_AUTHPASSPHRASE;
+sub NETSNMP_DS_LIB_CLIENTRECVBUF;
+sub NETSNMP_DS_LIB_CLIENTSENDBUF;
+sub NETSNMP_DS_LIB_CLIENT_ADDR;
+sub NETSNMP_DS_LIB_CLIENT_ADDR_USES_PORT;
+sub NETSNMP_DS_LIB_COMMUNITY;
+sub NETSNMP_DS_LIB_CONFIGURATION_DIR;
+sub NETSNMP_DS_LIB_CONTEXT;
+sub NETSNMP_DS_LIB_DEFAULT_PORT;
+sub NETSNMP_DS_LIB_DISABLE_PERSISTENT_LOAD;
+sub NETSNMP_DS_LIB_DISABLE_PERSISTENT_SAVE;
+sub NETSNMP_DS_LIB_DONT_BREAKDOWN_OIDS;
+sub NETSNMP_DS_LIB_DONT_CHECK_RANGE;
+sub NETSNMP_DS_LIB_DONT_PERSIST_STATE;
+sub NETSNMP_DS_LIB_DONT_PRINT_UNITS;
+sub NETSNMP_DS_LIB_DONT_READ_CONFIGS;
+sub NETSNMP_DS_LIB_DUMP_PACKET;
+sub NETSNMP_DS_LIB_ESCAPE_QUOTES;
+sub NETSNMP_DS_LIB_EXTENDED_INDEX;
+sub NETSNMP_DS_LIB_HAVE_READ_CONFIG;
+sub NETSNMP_DS_LIB_HAVE_READ_PREMIB_CONFIG;
+sub NETSNMP_DS_LIB_HEX_OUTPUT_LENGTH;
+sub NETSNMP_DS_LIB_IGNORE_NO_COMMUNITY;
+sub NETSNMP_DS_LIB_KSM_KEYTAB;
+sub NETSNMP_DS_LIB_KSM_SERVICE_NAME;
+sub NETSNMP_DS_LIB_LOG_TIMESTAMP;
+sub NETSNMP_DS_LIB_MIBDIRS;
+sub NETSNMP_DS_LIB_MIB_COMMENT_TERM;
+sub NETSNMP_DS_LIB_MIB_ERRORS;
+sub NETSNMP_DS_LIB_MIB_PARSE_LABEL;
+sub NETSNMP_DS_LIB_MIB_REPLACE;
+sub NETSNMP_DS_LIB_MIB_WARNINGS;
+sub NETSNMP_DS_LIB_NO_DISPLAY_HINT;
+sub NETSNMP_DS_LIB_NO_TOKEN_WARNINGS;
+sub NETSNMP_DS_LIB_NUMERIC_TIMETICKS;
+sub NETSNMP_DS_LIB_OIDPREFIX;
+sub NETSNMP_DS_LIB_OIDSUFFIX;
+sub NETSNMP_DS_LIB_OID_OUTPUT_FORMAT;
+sub NETSNMP_DS_LIB_OPTIONALCONFIG;
+sub NETSNMP_DS_LIB_PASSPHRASE;
+sub NETSNMP_DS_LIB_PERSISTENT_DIR;
+sub NETSNMP_DS_LIB_PRINT_BARE_VALUE;
+sub NETSNMP_DS_LIB_PRINT_FULL_OID;
+sub NETSNMP_DS_LIB_PRINT_HEX_TEXT;
+sub NETSNMP_DS_LIB_PRINT_NUMERIC_ENUM;
+sub NETSNMP_DS_LIB_PRINT_NUMERIC_OIDS;
+sub NETSNMP_DS_LIB_PRINT_UCD_STYLE_OID;
+sub NETSNMP_DS_LIB_PRIVLOCALIZEDKEY;
+sub NETSNMP_DS_LIB_PRIVMASTERKEY;
+sub NETSNMP_DS_LIB_PRIVPASSPHRASE;
+sub NETSNMP_DS_LIB_QUICKE_PRINT;
+sub NETSNMP_DS_LIB_QUICK_PRINT;
+sub NETSNMP_DS_LIB_RANDOM_ACCESS;
+sub NETSNMP_DS_LIB_READ_UCD_STYLE_OID;
+sub NETSNMP_DS_LIB_REGEX_ACCESS;
+sub NETSNMP_DS_LIB_REVERSE_ENCODE;
+sub NETSNMP_DS_LIB_SAVE_MIB_DESCRS;
+sub NETSNMP_DS_LIB_SBSM_LOCAL_PWD;
+sub NETSNMP_DS_LIB_SECLEVEL;
+sub NETSNMP_DS_LIB_SECMODEL;
+sub NETSNMP_DS_LIB_SECNAME;
+sub NETSNMP_DS_LIB_SERVERRECVBUF;
+sub NETSNMP_DS_LIB_SERVERSENDBUF;
+sub NETSNMP_DS_LIB_SNMPVERSION;
+sub NETSNMP_DS_LIB_STRING_OUTPUT_FORMAT;
+sub NETSNMP_DS_LIB_TEMP_FILE_PATTERN;
+sub NETSNMP_DS_MAX_IDS;
+sub NETSNMP_DS_MAX_SUBIDS;
+sub NETSNMP_DS_NOTIF_LOG_CTX;
+sub NETSNMP_DS_SMUX_SOCKET;
+sub NETSNMP_DS_SNMP_VERSION_1;
+sub NETSNMP_DS_SNMP_VERSION_2c;
+sub NETSNMP_DS_SNMP_VERSION_3;
+sub NETSNMP_DS_TOKEN_ID;
+sub __agent_check_and_process(;$) ;
+sub _uptime() ;
+sub constant($) ;
+sub errlog($$) ;
+sub init_agent($) ;
+sub init_master_agent() ;
+sub init_mib() ;
+sub init_snmp($) ;
+sub netsnmp_ds_get_boolean($$) ;
+sub netsnmp_ds_get_int($$) ;
+sub netsnmp_ds_get_string($$) ;
+sub netsnmp_ds_get_void($$) ;
+sub netsnmp_ds_register_config($$$$$) ;
+sub netsnmp_ds_register_premib($$$$$) ;
+sub netsnmp_ds_set_boolean($$$) ;
+sub netsnmp_ds_set_int($$$) ;
+sub netsnmp_ds_set_string($$$) ;
+sub netsnmp_ds_set_void($$$) ;
+sub netsnmp_ds_shutdown() ;
+sub netsnmp_ds_toggle_boolean($$) ;
+sub shutdown($) ;
+sub snmp_enable_stderrlog() ;
+}
+package NetSNMP::agent::default_store {
+sub NETSNMP_DS_AGENT_AGENTX_MASTER;
+sub NETSNMP_DS_AGENT_AGENTX_PING_INTERVAL;
+sub NETSNMP_DS_AGENT_AGENTX_RETRIES;
+sub NETSNMP_DS_AGENT_AGENTX_TIMEOUT;
+sub NETSNMP_DS_AGENT_CACHE_TIMEOUT;
+sub NETSNMP_DS_AGENT_DISABLE_PERL;
+sub NETSNMP_DS_AGENT_DONT_LOG_TCPWRAPPERS_CONNECTS;
+sub NETSNMP_DS_AGENT_DONT_RETAIN_NOTIFICATIONS;
+sub NETSNMP_DS_AGENT_FLAGS;
+sub NETSNMP_DS_AGENT_GROUPID;
+sub NETSNMP_DS_AGENT_INTERNAL_SECLEVEL;
+sub NETSNMP_DS_AGENT_INTERNAL_SECNAME;
+sub NETSNMP_DS_AGENT_INTERNAL_VERSION;
+sub NETSNMP_DS_AGENT_LEAVE_PIDFILE;
+sub NETSNMP_DS_AGENT_MAX_GETBULKREPEATS;
+sub NETSNMP_DS_AGENT_MAX_GETBULKRESPONSES;
+sub NETSNMP_DS_AGENT_NO_CACHING;
+sub NETSNMP_DS_AGENT_NO_CONNECTION_WARNINGS;
+sub NETSNMP_DS_AGENT_NO_ROOT_ACCESS;
+sub NETSNMP_DS_AGENT_PERL_INIT_FILE;
+sub NETSNMP_DS_AGENT_PORTS;
+sub NETSNMP_DS_AGENT_PROGNAME;
+sub NETSNMP_DS_AGENT_QUIT_IMMEDIATELY;
+sub NETSNMP_DS_AGENT_ROLE;
+sub NETSNMP_DS_AGENT_SKIPNFSINHOSTRESOURCES;
+sub NETSNMP_DS_AGENT_STRICT_DISMAN;
+sub NETSNMP_DS_AGENT_USERID;
+sub NETSNMP_DS_AGENT_VERBOSE;
+sub NETSNMP_DS_AGENT_X_DIR_PERM;
+sub NETSNMP_DS_AGENT_X_SOCKET;
+sub NETSNMP_DS_AGENT_X_SOCK_GROUP;
+sub NETSNMP_DS_AGENT_X_SOCK_PERM;
+sub NETSNMP_DS_AGENT_X_SOCK_USER;
+sub NETSNMP_DS_NOTIF_LOG_CTX;
+sub NETSNMP_DS_SMUX_SOCKET;
+sub constant($) ;
+}
+package NetSNMP::agent::netsnmp_agent_request_info {
+sub getDestIp($) ;
+sub getMode($) ;
+sub getSourceIp($) ;
+sub setMode($$) ;
+}
+package NetSNMP::agent::netsnmp_handler_registration {
+sub DESTROY($) ;
+sub new($$$) ;
+sub register($) ;
+}
+package NetSNMP::agent::netsnmp_handler_registrationPtr {
+sub getRootOID($) ;
+}
+package NetSNMP::agent::netsnmp_request_infoPtr {
+sub getDelegated($) ;
+sub getOID($) ;
+sub getOIDptr($) ;
+sub getProcessed($) ;
+sub getRepeat($) ;
+sub getStatus($) ;
+sub getType($) ;
+sub getValue($) ;
+sub next($) ;
+sub setDelegated($$) ;
+sub setError($$$) ;
+sub setOID($$) ;
+sub setProcessed($$) ;
+sub setRepeat($$) ;
+sub setStatus($$) ;
+sub setType($$) ;
+sub setValue($$$) ;
+}
+package NetSNMP::default_store {
+sub NETSNMP_DS_APPLICATION_ID;
+sub NETSNMP_DS_LIBRARY_ID;
+sub NETSNMP_DS_LIB_16BIT_IDS;
+sub NETSNMP_DS_LIB_2DIGIT_HEX_OUTPUT;
+sub NETSNMP_DS_LIB_ALARM_DONT_USE_SIG;
+sub NETSNMP_DS_LIB_APPEND_LOGFILES;
+sub NETSNMP_DS_LIB_APPTYPE;
+sub NETSNMP_DS_LIB_APPTYPES;
+sub NETSNMP_DS_LIB_AUTHLOCALIZEDKEY;
+sub NETSNMP_DS_LIB_AUTHMASTERKEY;
+sub NETSNMP_DS_LIB_AUTHPASSPHRASE;
+sub NETSNMP_DS_LIB_CLIENTRECVBUF;
+sub NETSNMP_DS_LIB_CLIENTSENDBUF;
+sub NETSNMP_DS_LIB_CLIENT_ADDR;
+sub NETSNMP_DS_LIB_CLIENT_ADDR_USES_PORT;
+sub NETSNMP_DS_LIB_COMMUNITY;
+sub NETSNMP_DS_LIB_CONFIGURATION_DIR;
+sub NETSNMP_DS_LIB_CONTEXT;
+sub NETSNMP_DS_LIB_DEFAULT_PORT;
+sub NETSNMP_DS_LIB_DISABLE_PERSISTENT_LOAD;
+sub NETSNMP_DS_LIB_DISABLE_PERSISTENT_SAVE;
+sub NETSNMP_DS_LIB_DONT_BREAKDOWN_OIDS;
+sub NETSNMP_DS_LIB_DONT_CHECK_RANGE;
+sub NETSNMP_DS_LIB_DONT_PERSIST_STATE;
+sub NETSNMP_DS_LIB_DONT_PRINT_UNITS;
+sub NETSNMP_DS_LIB_DONT_READ_CONFIGS;
+sub NETSNMP_DS_LIB_DUMP_PACKET;
+sub NETSNMP_DS_LIB_ESCAPE_QUOTES;
+sub NETSNMP_DS_LIB_EXTENDED_INDEX;
+sub NETSNMP_DS_LIB_HAVE_READ_CONFIG;
+sub NETSNMP_DS_LIB_HAVE_READ_PREMIB_CONFIG;
+sub NETSNMP_DS_LIB_HEX_OUTPUT_LENGTH;
+sub NETSNMP_DS_LIB_IGNORE_NO_COMMUNITY;
+sub NETSNMP_DS_LIB_KSM_KEYTAB;
+sub NETSNMP_DS_LIB_KSM_SERVICE_NAME;
+sub NETSNMP_DS_LIB_LOG_TIMESTAMP;
+sub NETSNMP_DS_LIB_MIBDIRS;
+sub NETSNMP_DS_LIB_MIB_COMMENT_TERM;
+sub NETSNMP_DS_LIB_MIB_ERRORS;
+sub NETSNMP_DS_LIB_MIB_PARSE_LABEL;
+sub NETSNMP_DS_LIB_MIB_REPLACE;
+sub NETSNMP_DS_LIB_MIB_WARNINGS;
+sub NETSNMP_DS_LIB_NO_DISPLAY_HINT;
+sub NETSNMP_DS_LIB_NO_TOKEN_WARNINGS;
+sub NETSNMP_DS_LIB_NUMERIC_TIMETICKS;
+sub NETSNMP_DS_LIB_OIDPREFIX;
+sub NETSNMP_DS_LIB_OIDSUFFIX;
+sub NETSNMP_DS_LIB_OID_OUTPUT_FORMAT;
+sub NETSNMP_DS_LIB_OPTIONALCONFIG;
+sub NETSNMP_DS_LIB_PASSPHRASE;
+sub NETSNMP_DS_LIB_PERSISTENT_DIR;
+sub NETSNMP_DS_LIB_PRINT_BARE_VALUE;
+sub NETSNMP_DS_LIB_PRINT_FULL_OID;
+sub NETSNMP_DS_LIB_PRINT_HEX_TEXT;
+sub NETSNMP_DS_LIB_PRINT_NUMERIC_ENUM;
+sub NETSNMP_DS_LIB_PRINT_NUMERIC_OIDS;
+sub NETSNMP_DS_LIB_PRINT_UCD_STYLE_OID;
+sub NETSNMP_DS_LIB_PRIVLOCALIZEDKEY;
+sub NETSNMP_DS_LIB_PRIVMASTERKEY;
+sub NETSNMP_DS_LIB_PRIVPASSPHRASE;
+sub NETSNMP_DS_LIB_QUICKE_PRINT;
+sub NETSNMP_DS_LIB_QUICK_PRINT;
+sub NETSNMP_DS_LIB_RANDOM_ACCESS;
+sub NETSNMP_DS_LIB_READ_UCD_STYLE_OID;
+sub NETSNMP_DS_LIB_REGEX_ACCESS;
+sub NETSNMP_DS_LIB_REVERSE_ENCODE;
+sub NETSNMP_DS_LIB_SAVE_MIB_DESCRS;
+sub NETSNMP_DS_LIB_SBSM_LOCAL_PWD;
+sub NETSNMP_DS_LIB_SECLEVEL;
+sub NETSNMP_DS_LIB_SECMODEL;
+sub NETSNMP_DS_LIB_SECNAME;
+sub NETSNMP_DS_LIB_SERVERRECVBUF;
+sub NETSNMP_DS_LIB_SERVERSENDBUF;
+sub NETSNMP_DS_LIB_SNMPVERSION;
+sub NETSNMP_DS_LIB_STRING_OUTPUT_FORMAT;
+sub NETSNMP_DS_LIB_TEMP_FILE_PATTERN;
+sub NETSNMP_DS_MAX_IDS;
+sub NETSNMP_DS_MAX_SUBIDS;
+sub NETSNMP_DS_SNMP_VERSION_1;
+sub NETSNMP_DS_SNMP_VERSION_2c;
+sub NETSNMP_DS_SNMP_VERSION_3;
+sub NETSNMP_DS_TOKEN_ID;
+sub constant($) ;
+sub netsnmp_ds_get_boolean($$) ;
+sub netsnmp_ds_get_int($$) ;
+sub netsnmp_ds_get_string($$) ;
+sub netsnmp_ds_get_void($$) ;
+sub netsnmp_ds_register_config($$$$$) ;
+sub netsnmp_ds_register_premib($$$$$) ;
+sub netsnmp_ds_set_boolean($$$) ;
+sub netsnmp_ds_set_int($$$) ;
+sub netsnmp_ds_set_string($$$) ;
+sub netsnmp_ds_set_void($$$) ;
+sub netsnmp_ds_shutdown() ;
+sub netsnmp_ds_toggle_boolean($$) ;
 }
 package ODBM_File {
 sub DELETE;
@@ -3716,8 +3874,6 @@ sub CLK_TCK() ;
 sub EOTHER() ;
 sub EPROCLIM() ;
 sub FLT_ROUNDS() ;
-sub LC_SYNTAX;
-sub LC_TOD;
 sub LDBL_EPSILON() ;
 sub LDBL_MAX() ;
 sub LDBL_MIN() ;
@@ -3729,7 +3885,9 @@ sub S_ISBLK;
 sub S_ISCHR;
 sub S_ISDIR;
 sub S_ISFIFO;
+sub S_ISLNK;
 sub S_ISREG;
+sub S_ISSOCK;
 sub TZNAME_MAX() ;
 sub WEXITSTATUS;
 sub WIFEXITED;
@@ -4035,6 +4193,32 @@ sub setlflag;
 sub setoflag;
 sub setospeed;
 }
+package Package::Stash {
+sub add_symbol;
+sub get_all_symbols;
+sub get_or_add_symbol;
+sub get_symbol;
+sub has_symbol;
+sub list_all_symbols;
+sub name;
+sub namespace;
+sub new;
+sub remove_glob;
+sub remove_symbol;
+}
+package Package::Stash::XS {
+sub add_symbol;
+sub get_all_symbols;
+sub get_or_add_symbol;
+sub get_symbol;
+sub has_symbol;
+sub list_all_symbols;
+sub name;
+sub namespace;
+sub new;
+sub remove_glob;
+sub remove_symbol;
+}
 package PadWalker {
 sub _upcontext;
 sub closed_over;
@@ -4069,6 +4253,15 @@ sub validate(\@$) ;
 sub validate_pos(\@@) ;
 sub validate_with;
 }
+package Params::ValidationCompiler::Compiler {
+sub blessed($) ;
+sub looks_like_number($) ;
+sub pairkeys(@) ;
+sub pairvalues(@) ;
+sub perlstring;
+sub reftype($) ;
+sub set_subname;
+}
 package PerlIO {
 sub get_layers(*;@) ;
 }
@@ -4078,6 +4271,9 @@ sub find;
 }
 package Regexp {
 sub DESTROY() ;
+}
+package Role::Tiny {
+sub _linear_isa($;$) ;
 }
 package SDBM_File {
 sub DELETE;
@@ -4095,6 +4291,166 @@ sub filter_store_key;
 sub filter_store_value;
 sub sdbm_clearerr;
 }
+package SNMP {
+sub NETSNMP_DS_APPLICATION_ID;
+sub NETSNMP_DS_LIBRARY_ID;
+sub NETSNMP_DS_LIB_16BIT_IDS;
+sub NETSNMP_DS_LIB_2DIGIT_HEX_OUTPUT;
+sub NETSNMP_DS_LIB_ALARM_DONT_USE_SIG;
+sub NETSNMP_DS_LIB_APPEND_LOGFILES;
+sub NETSNMP_DS_LIB_APPTYPE;
+sub NETSNMP_DS_LIB_APPTYPES;
+sub NETSNMP_DS_LIB_AUTHLOCALIZEDKEY;
+sub NETSNMP_DS_LIB_AUTHMASTERKEY;
+sub NETSNMP_DS_LIB_AUTHPASSPHRASE;
+sub NETSNMP_DS_LIB_CLIENTRECVBUF;
+sub NETSNMP_DS_LIB_CLIENTSENDBUF;
+sub NETSNMP_DS_LIB_CLIENT_ADDR;
+sub NETSNMP_DS_LIB_CLIENT_ADDR_USES_PORT;
+sub NETSNMP_DS_LIB_COMMUNITY;
+sub NETSNMP_DS_LIB_CONFIGURATION_DIR;
+sub NETSNMP_DS_LIB_CONTEXT;
+sub NETSNMP_DS_LIB_DEFAULT_PORT;
+sub NETSNMP_DS_LIB_DISABLE_PERSISTENT_LOAD;
+sub NETSNMP_DS_LIB_DISABLE_PERSISTENT_SAVE;
+sub NETSNMP_DS_LIB_DONT_BREAKDOWN_OIDS;
+sub NETSNMP_DS_LIB_DONT_CHECK_RANGE;
+sub NETSNMP_DS_LIB_DONT_PERSIST_STATE;
+sub NETSNMP_DS_LIB_DONT_PRINT_UNITS;
+sub NETSNMP_DS_LIB_DONT_READ_CONFIGS;
+sub NETSNMP_DS_LIB_DUMP_PACKET;
+sub NETSNMP_DS_LIB_ESCAPE_QUOTES;
+sub NETSNMP_DS_LIB_EXTENDED_INDEX;
+sub NETSNMP_DS_LIB_HAVE_READ_CONFIG;
+sub NETSNMP_DS_LIB_HAVE_READ_PREMIB_CONFIG;
+sub NETSNMP_DS_LIB_HEX_OUTPUT_LENGTH;
+sub NETSNMP_DS_LIB_IGNORE_NO_COMMUNITY;
+sub NETSNMP_DS_LIB_KSM_KEYTAB;
+sub NETSNMP_DS_LIB_KSM_SERVICE_NAME;
+sub NETSNMP_DS_LIB_LOG_TIMESTAMP;
+sub NETSNMP_DS_LIB_MIBDIRS;
+sub NETSNMP_DS_LIB_MIB_COMMENT_TERM;
+sub NETSNMP_DS_LIB_MIB_ERRORS;
+sub NETSNMP_DS_LIB_MIB_PARSE_LABEL;
+sub NETSNMP_DS_LIB_MIB_REPLACE;
+sub NETSNMP_DS_LIB_MIB_WARNINGS;
+sub NETSNMP_DS_LIB_NO_DISPLAY_HINT;
+sub NETSNMP_DS_LIB_NO_TOKEN_WARNINGS;
+sub NETSNMP_DS_LIB_NUMERIC_TIMETICKS;
+sub NETSNMP_DS_LIB_OIDPREFIX;
+sub NETSNMP_DS_LIB_OIDSUFFIX;
+sub NETSNMP_DS_LIB_OID_OUTPUT_FORMAT;
+sub NETSNMP_DS_LIB_OPTIONALCONFIG;
+sub NETSNMP_DS_LIB_PASSPHRASE;
+sub NETSNMP_DS_LIB_PERSISTENT_DIR;
+sub NETSNMP_DS_LIB_PRINT_BARE_VALUE;
+sub NETSNMP_DS_LIB_PRINT_FULL_OID;
+sub NETSNMP_DS_LIB_PRINT_HEX_TEXT;
+sub NETSNMP_DS_LIB_PRINT_NUMERIC_ENUM;
+sub NETSNMP_DS_LIB_PRINT_NUMERIC_OIDS;
+sub NETSNMP_DS_LIB_PRINT_UCD_STYLE_OID;
+sub NETSNMP_DS_LIB_PRIVLOCALIZEDKEY;
+sub NETSNMP_DS_LIB_PRIVMASTERKEY;
+sub NETSNMP_DS_LIB_PRIVPASSPHRASE;
+sub NETSNMP_DS_LIB_QUICKE_PRINT;
+sub NETSNMP_DS_LIB_QUICK_PRINT;
+sub NETSNMP_DS_LIB_RANDOM_ACCESS;
+sub NETSNMP_DS_LIB_READ_UCD_STYLE_OID;
+sub NETSNMP_DS_LIB_REGEX_ACCESS;
+sub NETSNMP_DS_LIB_REVERSE_ENCODE;
+sub NETSNMP_DS_LIB_SAVE_MIB_DESCRS;
+sub NETSNMP_DS_LIB_SBSM_LOCAL_PWD;
+sub NETSNMP_DS_LIB_SECLEVEL;
+sub NETSNMP_DS_LIB_SECMODEL;
+sub NETSNMP_DS_LIB_SECNAME;
+sub NETSNMP_DS_LIB_SERVERRECVBUF;
+sub NETSNMP_DS_LIB_SERVERSENDBUF;
+sub NETSNMP_DS_LIB_SNMPVERSION;
+sub NETSNMP_DS_LIB_STRING_OUTPUT_FORMAT;
+sub NETSNMP_DS_LIB_TEMP_FILE_PATTERN;
+sub NETSNMP_DS_MAX_IDS;
+sub NETSNMP_DS_MAX_SUBIDS;
+sub NETSNMP_DS_SNMP_VERSION_1;
+sub NETSNMP_DS_SNMP_VERSION_2c;
+sub NETSNMP_DS_SNMP_VERSION_3;
+sub NETSNMP_DS_TOKEN_ID;
+sub RECEIVED_MESSAGE;
+sub SNMPERR_BAD_ADDRESS;
+sub SNMPERR_BAD_LOCPORT;
+sub SNMPERR_BAD_SESSION;
+sub SNMPERR_GENERR;
+sub SNMPERR_TOO_LONG;
+sub SNMP_API_SINGLE;
+sub SNMP_API_TRADITIONAL;
+sub SNMP_DEFAULT_ADDRESS;
+sub SNMP_DEFAULT_COMMUNITY_LEN;
+sub SNMP_DEFAULT_ENTERPRISE_LENGTH;
+sub SNMP_DEFAULT_ERRINDEX;
+sub SNMP_DEFAULT_ERRSTAT;
+sub SNMP_DEFAULT_PEERNAME;
+sub SNMP_DEFAULT_REMPORT;
+sub SNMP_DEFAULT_REQID;
+sub SNMP_DEFAULT_RETRIES;
+sub SNMP_DEFAULT_TIME;
+sub SNMP_DEFAULT_TIMEOUT;
+sub SNMP_DEFAULT_VERSION;
+sub TIMED_OUT;
+sub _add_mib_dir;
+sub _api_mode;
+sub _bulkwalk;
+sub _catch;
+sub _check_timeout;
+sub _debug_internals;
+sub _dump_packet;
+sub _get;
+sub _get_select_info;
+sub _get_type;
+sub _getbulk;
+sub _getenv;
+sub _getnext;
+sub _inform;
+sub _init_mib_internals;
+sub _main_loop;
+sub _mainloop_finish;
+sub _map_enum;
+sub _mib_toggle_options;
+sub _new_session;
+sub _new_tunneled_session;
+sub _new_v3_session;
+sub _read_mib;
+sub _read_module;
+sub _read_on_fd;
+sub _register_debug_tokens;
+sub _set;
+sub _set_debugging;
+sub _set_replace_newer;
+sub _set_save_descriptions;
+sub _setenv;
+sub _sock_cleanup;
+sub _sys_uptime;
+sub _translate_obj;
+sub _trapV1;
+sub _trapV2;
+sub _update_session;
+sub constant;
+sub init_snmp;
+sub netsnmp_ds_get_boolean($$) ;
+sub netsnmp_ds_get_int($$) ;
+sub netsnmp_ds_get_string($$) ;
+sub netsnmp_ds_get_void($$) ;
+sub netsnmp_ds_register_config($$$$$) ;
+sub netsnmp_ds_register_premib($$$$$) ;
+sub netsnmp_ds_set_boolean($$$) ;
+sub netsnmp_ds_set_int($$$) ;
+sub netsnmp_ds_set_string($$$) ;
+sub netsnmp_ds_set_void($$$) ;
+sub netsnmp_ds_shutdown() ;
+sub netsnmp_ds_toggle_boolean($$) ;
+}
+package SNMP::MIB::NODE {
+sub FETCH;
+sub TIEHASH;
+}
 package Scalar::Util {
 sub blessed($) ;
 sub dualvar($$) ;
@@ -4109,6 +4465,9 @@ sub reftype($) ;
 sub tainted($) ;
 sub unweaken($) ;
 sub weaken($) ;
+}
+package SnmpSessionPtr {
+sub DESTROY;
 }
 package Socket {
 sub AF_802() ;
@@ -4220,6 +4579,56 @@ sub unpack_sockaddr_in6;
 sub unpack_sockaddr_in;
 sub unpack_sockaddr_un;
 }
+package Specio::Constraint::AnyCan {
+sub perlstring;
+}
+package Specio::Constraint::Enum {
+sub refaddr($) ;
+}
+package Specio::Constraint::ObjectCan {
+sub perlstring;
+}
+package Specio::Constraint::ObjectIsa {
+sub perlstring;
+}
+package Specio::Constraint::Role::CanType {
+sub blessed($) ;
+}
+package Specio::Constraint::Role::Interface {
+sub all(&@) ;
+sub any(&@) ;
+sub first(&@) ;
+}
+package Specio::Constraint::Role::IsaType {
+sub blessed($) ;
+}
+package Specio::Constraint::Union {
+sub all(&@) ;
+sub any(&@) ;
+}
+package Specio::Exception {
+sub blessed($) ;
+}
+package Specio::Helpers {
+sub blessed($) ;
+sub perlstring;
+}
+package Specio::OO {
+sub all(&@) ;
+sub perlstring;
+sub weaken($) ;
+}
+package Specio::PartialDump {
+sub blessed($) ;
+sub looks_like_number($) ;
+sub reftype($) ;
+}
+package Specio::TypeChecks {
+sub blessed($) ;
+}
+package Specio::XS {
+sub clone($;$) ;
+}
 package Storable {
 sub dclone($) ;
 sub init_perinterp() ;
@@ -4234,6 +4643,11 @@ sub pretrieve($;$) ;
 sub pstore($$) ;
 sub stack_depth() ;
 sub stack_depth_hash() ;
+}
+package Sub::Identify {
+sub get_code_info($) ;
+sub get_code_location($) ;
+sub is_sub_constant($) ;
 }
 package Sub::Util {
 sub set_prototype;
@@ -4378,47 +4792,6 @@ sub setnodelay;
 sub termoptions;
 sub termsizeoptions;
 }
-package Test2::API {
-sub blessed($) ;
-sub time() ;
-sub weaken($) ;
-}
-package Test2::API::Context {
-sub blessed($) ;
-sub weaken($) ;
-}
-package Test2::API::Instance {
-sub reftype($) ;
-}
-package Test2::Event {
-sub blessed($) ;
-sub reftype($) ;
-}
-package Test2::Event::V2 {
-sub reftype($) ;
-}
-package Test2::Hub {
-sub first(&@) ;
-sub weaken($) ;
-}
-package Test2::Util::Facets2Legacy {
-sub blessed($) ;
-}
-package Test2::Util::HashBase {
-sub _isa($;$) ;
-}
-package Test::Builder {
-sub blessed($) ;
-sub reftype($) ;
-sub weaken($) ;
-}
-package Test::LeakTrace {
-sub CLONE;
-sub _finish;
-sub _runops_installed;
-sub _start;
-sub count_sv;
-}
 package Tie::Hash::NamedCapture {
 sub CLEAR;
 sub DELETE;
@@ -4461,11 +4834,16 @@ sub _strptime($$$$) ;
 sub _tzset() ;
 sub blessed($) ;
 }
+package Try::Tiny {
+sub _subname;
+}
 package UNIVERSAL {
 sub DOES;
 sub VERSION;
 sub can;
+sub import;
 sub isa;
+sub unimport;
 }
 package Unicode::Collate {
 sub _decompHangul;
@@ -4494,6 +4872,53 @@ sub getHST;
 sub mk_SortKey;
 sub varCE;
 sub visualizeSortKey;
+}
+package Unicode::GCString {
+sub DESTROY($) ;
+sub _new($$;$) ;
+sub as_array($) ;
+sub as_scalarref;
+sub as_string($;$;$) ;
+sub chars($) ;
+sub cmp($$;$) ;
+sub columns;
+sub concat($$;$) ;
+sub copy($) ;
+sub eos;
+sub flag($;$;$) ;
+sub item($;$) ;
+sub join;
+sub lbc($) ;
+sub lbcext($) ;
+sub lbclass($;$) ;
+sub lbclass_ext($;$) ;
+sub length($) ;
+sub next($;$;$) ;
+sub pos($;$) ;
+sub substr($$;$;$) ;
+}
+package Unicode::LineBreak {
+sub DESTROY($) ;
+sub EAWidths;
+sub LBClasses;
+sub SOMBOK_VERSION;
+sub UNICODE_VERSION;
+sub _config;
+sub _new($) ;
+sub as_hashref;
+sub as_scalarref;
+sub as_string;
+sub break($$) ;
+sub break_partial($$) ;
+sub breakingRule($$$) ;
+sub copy($) ;
+sub is_utf8($;$) ;
+sub lbrule($$$) ;
+sub reset($) ;
+sub strsize($$$$$;$) ;
+}
+package Unicode::LineBreak::SouthEastAsian {
+sub supported() ;
 }
 package Unicode::Normalize {
 sub FCC($) ;
@@ -4527,6 +4952,13 @@ sub isNonStDecomp($) ;
 sub isSingleton($) ;
 sub reorder($) ;
 sub splitOnLastStarter;
+}
+package Variable::Magic {
+sub CLONE;
+sub _wizard;
+sub cast(\[$@%&*]$@) ;
+sub dispell(\[$@%&*]$) ;
+sub getdata(\[$@%&*]$) ;
 }
 package XML::Parser::Expat {
 sub DefaultCurrent;
@@ -4585,29 +5017,32 @@ sub blessed($) ;
 sub ceil($) ;
 sub created_as_number($) ;
 sub created_as_string($) ;
+sub export_lexically;
 sub false() ;
 sub floor($) ;
 sub import;
-sub indexed;
+sub indexed(@) ;
+sub inf() ;
 sub is_bool($) ;
+sub is_tainted($) ;
 sub is_weak($) ;
+sub load_module($) ;
+sub nan() ;
 sub refaddr($) ;
 sub reftype($) ;
-sub trim;
+sub stringify($) ;
+sub trim($) ;
 sub true() ;
 sub unweaken($) ;
 sub weaken($) ;
 }
-package bytes {
-sub chr(_) ;
-sub index($$;$) ;
-sub length(_) ;
-sub ord(_) ;
-sub rindex($$;$) ;
-sub substr($$;$$) ;
-}
 package constant {
 sub _make_const(\[$@]) ;
+}
+package indirect {
+sub CLONE;
+sub _global($) ;
+sub _tag($) ;
 }
 package mro {
 sub _nextcan;
@@ -4619,6 +5054,16 @@ sub invalidate_all_method_caches() ;
 sub is_universal($) ;
 sub method_changed_in($) ;
 sub set_mro($$) ;
+}
+package netsnmp_oidPtr {
+sub DESTROY($) ;
+sub append($$) ;
+sub append_oid($$) ;
+sub clone($) ;
+sub get_indexes($) ;
+sub length($) ;
+sub to_array($) ;
+sub to_string($) ;
 }
 package re {
 sub install;
@@ -4692,6 +5137,7 @@ package version {
 sub _VERSION;
 sub boolean;
 sub declare;
+sub from_tuple;
 sub is_alpha;
 sub is_qv;
 sub new;
@@ -4701,5 +5147,8 @@ sub numify;
 sub parse;
 sub qv;
 sub stringify;
+sub to_decimal;
+sub to_dotted_decimal;
+sub tuple;
 sub vcmp;
 }
