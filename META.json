@@ -69,8 +69,9 @@
          "web" : "https://github.com/Kishitsu-Shiko-Lab/ATLib-Std"
       }
    },
-   "version" : "v0.4.0",
+   "version" : "v0.4.1",
    "x_contributors" : [
+      "atdev01 <atdev01@honatuxs02.local.jp>",
       "atdev01ux2 <mine_t7@hotmail.com>"
    ],
    "x_serialization_backend" : "JSON::PP version 4.16",

@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/ATLib-Std.iml" filepath="$PROJECT_DIR$/ATLib-Std.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/ATLib-Std.iml" filepath="$PROJECT_DIR$/.idea/ATLib-Std.iml" />
     </modules>
   </component>
 </project>

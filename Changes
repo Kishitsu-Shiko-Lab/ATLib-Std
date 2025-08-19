@@ -2,6 +2,10 @@ Revision history for Perl extension ATLib-Std
 
 {{$NEXT}}
 
+v0.4.1 2025-08-19T14:39:18Z
+
+    - 管理上の軽微な習性
+
 v0.4.0 2025-08-17T22:43:30Z
 
     - ATLib::Std::Boolを追加 (破壊的な変更)
